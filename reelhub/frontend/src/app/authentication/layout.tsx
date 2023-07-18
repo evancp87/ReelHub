@@ -1,4 +1,4 @@
-import "./globals.css";
+import "../globals.css";
 // import type { Metadata } from "next";
 // import { Inter } from "next/font/google";
 // import Sidebar from "../components/Sidebar";
@@ -25,20 +25,19 @@ import "./globals.css";
 
 import React from "react";
 import Image from "next/image";
-import Sidebar from "@/components/Sidebar";
-import Dashboard from "@/components/Dashboard";
-import Controls from "@/components/Controls";
 
-const RootLayout = ({ children }) => {
+import MovieIcon from "/public/assets/icon-category-movie.svg";
+
+const AuthLayout = ({ children }) => {
   return (
-    <div className="flex flex-col bg-[#10141E] md:flex-row ">
-      <Sidebar />
-      <main className="flex min-h-screen flex-col items-center   p-[2em]">
-        <Controls />
+    <main className="flex min-h-screen max-w-[1000px] p-24">
+      <div className="flex-col items-center justify-between ">
+        <Image width="50" height="50" alt="bookmark" src={MovieIcon} />
+
         {children}
-      </main>
-    </div>
+      </div>
+    </main>
   );
 };
 
-export default RootLayout;
+export default AuthLayout;
