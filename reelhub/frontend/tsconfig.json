@@ -23,6 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "public/assets/features/usersSlice.js", "public/assets/features/moviesSlice.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/features/usersSlice.js", "src/features/moviesSlice.js"],
   "exclude": ["node_modules"]
 }
