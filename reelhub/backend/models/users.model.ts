@@ -15,8 +15,14 @@ const userSchema = new Schema<IUser>({
     password: {type:String, required: true},
 })
 
+// for relational
+// types.objectId
+// https://dev.to/alexmercedcoder/mongodb-relationships-using-mongoose-in-nodejs-54cc
 
 
-export const User = model<IUser>('User', userSchema);
+  const User = model<IUser>('User', userSchema);
+
+  export {User}
+
 
 

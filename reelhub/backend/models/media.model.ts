@@ -15,7 +15,7 @@ interface IMedia {
       rating:  String,
       isBookmarked:  Boolean,
       isTrending:  Boolean,
-w
+
   }
 
 const mediaSchema = new Schema<IMedia>({
@@ -39,6 +39,5 @@ const mediaSchema = new Schema<IMedia>({
 
 
 
-const Media = model<IMedia>('Media', mediaSchema);
+export const Media = model<IMedia>('Media', mediaSchema);
 
-module.exports = Media;
