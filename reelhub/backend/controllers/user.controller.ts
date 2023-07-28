@@ -1,55 +1,66 @@
 
-import {User} from "../models/users.model";
+import { User } from "../models/users.model";
+import bcrypt from "bcrypt";
+const saltRounds = 10;
+// const ,} = require( "express");
 import {Request, Response} from "express";
 
-export async function createUser(req:Request, res:Response):Promise<void> {
+ export async function createUser(req:Request, res:Response):Promise<void> {
 try {
-  
-  const newUser =  new User(req.body);
+  console.log("createUser route ran");
+  const {firstName, lastName, email, password} = req.body;
+
+  const hashedPassword = await bcrypt.hash(password, saltRounds)
+  const newUser =  new User({
+    firstName,
+    lastName,
+    email,
+    password: hashedPassword
+  });
   await newUser.save()
   res.json(newUser);
 } catch (error) {
   console.log("There was an error:", error);
+  res.sendStatus(500).json({error: "Failed to create a user"});
 }
 
 }
 
 
-export async function findUser(req:Request, res:Response):Promise<void> {
+
+export async function login(req: Request, res: Response): Promise<void> {
+  console.log("login route ran");
+
   try {
-    const {name, email, password} = req.body;
-    
-    const user =  await  User.find();
-   
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      res.status(400).json({ error: "Email and password are required" });
+      return;
+    }
+
+    const userToFind = await User.findOne({ email });
+
+    if (!userToFind) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+
+    // Compare the provided password with the hashed password in the database
+    const matchedPassword = await bcrypt.compare(password, userToFind.password);
+
+    if (!matchedPassword) {
+      res.status(401).json({ error: "Incorrect password" });
+      return;
+    }
+
+    // Password is correct, login successful
+    res.status(200).json(userToFind);
   } catch (error) {
-    console.log("There was an error:", error);
+    console.error("There was an error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-  
-  }
+}
 
-  export async function deleteUser(req:Request, res:Response):Promise<void> {
-    try {
-      const {name, email, password} = req.body;
-      
-      const user =  await  User.find();
-     
-    } catch (error) {
-      console.log("There was an error:", error);
-    }
-    
-    }
-
-    export async function updateUser(req:Request, res:Response):Promise<void> {
-      try {
-        const {name, email, password} = req.body;
-        
-        const user =  await  User.find();
-       
-      } catch (error) {
-        console.log("There was an error:", error);
-      }
-      
-      }
-  
 
 
