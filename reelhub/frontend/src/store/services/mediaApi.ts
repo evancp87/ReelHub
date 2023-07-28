@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+// import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
  import data from "../../data.json";
 
@@ -51,9 +51,9 @@ export const mediaApi = createApi({
   endpoints: (builder) => ({
     getMedia: builder.query<Media[], null>({
       query: () => "media",
-      queryFn: async () => {
-        return { data };
-      },
+    //   queryFn: async () => {
+    //     return { data };
+    //   },
     }),
   }),
 });
