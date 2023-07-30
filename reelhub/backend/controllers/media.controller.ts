@@ -81,8 +81,9 @@ import {Request, Response} from "express";
       const {
         title,
         thumbnail: {
-          trending: { small: trendingSmall, large: trendingLarge },
-          regular: { small: regularSmall, medium: regularMedium, large: regularLarge },
+          // trending: { small: trendingSmall, large: trendingLarge },
+          // regular: { small: regularSmall, medium: regularMedium, large: regularLarge },
+                 trending, regular,
         },
         year,
         category,
@@ -90,18 +91,27 @@ import {Request, Response} from "express";
         isBookmarked,
         isTrending,
       } = req.body;
+
+
+    console.log(req.body);
+    
+      
   
       const contentItem = new Media({
         title,
         thumbnail: {
           trending: {
-            small: trendingSmall,
-            large: trendingLarge,
+            small: trending?.small || null,
+            large: trending?.large || null,
+
           },
           regular: {
-            small: regularSmall,
-            medium: regularMedium,
-            large: regularLarge,
+            // small: regularSmall,
+            // medium: regularMedium,
+            // large: regularLarge,
+            small: regular.small,
+          medium: regular.medium,
+          large: regular.large,
           },
         },
         year,
@@ -109,7 +119,11 @@ import {Request, Response} from "express";
         rating,
         isBookmarked,
         isTrending,
-      });
+      },
+      { 
+      //  default value for optional trending property
+        default: { trending: undefined },}
+      );
   
   
       await contentItem.save()
