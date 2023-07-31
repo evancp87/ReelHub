@@ -1,6 +1,6 @@
 import { Schema, model, connect } from 'mongoose';
 
-interface IMedia {
+export interface IMedia {
   title: string,
   thumbnail: {
 
