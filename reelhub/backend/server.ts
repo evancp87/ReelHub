@@ -6,12 +6,12 @@ import helmet from "helmet";
 import dotenv  from "dotenv"
 import userRouter from "./routes/users"
 import mediaRouter from "./routes/media"
+import bookmarksRouter from "./routes/bookmarks";
 import mongoose from "mongoose";
 const app = express();
 app.use(helmet());
 dotenv.config()
-app.use(express.static("public"));
-app.use(express.urlencoded({ extended: false }));
+
 app.use(cors())
 app.use(express.json());
 app.use(express.static("public"));
@@ -44,7 +44,7 @@ connectDB();
 
 app.use("/users", userRouter);
 app.use("/media", mediaRouter);
-// app.use("/media", require("./controllers/bookmarks.controller"))
+app.use("/bookmarks", bookmarksRouter)
 
 
 app.listen(PORT, () => {

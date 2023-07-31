@@ -1,7 +1,7 @@
 import { Schema, model, connect, Types } from 'mongoose';
 // import mongoose from "mongoose";
 
-interface IUser {
+export interface IUser {
     firstName: string;
     lastName: string;
     email: string;
@@ -14,7 +14,7 @@ const userSchema = new Schema<IUser>({
     lastName: {type:String, required: true},
     email: {type:String, required: true},
     password: {type:String, required: true},
-    bookmarks: {type:  Schema.Types.Mixed, ref: "Media"}
+    bookmarks: {type:  Schema.Types.Mixed, ref: "Bookmark"}
 })
 // House.find({}).populate("owner")
 // for relational

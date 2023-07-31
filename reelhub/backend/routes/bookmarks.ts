@@ -1,8 +1,11 @@
 const express = require('express');
-const Router = express.Router();
+const router = express.Router();
+
+import {addBookmark, getBookmarksByCategory, removeBookmark} from '../controllers/bookmarks.controller';
+
+router.post("/add", addBookmark);
+router.get("/:category", getBookmarksByCategory);
+router.delete("/delete", removeBookmark)
 
 
-// Router.post("/new", createUser)
-// Router.get("/new", createUser)
-// Router.delete("/new", createUser)
-// Router.patch("/new", createUser)
+export default router;
