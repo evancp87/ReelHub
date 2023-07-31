@@ -2,79 +2,76 @@
 // const Media = require("../models/users.model");
 import {Media} from "../models/media.model";
 import {Request, Response} from "express";
+import { MongoError } from 'mongodb'
 
 
 
 
+export async function getContent(req:Request, res:Response):Promise<void> {
+  try {
+    const results: typeof Media[] = await Media.find({});
+    res.status(200).json(results);
+  } catch (err) {
+    res.status(404).json("no results found");
+  }
+}
 
-// export async function getContent(req:Request, res:Response):Promise<void> {
+export async function getTrending(req:Request, res:Response):Promise<void> {
+ try {
+    const results: typeof Media[] = await Media.find({isTrending: true});
+ res.status(200).json(results);
+    
+  } catch (error) {
+    res.status(404).json("no results found");
+   
+  }
+
+}
+
+
+export async function getTv(req:Request, res:Response):Promise<void> {
+  try {
+     const results: typeof Media[] = await Media.find({isTrending: true});
+  res.status(200).json(results);
+     
+   } catch (error) {
+     res.status(404).json("no results found");
+    
+   }
  
-//   Media.find({},(err, results) =>  {
-//     if (err) {
-//       res.status(404).json("no results found");
-//       return;
-//     } 
+ }
 
-//     res.status(200).json(results);
-//   })
-
-// }
-
-
-// export async function getTrending(req:Request, res:Response):Promise<void> {
+ export async function getCategory(req:Request, res:Response):Promise<void> {
+  try {
+    const category = req.params.category;
+    console.log(category);
+    
+     const results: typeof Media[] = await Media.find({category: `${category}`});
+  res.status(200).json(results);
+     
+   } catch (error) {
+     res.status(404).json("no results found");
+    
+   }
  
-//   Media.find({trending: true },(err, results) =>  {
-//     if (err) {
-//       res.status(404).json("no results found");
-//       return;
-//     } 
-
-//     res.status(200).json(results);
-//   })
-
-// }
+ }
 
 
-// export async function getTrending(req:Request, res:Response):Promise<void> {
+ export async function getBookmarkedMedia(req:Request, res:Response):Promise<void> {
+  try {
+    const category = req.params.category;
+    console.log(category);
+    
+     const results: typeof Media[] = await Media.find({isBookmarked: true, category: `${category}`});
+  res.status(200).json(results);
+     
+   } catch (error) {
+     res.status(404).json("no results found");
+    
+   }
  
-//   Media.find({trending: true,  },(err, results) =>  {
-//     if (err) {
-//       res.status(404).json("no results found");
-//       return;
-//     } 
+ }
 
-//     res.status(200).json(results);
-//   })
-
-// }
-
-// export async function getBookmarked(req:Request, res:Response):Promise<void> {
- 
-
-//   Media.find({isBookmarked: true, category: `${category}` },(err, results) =>  {
-//     if (err) {
-//       res.status(404).json("no results found");
-//       return;
-//     } 
-
-//     res.status(200).json(results);
-//   })
-
-// }
-
-// export async function getREcommended(req:Request, res:Response):Promise<void> {
- 
-// find user
-// find likes
-// const likedContentIds = user.likedContent.map((content) => content._id);
-
-    // Find recommended content that other users have liked
-    // const recommendedContent = await Content.find({
-    //   _id: { $nin: likedContentIds },
-    // }).limit(5); // Adjust the number of recommendations as needed
-
-    // res.json(recommendedContent);
-// }
 
   export async function addMedia(req:Request, res:Response):Promise<void> {
     try {
@@ -106,9 +103,6 @@ import {Request, Response} from "express";
 
           },
           regular: {
-            // small: regularSmall,
-            // medium: regularMedium,
-            // large: regularLarge,
             small: regular.small,
           medium: regular.medium,
           large: regular.large,

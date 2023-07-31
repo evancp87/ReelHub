@@ -1,11 +1,16 @@
 import express from 'express';
 const router = express.Router();
-import  {addMedia}  from "../controllers/media.controller";
+import  {addMedia, getContent, getTrending, getCategory, getBookmarkedMedia}  from "../controllers/media.controller";
 
 
 router.post("/add", addMedia)
-// Router.get("/new", createUser)
-// Router.delete("/new", createUser)
+router.get("/", getContent)
+router.get("/trending", getTrending)
+router.get("/category/:category", getCategory)
+router.get("/bookmarks/:category", getBookmarkedMedia)
+
+
+
 // Router.patch("/new", createUser)
 
 export default router;
