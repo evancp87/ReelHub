@@ -5,60 +5,101 @@ import {User, IUser} from "../models/users.model";
 import {Bookmark} from "../models/bookmarks.model";
 import {Request, Response} from "express";
 
-
-
-
-export async function addBookmark(req:Request, res:Response):Promise<void> {
-  try {
-
-    const {mediaId, userId} = req.body;
-
-    console.log("The media is:", mediaId, "and the user is:", userId);
-    
-     const mediaToBookmark =  await Media.findOne({ _id: mediaId});
-
-     console.log(mediaToBookmark);
-     
-
-if (!mediaToBookmark) {
-
-    res.status(404).json("no content to bookmark specified");
-    return;
-}
-
-
-if (mediaToBookmark.isBookmarked) {
-    res.send("already bookmarked!")
-    return;
-
-}
-
-
-   const newBookmark = await Bookmark.collection.insertOne({ media: mediaToBookmark});
-     const user = await User.findOne({_id: userId});
-
-
-    mediaToBookmark.isBookmarked = true;
-
-     console.log("THe new bookmark is:", newBookmark);
-     console.log("the user is:", user);
-     
-     
-if (!user) {
-    res.status(404).json("user not found");
-    return;
-}
-
-
-user.bookmarks.push(newBookmark.insertedId)
-
-
-await user.save();
-res.status(200).send("bookmark added successfully")
-  } catch (err) {
-    res.status(404).json("no results found");
+export async function addBookmark(req: Request, res: Response): Promise<void> {
+    try {
+      const { mediaId, userId } = req.body;
+  
+      console.log("The media is:", mediaId, "and the user is:", userId);
+  
+      const mediaToBookmark = await Media.findOne({ _id: mediaId });
+  
+      console.log(mediaToBookmark);
+  
+      if (!mediaToBookmark) {
+        res.status(404).json("no content to bookmark specified");
+        return;
+      }
+  
+      if (mediaToBookmark.isBookmarked) {
+        res.send("already bookmarked!");
+        return;
+      }
+  
+      const newBookmark = new Bookmark({ media: mediaId, user: userId }); 
+      await newBookmark.save(); 
+      const user = await User.findOne({ _id: userId });
+  
+      mediaToBookmark.isBookmarked = true;
+  
+      console.log("The new bookmark is:", newBookmark);
+      console.log("the user is:", user);
+  
+      if (!user) {
+        res.status(404).json("user not found");
+        return;
+      }
+  
+      user.bookmarks.push(newBookmark._id); 
+      await user.save();
+      res.status(200).send("bookmark added successfully");
+    } catch (err) {
+      res.status(500).json("error while adding bookmark");
+    }
   }
-}
+  
+
+
+// export async function addBookmark(req:Request, res:Response):Promise<void> {
+//   try {
+
+//     const {mediaId, userId} = req.body;
+
+//     console.log("The media is:", mediaId, "and the user is:", userId);
+    
+//      const mediaToBookmark =  await Media.findOne({ _id: mediaId});
+
+//      console.log(mediaToBookmark);
+     
+
+// if (!mediaToBookmark) {
+
+//     res.status(404).json("no content to bookmark specified");
+//     return;
+// }
+
+
+// if (mediaToBookmark.isBookmarked) {
+//     res.send("already bookmarked!")
+//     return;
+
+// }
+
+
+//    const newBookmark = await Bookmark.collection.insertOne({ media: mediaId});
+//      const user = await User.findOne({_id: userId});
+
+
+//     mediaToBookmark.isBookmarked = true;
+
+//      console.log("THe new bookmark is:", newBookmark);
+//      console.log("the user is:", user);
+     
+     
+// if (!user) {
+//     res.status(404).json("user not found");
+//     return;
+// }
+
+
+// user.bookmarks.push(newBookmark.insertedId)
+
+
+// await user.save();
+// res.status(200).send("bookmark added successfully")
+//   } catch (err) {
+//     res.status(404).json("no results found");
+//   }
+// }
 
 export async function removeBookmark(req:Request, res:Response):Promise<void> {
     try {
