@@ -2,7 +2,7 @@
 export type Media = {
     title: string,
     year: number,
-    thumbnail:  {
+    thumbnail?:  {
        trending: {
          small: string;
          large: string;
@@ -43,4 +43,20 @@ export type RegisterCredentials = {
 export type LoginCredentials = {
     email: string;
     password: string;
+}
+
+// for bookmarks api
+
+
+export type Bookmark = {
+    user: User
+    media: Media
+}
+
+export type UserId = {
+   userId: string;
+}
+
+export type Category = {
+  category: string;
 }

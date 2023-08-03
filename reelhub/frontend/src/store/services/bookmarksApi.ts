@@ -42,28 +42,3 @@ export const bookmarkApi = createApi({
 
 // Exporting the generated hooks for usage in components
 export const { useGetUserBookmarksQuery,  useGetUserBookmarksByCategoryQuery, useAddBookmarkMutation, useDeleteMediaMutation} = bookmarkApi;
-
-// const initialState: MediaState = {
-//   content: [],
-//   recommended: [],
-//   trending: [],
-//   searchInput: "",
-//   bookmarked: [],
-//   initialMedia: [],
-// };
-
-// export const mediaSlice = createSlice({
-//   name: "media",
-//   initialState,
-//   reducers: {
-//     search: (state, action: PayloadAction<string>) => {
-//       state.searchInput = action.payload;
-//     },
-//     setInitialMedia: (state, action: PayloadAction<Media[]>) => {
-//       state.content = action.payload;
-//     },
-//   },
-// });
-
-// export const { search, setInitialMedia } = mediaSlice.actions;
-// export default mediaSlice.reducer;
