@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-import {addBookmark, getBookmarksByCategory, removeBookmark} from '../controllers/bookmarks.controller';
+import {addBookmark, getBookmarksByUser, removeBookmark, getBookmarksByCategoryOnUser} from '../controllers/bookmarks.controller';
 
 router.post("/add", addBookmark);
-router.get("/:category", getBookmarksByCategory);
+router.get("/:userId", getBookmarksByUser);
+router.get("/:category/:userId", getBookmarksByCategoryOnUser);
 router.delete("/delete", removeBookmark)
 
 

@@ -39,7 +39,7 @@ export async function addBookmark(req: Request, res: Response): Promise<void> {
         return;
       }
   
-      user.bookmarks.push(newBookmark._id); 
+    //   user.bookmarks.push(newBookmark._id); 
       await user.save();
       res.status(200).send("bookmark added successfully");
     } catch (err) {
@@ -49,58 +49,6 @@ export async function addBookmark(req: Request, res: Response): Promise<void> {
   
 
 
-// export async function addBookmark(req:Request, res:Response):Promise<void> {
-//   try {
-
-//     const {mediaId, userId} = req.body;
-
-//     console.log("The media is:", mediaId, "and the user is:", userId);
-    
-//      const mediaToBookmark =  await Media.findOne({ _id: mediaId});
-
-//      console.log(mediaToBookmark);
-     
-
-// if (!mediaToBookmark) {
-
-//     res.status(404).json("no content to bookmark specified");
-//     return;
-// }
-
-
-// if (mediaToBookmark.isBookmarked) {
-//     res.send("already bookmarked!")
-//     return;
-
-// }
-
-
-//    const newBookmark = await Bookmark.collection.insertOne({ media: mediaId});
-//      const user = await User.findOne({_id: userId});
-
-
-//     mediaToBookmark.isBookmarked = true;
-
-//      console.log("THe new bookmark is:", newBookmark);
-//      console.log("the user is:", user);
-     
-     
-// if (!user) {
-//     res.status(404).json("user not found");
-//     return;
-// }
-
-
-// user.bookmarks.push(newBookmark.insertedId)
-
-
-// await user.save();
-// res.status(200).send("bookmark added successfully")
-//   } catch (err) {
-//     res.status(404).json("no results found");
-//   }
-// }
-
 export async function removeBookmark(req:Request, res:Response):Promise<void> {
     try {
   
@@ -109,6 +57,7 @@ export async function removeBookmark(req:Request, res:Response):Promise<void> {
       console.log("The media is:", mediaId, "and the user is:", userId);
       
        const mediaToRemove =  await Media.findOne({ _id: mediaId});
+       const user = await User.findOne({_id: userId});
   
        console.log(mediaToRemove);
        
@@ -120,30 +69,26 @@ export async function removeBookmark(req:Request, res:Response):Promise<void> {
   }
   
   
-  if (!mediaToRemove.isBookmarked) {
-      res.status(404).json("That content is not in your bookmarks")
-      return;
+//   if (!mediaToRemove.isBookmarked) {
+//       res.status(404).json("That content is not in your bookmarks")
+//       return;
   
-  }
-  
-  
-     await Bookmark.collection.deleteOne({ media: mediaToRemove});
-       const user = await User.findOne({_id: userId});
+//   }
+if  (!user) {
+    res.status(404).send("can't find that user");
+    return;
+}  
+     await Bookmark.collection.findOneAndDelete({ media: mediaToRemove});
   
   
        mediaToRemove.isBookmarked = false;
   
       
-       
-       
-  if (!user) {
-      res.status(404).json("user not found");
-      return;
-  }
+ 
   
   
-  const index = user.bookmarks.findIndex(bookmark => bookmark._id === mediaId);
-  user.bookmarks.splice(index);
+//   const index = user.bookmarks.findIndex(bookmark => bookmark._id === mediaId);
+//   user.bookmarks.splice(index);
   
   
   await user.save();
@@ -155,22 +100,52 @@ export async function removeBookmark(req:Request, res:Response):Promise<void> {
   
 
 
-
- export async function getBookmarksByCategory(req:Request, res:Response):Promise<void> {
-  try {
-    console.log("i ran!");
+  
+  
+  
+  export async function getBookmarksByCategoryOnUser(req:Request, res:Response):Promise<void> {
+      try {
+          
+          const category = req.params.category;
+          const userId = req.params.userId;
+          
+          if (!userId) {
+              res.send(404).json("couldn't find user");
+              return;
+            }
+            // TODO handle if there are no bookmarks under that category
+            if (!category) {
+                res.send(404).json("couldn't find the category");
+                return;
+            } 
+            // TODO: handle if no records in database yet
+            const results: typeof Bookmark[] = await Bookmark.find({user: userId}).populate({path: 'media', match: {category: `${category}`}})
+            // const filteredResults = results.filter(bookmark => bookmark.category.category !== null);
+            
+            res.status(200).json(results);
+        } catch (error) {
+            
+        }
+    }
     
-    const category = req.params.category;
-    console.log(category);
     
-     const results: typeof Media[] = await Media.find({category: `${category}`, isBookmarked: true});
-  res.status(200).json(results);
+    // Finds all bookmarks under a user regardless of category, for querying and filtering in frontend
+     export async function getBookmarksByUser(req:Request, res:Response):Promise<void> {
+      try {
+        console.log("i ran!");
+        
+        const category = req.params.category;
+        const userId = req.params.userId;
+    
+        console.log(category);
+        
+         const results: typeof Bookmark[] = await Bookmark.find({user: userId}).populate({path: 'media'});
+    
+      res.status(200).json(results);
+         
+       } catch (error) {
+         res.status(404).json("no results found");
+        
+       }
      
-   } catch (error) {
-     res.status(404).json("no results found");
-    
-   }
- 
- }
-
-
+     }
