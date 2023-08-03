@@ -10,13 +10,28 @@ try {
   console.log("createUser route ran");
   const {firstName, lastName, email, password} = req.body;
 
-  const hashedPassword = await bcrypt.hash(password, saltRounds)
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
   const newUser =  new User({
     firstName,
     lastName,
     email,
     password: hashedPassword
   });
+
+ // const token = jwt.sign(
+    //   { email },
+    //   process.env.TOKEN_KEY,
+    //   {
+    //     expiresIn: "2h",
+    //   },
+    //   (err, token) => {
+    //     if (err) {
+    //       console.log(err);
+    //     }
+    //     res.send(token);
+    //   }
+    // );
+
   await newUser.save()
   res.json(newUser);
 } catch (error) {
@@ -48,7 +63,20 @@ export async function login(req: Request, res: Response): Promise<void> {
 
     // Compare the provided password with the hashed password in the database
     const matchedPassword = await bcrypt.compare(password, userToFind.password);
-
+    // const token = jwt.sign(
+    //   { email },
+    //   process.env.TOKEN_KEY,
+    //   {
+    //     expiresIn: "2h",
+    //   },
+    //   (err, token) => {
+    //     if (err) {
+    //       console.log(err);
+    //     }
+    //     res.send(token);
+    //   }
+    // );
+  
     if (!matchedPassword) {
       res.status(401).json({ error: "Incorrect password" });
       return;

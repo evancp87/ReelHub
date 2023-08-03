@@ -4,7 +4,7 @@ import  {createUser, login}  from "../controllers/user.controller";
 
 
 router.post("/new", createUser)
-router.get("/login", login)
+router.post("/login", login)
 // Router.delete("/new", createUser)
 // Router.patch("/new", createUser)
 
