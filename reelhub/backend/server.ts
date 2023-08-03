@@ -8,10 +8,10 @@ import userRouter from "./routes/users"
 import mediaRouter from "./routes/media"
 import bookmarksRouter from "./routes/bookmarks";
 import mongoose from "mongoose";
+import checkToken from "./middleware/tokens";
 const app = express();
 app.use(helmet());
 dotenv.config()
-
 app.use(cors())
 app.use(express.json());
 app.use(express.static("public"));
