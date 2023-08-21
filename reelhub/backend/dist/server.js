@@ -46,12 +46,12 @@ var helmet_1 = __importDefault(require("helmet"));
 var dotenv_1 = __importDefault(require("dotenv"));
 var users_1 = __importDefault(require("./routes/users"));
 var media_1 = __importDefault(require("./routes/media"));
+var bookmarks_1 = __importDefault(require("./routes/bookmarks"));
 var mongoose_1 = __importDefault(require("mongoose"));
+var tokens_1 = __importDefault(require("./middleware/tokens"));
 var app = (0, express_1.default)();
 app.use((0, helmet_1.default)());
 dotenv_1.default.config();
-app.use(express_1.default.static("public"));
-app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.static("public"));
@@ -86,7 +86,7 @@ connectDB();
 // mongoose.connect(`${source}`);
 app.use("/users", users_1.default);
 app.use("/media", media_1.default);
-// app.use("/media", require("./controllers/bookmarks.controller"))
+app.use("/bookmarks", tokens_1.default, bookmarks_1.default);
 app.listen(PORT, function () {
     console.log("server listening on port ".concat(PORT));
 });

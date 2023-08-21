@@ -61,8 +61,34 @@ function createUser(req, res) {
                         email: email,
                         password: hashedPassword
                     });
+                    // const token = jwt.sign(
+                    //   { email },
+                    //   process.env.TOKEN_KEY,
+                    //   {
+                    //     expiresIn: "2h",
+                    //   },
+                    //   (err, token) => {
+                    //     if (err) {
+                    //       console.log(err);
+                    //     }
+                    //     res.send(token);
+                    //   }
+                    // );
                     return [4 /*yield*/, newUser.save()];
                 case 2:
+                    // const token = jwt.sign(
+                    //   { email },
+                    //   process.env.TOKEN_KEY,
+                    //   {
+                    //     expiresIn: "2h",
+                    //   },
+                    //   (err, token) => {
+                    //     if (err) {
+                    //       console.log(err);
+                    //     }
+                    //     res.send(token);
+                    //   }
+                    // );
                     _b.sent();
                     res.json(newUser);
                     return [3 /*break*/, 4];
@@ -102,6 +128,19 @@ function login(req, res) {
                     return [4 /*yield*/, bcrypt_1.default.compare(password, userToFind.password)];
                 case 3:
                     matchedPassword = _b.sent();
+                    // const token = jwt.sign(
+                    //   { email },
+                    //   process.env.TOKEN_KEY,
+                    //   {
+                    //     expiresIn: "2h",
+                    //   },
+                    //   (err, token) => {
+                    //     if (err) {
+                    //       console.log(err);
+                    //     }
+                    //     res.send(token);
+                    //   }
+                    // );
                     if (!matchedPassword) {
                         res.status(401).json({ error: "Incorrect password" });
                         return [2 /*return*/];

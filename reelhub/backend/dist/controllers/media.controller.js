@@ -36,74 +36,146 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addMedia = void 0;
+exports.addMedia = exports.getBookmarkedMedia = exports.getCategory = exports.getTv = exports.getTrending = exports.getContent = void 0;
 // const Media = require("../models/users.model");
 var media_model_1 = require("../models/media.model");
-// export async function getContent(req:Request, res:Response):Promise<void> {
-//   Media.find({},(err, results) =>  {
-//     if (err) {
-//       res.status(404).json("no results found");
-//       return;
-//     } 
-//     res.status(200).json(results);
-//   })
-// }
-// export async function getTrending(req:Request, res:Response):Promise<void> {
-//   Media.find({trending: true },(err, results) =>  {
-//     if (err) {
-//       res.status(404).json("no results found");
-//       return;
-//     } 
-//     res.status(200).json(results);
-//   })
-// }
-// export async function getTrending(req:Request, res:Response):Promise<void> {
-//   Media.find({trending: true,  },(err, results) =>  {
-//     if (err) {
-//       res.status(404).json("no results found");
-//       return;
-//     } 
-//     res.status(200).json(results);
-//   })
-// }
-// export async function getBookmarked(req:Request, res:Response):Promise<void> {
-//   Media.find({isBookmarked: true, category: `${category}` },(err, results) =>  {
-//     if (err) {
-//       res.status(404).json("no results found");
-//       return;
-//     } 
-//     res.status(200).json(results);
-//   })
-// }
-// export async function getREcommended(req:Request, res:Response):Promise<void> {
-// find user
-// find likes
-// const likedContentIds = user.likedContent.map((content) => content._id);
-// Find recommended content that other users have liked
-// const recommendedContent = await Content.find({
-//   _id: { $nin: likedContentIds },
-// }).limit(5); // Adjust the number of recommendations as needed
-// res.json(recommendedContent);
-// }
+function getContent(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var results, err_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, media_model_1.Media.find({})];
+                case 1:
+                    results = _a.sent();
+                    res.status(200).json(results);
+                    return [3 /*break*/, 3];
+                case 2:
+                    err_1 = _a.sent();
+                    res.status(404).json("no results found");
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.getContent = getContent;
+function getTrending(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var results, error_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, media_model_1.Media.find({ isTrending: true })];
+                case 1:
+                    results = _a.sent();
+                    res.status(200).json(results);
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_1 = _a.sent();
+                    res.status(404).json("no results found");
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.getTrending = getTrending;
+function getTv(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var results, error_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, media_model_1.Media.find({ isTrending: true })];
+                case 1:
+                    results = _a.sent();
+                    res.status(200).json(results);
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_2 = _a.sent();
+                    res.status(404).json("no results found");
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.getTv = getTv;
+function getCategory(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var category, results, error_3;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    category = req.params.category;
+                    console.log(category);
+                    return [4 /*yield*/, media_model_1.Media.find({ category: "".concat(category) })];
+                case 1:
+                    results = _a.sent();
+                    res.status(200).json(results);
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_3 = _a.sent();
+                    res.status(404).json("no results found");
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.getCategory = getCategory;
+function getBookmarkedMedia(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var category, results, error_4;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    category = req.params.category;
+                    console.log(category);
+                    return [4 /*yield*/, media_model_1.Media.find({ isBookmarked: true, category: "".concat(category) })];
+                case 1:
+                    results = _a.sent();
+                    res.status(200).json(results);
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_4 = _a.sent();
+                    res.status(404).json("no results found");
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.getBookmarkedMedia = getBookmarkedMedia;
 function addMedia(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, title, _b, _c, trendingSmall, trendingLarge, _d, regularSmall, regularMedium, regularLarge, year, category, rating, isBookmarked, isTrending, contentItem, error_1;
-        return __generator(this, function (_e) {
-            switch (_e.label) {
+        var _a, title, _b, 
+        // trending: { small: trendingSmall, large: trendingLarge },
+        // regular: { small: regularSmall, medium: regularMedium, large: regularLarge },
+        trending, regular, year, category, rating, isBookmarked, isTrending, contentItem, error_5;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    _e.trys.push([0, 2, , 3]);
-                    _a = req.body, title = _a.title, _b = _a.thumbnail, _c = _b.trending, trendingSmall = _c.small, trendingLarge = _c.large, _d = _b.regular, regularSmall = _d.small, regularMedium = _d.medium, regularLarge = _d.large, year = _a.year, category = _a.category, rating = _a.rating, isBookmarked = _a.isBookmarked, isTrending = _a.isTrending;
+                    _c.trys.push([0, 2, , 3]);
+                    _a = req.body, title = _a.title, _b = _a.thumbnail, trending = _b.trending, regular = _b.regular, year = _a.year, category = _a.category, rating = _a.rating, isBookmarked = _a.isBookmarked, isTrending = _a.isTrending;
+                    console.log(req.body);
                     contentItem = new media_model_1.Media({
                         title: title,
                         thumbnail: {
                             trending: {
-                                small: trendingSmall,
-                                large: trendingLarge,
+                                small: (trending === null || trending === void 0 ? void 0 : trending.small) || null,
+                                large: (trending === null || trending === void 0 ? void 0 : trending.large) || null,
                             },
                             regular: {
-                                small: regularSmall,
-                                medium: regularMedium,
-                                large: regularLarge,
+                                small: regular.small,
+                                medium: regular.medium,
+                                large: regular.large,
                             },
                         },
                         year: year,
@@ -111,15 +183,18 @@ function addMedia(req, res) {
                         rating: rating,
                         isBookmarked: isBookmarked,
                         isTrending: isTrending,
+                    }, {
+                        //  default value for optional trending property
+                        default: { trending: undefined },
                     });
                     return [4 /*yield*/, contentItem.save()];
                 case 1:
-                    _e.sent();
+                    _c.sent();
                     res.status(200).json(contentItem);
                     return [3 /*break*/, 3];
                 case 2:
-                    error_1 = _e.sent();
-                    console.log("There was an error:", error_1);
+                    error_5 = _c.sent();
+                    console.log("There was an error:", error_5);
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }

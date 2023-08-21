@@ -1,7 +1,10 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var express = require('express');
-var Router = express.Router();
-// Router.post("/new", createUser)
-// Router.get("/new", createUser)
-// Router.delete("/new", createUser)
-// Router.patch("/new", createUser)
+var router = express.Router();
+var bookmarks_controller_1 = require("../controllers/bookmarks.controller");
+router.post("/add", bookmarks_controller_1.addBookmark);
+router.get("/:userId", bookmarks_controller_1.getBookmarksByUser);
+router.get("/:category/:userId", bookmarks_controller_1.getBookmarksByCategoryOnUser);
+router.delete("/delete", bookmarks_controller_1.removeBookmark);
+exports.default = router;

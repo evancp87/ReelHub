@@ -7,7 +7,9 @@ var userSchema = new mongoose_1.Schema({
     lastName: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
+    // bookmarks: {type:  Schema.Types.Mixed, ref: "Bookmark"}
 });
+// House.find({}).populate("owner")
 // for relational
 // types.objectId
 // https://dev.to/alexmercedcoder/mongodb-relationships-using-mongoose-in-nodejs-54cc
