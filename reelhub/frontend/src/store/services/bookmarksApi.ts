@@ -4,7 +4,7 @@ import {User, Media, Category, UserId, Bookmark} from "./types";
 
  
 // The base URL 
-const BASE_API_URL = "http://localhost:6002/";
+const BASE_API_URL = "http://localhost:6002";
 
 
 
@@ -33,7 +33,7 @@ export const bookmarkApi = createApi({
     }),
     deleteMedia: builder.mutation<{ success: boolean, message: string }, string>({
       query: (id) => ({
-        url: `bookmarks/delete/${id}`,
+        url: `/bookmarks/delete/${id}`,
         method: 'DELETE',
       }),
     }),

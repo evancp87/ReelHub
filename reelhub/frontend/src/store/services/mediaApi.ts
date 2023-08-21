@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {Media} from "./types";
 
 // The base URL 
-const BASE_API_URL = "http://localhost:6002/";
+const BASE_API_URL = "http://localhost:6002";
 
 
 
@@ -13,15 +13,15 @@ export const mediaApi = createApi({
   }),
   endpoints: (builder) => ({
     getMedia: builder.query<Media[], null>({
-      query: () => "/media",
+      query: () => "/media/",
     
     }),
-    getMediaByCategory: builder.query<Media[], null>({
-      query: (category) => `media/category/${category}`,
+    getMediaByCategory: builder.query<Media[], string>({
+      query: (category) => `/media/category/${category}`,
     
     }),
     getTrendingMedia: builder.query<Media[], null>({
-      query: () => "media/trending",
+      query: () => "/media/trending",
    
     }),
   }),

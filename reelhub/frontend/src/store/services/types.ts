@@ -3,7 +3,7 @@ export type Media = {
     title: string,
     year: number,
     thumbnail?:  {
-       trending: {
+       trending?: {
          small: string;
          large: string;
        },
