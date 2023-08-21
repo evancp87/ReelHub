@@ -31,39 +31,25 @@ import Sidebar from "@/components/Sidebar";
 import Dashboard from "@/components/Dashboard";
 import Controls from "@/components/Controls";
 import { ReduxProvider } from "@/components/ReduxProvider";
-// import { useDispatch, useSelector } from "react-redux";
-// import { setMedia, search } from "../../features/mediaSlice";
-// import { AppDispatch } from "@/store/store";
-// import { useEffect, useState, useCallback } from "react";
+import { useGetTrendingMediaQuery } from "../store/services/mediaApi";
+import TrendingCard from "@/components/TrendingCard";
 
 // const handle;
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  // const [loading, setLoading] = useState(true);
-  // const dispatch = useDispatch<AppDispatch>();
-
-  // const getData = useCallback(() => {
-  //   dispatch(setMedia());
-  //   setLoading(false);
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   getData();
-  // }, [getData]);
-
-  // if (loading) {
-  //   return <p>Loading...</p>;
-  // }
-
   return (
-    <div className="flex flex-col bg-[#10141E] md:flex-row ">
-      <Sidebar />
-      <main className="flex min-h-screen flex-col items-center   p-[2em]">
+    <html>
+      <body>
         <ReduxProvider>
-          <Controls />
-          {children}
+          <div className="flex flex-col bg-[#10141E] md:flex-row ">
+            <Sidebar />
+            <main className="flex min-h-screen flex-col items-center   p-[2em]">
+              <Controls />
+              {children}
+            </main>
+          </div>
         </ReduxProvider>
-      </main>
-    </div>
+      </body>
+    </html>
   );
 };
 

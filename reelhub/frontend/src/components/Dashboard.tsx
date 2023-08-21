@@ -7,7 +7,6 @@ type Props = {};
 export default function Dashboard({}: Props) {
   return (
     <div className="bg-[#10141E]">
-      {/* <Controls /> */}
       <Trending />
       <Recommended />
     </div>
