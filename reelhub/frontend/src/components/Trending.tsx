@@ -3,154 +3,42 @@ import Image from "next/image";
 import Thing from "/public/assets/thumbnails/autosport-the-series/regular/large.jpg";
 import Bookmark from "/public/assets/icon-bookmark-empty.svg";
 import Category from "/public/assets/icon-category-movie.svg";
+import TrendingCard from "./TrendingCard";
+import { ReduxProvider } from "./ReduxProvider";
 type Props = {};
-
+import { useGetTrendingMediaQuery } from "../store/services/mediaApi";
 export default function Trending({}: Props) {
+  const { isLoading, isFetching, data, error } = useGetTrendingMediaQuery(null);
+  console.log(isLoading, isFetching, data, error);
+
   return (
-    <div className="mb-4">
-      <h3 className="my-4 text-xl">Trending</h3>
-      <div className="carousel-end carousel rounded-box mb-4 gap-4">
-        <div className="carousel-item relative">
-          <Image
-            alt="image"
-            className="rounded-md"
-            width="400"
-            height="200"
-            src={Thing}
-          />
-          <div className="absolute right-0 top-0 mr-[1em] mt-[1em] rounded-full bg-gray-700 p-3 opacity-60">
-            <Image width="20" height="20" alt="bookmark" src={Bookmark} />
-          </div>
-          <div className=" absolute bottom-0 left-0 mb-4 ms-4 flex w-[50%] flex-col">
-            <div className="mb-2 flex flex-row items-center justify-between">
-              <p>
-                2019 <span className="text-xs">●</span>
-              </p>
-              <div>
-                <Image width="20" height="10" alt="bookmark" src={Category} />
-              </div>
-              <p>
-                Movie <span className="text-xs">●</span>
-              </p>
-
-              <p>PG </p>
-            </div>
-            <h3>Beyond Earth</h3>
-          </div>
-        </div>
-        <div className="carousel-item relative">
-          <Image
-            alt="image"
-            className="rounded-md"
-            width="400"
-            height="200"
-            src={Thing}
-          />
-          <div className="absolute right-0 top-0 mr-[1em] mt-[1em] rounded-full bg-gray-700 p-3 opacity-60">
-            <Image width="20" height="20" alt="bookmark" src={Bookmark} />
-          </div>
-          <div className=" absolute bottom-0 left-0 mb-4 ms-4 flex w-[50%] flex-col">
-            <div className="mb-2 flex flex-row items-center justify-between">
-              <p>
-                2019 <span className="text-xs">●</span>
-              </p>
-              <div>
-                <Image width="20" height="10" alt="bookmark" src={Category} />
-              </div>
-              <p>
-                Movie <span className="text-xs">●</span>
-              </p>
-
-              <p>PG </p>
-            </div>
-            <h3>Beyond Earth</h3>
-          </div>
-        </div>
-        <div className="carousel-item relative">
-          <Image
-            alt="image"
-            className="rounded-md"
-            width="400"
-            height="200"
-            src={Thing}
-          />
-          <div className="absolute right-0 top-0 mr-[1em] mt-[1em] rounded-full bg-gray-700 p-3 opacity-60">
-            <Image width="20" height="20" alt="bookmark" src={Bookmark} />
-          </div>
-          <div className=" absolute bottom-0 left-0 mb-4 ms-4 flex w-[50%] flex-col">
-            <div className="mb-2 flex flex-row items-center justify-between">
-              <p>
-                2019 <span className="text-xs">●</span>
-              </p>
-              <div>
-                <Image width="20" height="10" alt="bookmark" src={Category} />
-              </div>
-              <p>
-                Movie <span className="text-xs">●</span>
-              </p>
-
-              <p>PG </p>
-            </div>
-            <h3>Beyond Earth</h3>
-          </div>
-        </div>
-        <div className="carousel-item relative">
-          <Image
-            alt="image"
-            className="rounded-md"
-            width="400"
-            height="200"
-            src={Thing}
-          />
-          <div className="absolute right-0 top-0 mr-[1em] mt-[1em] rounded-full bg-gray-700 p-3 opacity-60">
-            <Image width="20" height="20" alt="bookmark" src={Bookmark} />
-          </div>
-          <div className=" absolute bottom-0 left-0 mb-4 ms-4 flex w-[50%] flex-col">
-            <div className="mb-2 flex flex-row items-center justify-between">
-              <p>
-                2019 <span className="text-xs">●</span>
-              </p>
-              <div>
-                <Image width="20" height="10" alt="bookmark" src={Category} />
-              </div>
-              <p>
-                Movie <span className="text-xs">●</span>
-              </p>
-
-              <p>PG </p>
-            </div>
-            <h3>Beyond Earth</h3>
-          </div>
-        </div>
-        <div className="carousel-item relative">
-          <Image
-            alt="image"
-            className="rounded-md"
-            width="400"
-            height="200"
-            src={Thing}
-          />
-          <div className="absolute right-0 top-0 mr-[1em] mt-[1em] rounded-full bg-gray-700 p-3 opacity-60">
-            <Image width="20" height="20" alt="bookmark" src={Bookmark} />
-          </div>
-          <div className=" absolute bottom-0 left-0 mb-4 ms-4 flex w-[50%] flex-col">
-            <div className="mb-2 flex flex-row items-center justify-between">
-              <p>
-                2019 <span className="text-xs">●</span>
-              </p>
-              <div>
-                <Image width="20" height="10" alt="bookmark" src={Category} />
-              </div>
-              <p>
-                Movie <span className="text-xs">●</span>
-              </p>
-
-              <p>PG </p>
-            </div>
-            <h3>Beyond Earth</h3>
-          </div>
+    <ReduxProvider>
+      <div className="mb-4">
+        <h3 className="my-4 text-xl">Trending</h3>
+        <div className="carousel-end carousel rounded-box mb-4 gap-4">
+          {error ? (
+            <p>Oh no, there was an error</p>
+          ) : isLoading || isFetching ? (
+            <p>Loading...</p>
+          ) : data ? (
+            data.map((media, index) => {
+              const { year, title, rating, thumbnail, category } = media;
+              return (
+                <div className="carousel-item relative">
+                  <TrendingCard
+                    key={index}
+                    year={year}
+                    category={category}
+                    rating={rating}
+                    title={title}
+                    thumbnail={thumbnail.regular.large}
+                  />
+                </div>
+              );
+            })
+          ) : null}
         </div>
       </div>
-    </div>
+    </ReduxProvider>
   );
 }
