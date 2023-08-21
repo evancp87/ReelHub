@@ -42,9 +42,9 @@ connectDB();
 
 
 
-app.use("/users", userRouter);
+app.use("/users",  userRouter);
 app.use("/media", mediaRouter);
-app.use("/bookmarks", bookmarksRouter)
+app.use("/bookmarks", checkToken, bookmarksRouter)
 
 
 app.listen(PORT, () => {
