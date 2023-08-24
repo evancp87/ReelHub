@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import SearchIcon from "/public/assets/icon-search.svg";
-import { selectSearch, search } from "@/features/mediaSlice";
+import { selectSearch, search } from "@/store/services/mediaSlice";
 import type { TypedUseSelectorHook } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,8 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Controls() {
   const [query, setQuery] = useState<string>("");
-  // const dispatch = useAppDispatch();
-  // const search = useAppSelector(selectSearch);
+  const dispatch = useAppDispatch();
+  const search = useAppSelector(selectSearch);
 
   // const handleQuery = (e: React.ChangeEvent<HTMLInputElement>): void => {
   //   console.log(e.target.value);

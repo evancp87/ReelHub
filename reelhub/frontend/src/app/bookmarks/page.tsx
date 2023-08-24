@@ -1,7 +1,9 @@
+"use client";
 import React from "react";
 import BookmarkedMovies from "@/components/BookmarkedMovies";
 import BookmarkedTV from "@/components/BookmarkedTV";
-import { ReduxProvider } from "@/components/ReduxProvider";
+// import { ReduxProvider } from "@/components/ReduxProvider";
+import { ReduxProvider } from "../../components/ReduxProvider";
 
 type Props = {};
 

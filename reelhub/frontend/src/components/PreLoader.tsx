@@ -1,7 +1,7 @@
 "use client";
 import { useRef } from "react";
 import { store } from "@/store/store";
-import { setInitialMedia } from "@/features/mediaSlice";
+import { setInitialMedia } from "@/store/services/mediaSlice";
 import { Media } from "@/types/media";
 type Props = {};
 
