@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 // import thunk from "redux-thunk";
 // import logger from "redux-logger";
-import mediaReducer from "../features/mediaSlice";
+import {mediaReducer} from "./services/mediaSlice";
 import { setupListeners } from "@reduxjs/toolkit/dist/query"
 import { mediaApi } from "./services/mediaApi";
 import { bookmarkApi } from "./services/bookmarksApi";
