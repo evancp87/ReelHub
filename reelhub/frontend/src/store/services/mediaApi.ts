@@ -1,15 +1,20 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {Media} from "./types";
-
+import fetch, { RequestInfo, RequestInit, Response } from 'node-fetch';
 // The base URL 
 const BASE_API_URL = "http://localhost:6002";
 
-
+// const customFetchFn = async (url: RequestInfo, options?: RequestInit): Promise<any> => {
+//   const response: Response = await fetch(url, options);
+//   const data = await response.json();
+//   return data;
+// };
 
 export const mediaApi = createApi({
   reducerPath: "mediaApi",
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_API_URL,
+    // fetchFn: customFetchFn
   }),
   endpoints: (builder) => ({
     getMedia: builder.query<Media[], null>({
