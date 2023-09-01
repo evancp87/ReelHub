@@ -12,7 +12,27 @@ import checkToken from "./middleware/tokens";
 const app = express();
 app.use(helmet());
 dotenv.config()
-app.use(cors())
+app.use(cors());
+
+
+const options = {
+    origin: 'http://localhost:3000',
+    methods: 'GET, POST',
+  }
+
+// app.use(cors({
+//     origin: 'http://localhost:3000', 
+//     credentials: true,
+//   }));
+
+  app.use(cors(options));
+//   app.options('http://localhost:3000', cors({
+//     origin: 'http://localhost:3000',
+//     credentials: true,
+// }));
+
+
+
 app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
