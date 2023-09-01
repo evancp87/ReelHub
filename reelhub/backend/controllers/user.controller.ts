@@ -91,4 +91,30 @@ export async function login(req: Request, res: Response): Promise<void> {
 }
 
 
+export async function userDetails(req: Request, res: Response): Promise<void> {
+try {
+  const { email } = req.params;
+  if (!email) {
+    res.status(400).json({ error: "Email is required" });
+    return;
+  }
+
+  const userToFind = await User.findOne({ email });
+
+  if (!userToFind) {
+    res.status(404).json({ error: "User not found" });
+    return;
+  }
+
+
+  res.status(200).json(userToFind);
+
+} catch (error) {
+  console.error("There was an error:", error);
+  res.status(500).json({ error: "Internal Server Error" });
+}
+
+}
+
+
 
