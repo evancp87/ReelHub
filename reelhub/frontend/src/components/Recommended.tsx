@@ -24,6 +24,7 @@ export default function Recommended({}: Props) {
           ) : data ? (
             data.map((media, index) => {
               const { year, title, rating, thumbnail, category } = media;
+              console.log(thumbnail?.regular.large);
               return (
                 <MediaCard
                   key={index}
@@ -31,7 +32,7 @@ export default function Recommended({}: Props) {
                   category={category}
                   rating={rating}
                   title={title}
-                  thumbnail={thumbnail.regular.large}
+                  thumbnail={thumbnail}
                 />
               );
             })
