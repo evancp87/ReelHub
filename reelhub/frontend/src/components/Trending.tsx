@@ -5,6 +5,7 @@ import Bookmark from "/public/assets/icon-bookmark-empty.svg";
 import Category from "/public/assets/icon-category-movie.svg";
 import TrendingCard from "./TrendingCard";
 import { ReduxProvider } from "./ReduxProvider";
+import { Media } from "../store/services/types";
 type Props = {};
 import { useGetTrendingMediaQuery } from "../store/services/mediaApi";
 export default function Trending({}: Props) {
@@ -21,7 +22,7 @@ export default function Trending({}: Props) {
           ) : isLoading || isFetching ? (
             <p>Loading...</p>
           ) : data ? (
-            data.map((media, index) => {
+            data.map((media: Media, index) => {
               const { year, title, rating, thumbnail, category } = media;
               return (
                 <div className="carousel-item relative">
@@ -31,7 +32,9 @@ export default function Trending({}: Props) {
                     category={category}
                     rating={rating}
                     title={title}
-                    thumbnail={thumbnail?.regular.large}
+                    thumbnail={thumbnail}
+                    // isBookmarked={isBookmarked}
+                    // isTrending={isTrending}
                   />
                 </div>
               );

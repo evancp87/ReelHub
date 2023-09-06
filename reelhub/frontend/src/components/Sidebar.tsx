@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from "react";
 import Image from "next/image";
 import Logo from "../../public/assets/logo.svg";
@@ -19,6 +20,8 @@ import type { TypedUseSelectorHook } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useLogoutUserMutation } from "../store/services/userApi";
+import { useGetUserInfoQuery } from "../store/services/userApi";
+
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -43,6 +46,10 @@ export default function Sidebar({}: Props) {
   // const handleLogout = () => {
   //   logoutUser();
   // };
+  const { data, isLoading, isSuccess, error, isError } =
+    useGetUserInfoQuery(null);
+
+  console.log("user data", data);
   return (
     <ReduxProvider>
       <aside className=" flex h-24 flex-row items-center justify-between bg-darkBlue sm:mx-[0.5em] sm:mt-[1.5em] sm:rounded-xl md:mx-[2em] md:h-[70vh] md:w-[200px] md:max-w-[200px] md:flex-col">
@@ -75,7 +82,7 @@ export default function Sidebar({}: Props) {
           width="32"
           height="25"
         />
-
+        {data && data.firstName}
         <button> Logout </button>
       </aside>
     </ReduxProvider>

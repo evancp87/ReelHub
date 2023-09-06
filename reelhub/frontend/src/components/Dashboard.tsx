@@ -15,40 +15,46 @@ import { ReduxProvider } from "./ReduxProvider";
 type Props = {};
 
 export default function Dashboard({}: Props) {
-  // const { isLoading, isFetching, data, error } = useGetMediaQuery;
+  const { isLoading, isFetching, data, error } = useGetMediaQuery(null);
 
-  // const search = useAppSelector(selectSearch);
+  const search = useAppSelector(selectSearch);
 
-  // const filteredSearch = data.filter((data) =>
-  //   data.title.toLowerCase().includes(search.toLowerCase())
-  // );
+  const filteredSearch = data
+    ? data.filter((data) =>
+        data.title.toLowerCase().includes(search.toLowerCase())
+      )
+    : [];
 
   return (
-    <>
-      <Trending />
-      <Recommended />
-    </>
-    // <ReduxProvider>
-    //   <div className="bg-[#10141E]">
-    //     {search ? (
-    //       filteredSearch.map((media: Media) => (
-    //         <MediaCard
-    //           title={media.title}
-    //           thumbnail={media.thumbnail}
-    //           year={media.year}
-    //           category={media.category}
-    //           rating={media.rating}
-    //           isBookmarked={media.isBookmarked}
-    //           isTrending={media.isTrending}
-    //         />
-    //       ))
-    //     ) : (
-    //       <>
-    //         <Trending />
-    //         <Recommended />
-    //       </>
-    //     )}
-    //   </div>
-    // </ReduxProvider>
+    // <>
+    //   <Trending />
+    //   <Recommended />
+    // </>
+    <ReduxProvider>
+      <div className="bg-[#10141E]">
+        {search ? (
+          filteredSearch.map((media: Media) => (
+            <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
+              <div className="mb-4">
+                <MediaCard
+                  title={media.title}
+                  thumbnail={media.thumbnail}
+                  year={media.year}
+                  category={media.category}
+                  rating={media.rating}
+                  isBookmarked={media.isBookmarked}
+                  isTrending={media.isTrending}
+                />
+              </div>
+            </div>
+          ))
+        ) : (
+          <>
+            <Trending />
+            <Recommended />
+          </>
+        )}
+      </div>
+    </ReduxProvider>
   );
 }

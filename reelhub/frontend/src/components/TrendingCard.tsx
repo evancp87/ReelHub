@@ -6,7 +6,7 @@ import Category from "/public/assets/icon-category-movie.svg";
 
 type Props = {
   title: string;
-  thumbnail: {
+  thumbnail?: {
     trending?: {
       small: String;
       large: String;
@@ -26,20 +26,34 @@ type Props = {
 
 export default function TrendingCard({
   title,
-  thumbnail: { trending: large },
+  thumbnail,
   year,
   category,
   rating,
+  isBookmarked,
+  isTrending,
 }: Props) {
+  const trendingSmall = thumbnail?.trending?.small;
+  const trendingLarge = thumbnail?.trending?.large;
+  const regularSmall = thumbnail?.regular.small;
+  const regularMedium = thumbnail?.regular.medium;
+  const regularLarge = thumbnail?.regular.large;
+
   return (
     <div className="carousel-item relative">
-      <Image
-        alt="image"
-        className="rounded-md"
-        width="400"
-        height="200"
-        src={large}
-      />
+      <picture>
+        <source
+          media="(max-width: 500px)"
+          srcSet={trendingSmall?.valueOf() || ""}
+        />
+        <Image
+          alt="image"
+          className="rounded-md"
+          width="400"
+          height="200"
+          src={trendingLarge?.valueOf() || ""}
+        />
+      </picture>
       <div className="absolute right-0 top-0 mr-[1em] mt-[1em] rounded-full bg-gray-700 p-3 opacity-60">
         <Image width="20" height="20" alt="bookmark" src={Bookmark} />
       </div>

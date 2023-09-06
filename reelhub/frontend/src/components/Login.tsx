@@ -41,7 +41,8 @@ function Login({}: Props) {
     const { name, value } = e.target;
     setUserInput((inputs) => ({ ...inputs, [name]: value }));
   };
-  const handleLogin = () => {
+  const handleLogin = (e) => {
+    e.preventDefault();
     try {
       loginUser(userInput);
     } catch (error) {
