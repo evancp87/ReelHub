@@ -1,6 +1,8 @@
 "use client";
 
 import Dashboard from "@/components/Dashboard";
+import AuthProvider from "../components/AuthProvider";
+
 import HomePage from "@/components/HomePage";
 // import layout from "./layout";
 // import type { TypedUseSelectorHook } from "react-redux";
@@ -23,11 +25,13 @@ export default async function Home() {
     // <Layout>
     <div>
       <div className="flex flex-col bg-[#10141E] md:flex-row ">
-        <Sidebar />
+        {/* <Sidebar /> */}
 
-        <main className="flex min-h-screen flex-col items-center   p-[2em]">
-          <Controls />
-          <Dashboard />
+        <main className="flex min-h-screen flex-col items-center  w-full p-[2em]">
+          {/* <Controls /> */}
+          <AuthProvider>
+            <Dashboard />
+          </AuthProvider>
         </main>
       </div>
     </div>
