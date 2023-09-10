@@ -10,14 +10,14 @@ import {RootState} from "../store";
     reducerPath: "userApi",
     baseQuery: fetchBaseQuery({
       baseUrl: BASE_API_URL,
-      // prepareHeaders: (headers, {getState}) => {
-      //   const token = (getState() as RootState).users.token
+      prepareHeaders: (headers, {getState}) => {
+        const token = (getState() as RootState).users.token
 
-      //   if (token) {
-      //     headers.set('authorization', `Bearer ${token}`)
-      //     return headers
-      //   }
-      // }
+        if (token) {
+          headers.set('authorization', `Bearer ${token}`)
+          return headers
+        }
+      }
     }),
     endpoints: (builder) => ({
      
@@ -38,45 +38,49 @@ import {RootState} from "../store";
       //   }),
       // }),
       ({
-        query(data) {
+        query(data: { email: string, password: string }) {
           return {
             url: '/users/login',
             method: 'POST',
             body: data,
-            credentials: 'include',
+            // credentials: 'include',
           };
         },
-        async onQueryStarted(args, { dispatch, queryFulfilled }) {
-          try {
-            await queryFulfilled;
-            await dispatch(userApi.endpoints.getUserInfo.initiate(null));
-          } catch (error) {}
-        },
+        // async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        //   try {
+        //     await queryFulfilled;
+        //     const email = args.email;
+        //     await dispatch(userApi.endpoints.getUserInfo.initiate(null));
+        //   } catch (error) {}
+        // },
       }),
       logoutUser: builder.mutation<void, void>({
         query() {
           return {
             url: '/users/logout',
-            credentials: 'include',
+            // credentials: 'include',
           };
         },
       }),
-      getUserInfo: builder.query<User, null>({
-        query() {
-          return {
-            url: '/users/user',
-            credentials: 'include',
-          };
-        },
-        transformResponse: (result: { data: { user: User } }) =>
-          result.data.user,
-        async onQueryStarted(args, { dispatch, queryFulfilled }) {
-          try {
-            const { data } = await queryFulfilled;
-            dispatch(registerUser(data));
-          } catch (error) {}
-        },
-      }),
+      // getUserInfo: builder.query<User, null>({
+      //   query() {
+      //     return {
+      //       url: `/users/user/`,
+      //       // credentials: 'include',
+      //       // headers: {
+      //       //   Authorization: `Bearer ${token}`
+      //       // }
+      //     };
+      //   },
+        // transformResponse: (result: { data: { user: User } }) =>
+        //   result.data.user,
+        // async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        //   try {
+        //     const { data } = await queryFulfilled;
+        //     dispatch(registerUser(data));
+        //   } catch (error) {}
+        // },
+      // }),
     }),
   });
 
@@ -98,5 +102,8 @@ import {RootState} from "../store";
   //   }
   // }
 
-  export const { useCreateUserMutation, useLoginUserMutation, useLogoutUserMutation } = userApi;
+  export const { useCreateUserMutation, useLoginUserMutation, useLogoutUserMutation,
+    
+    // useGetUserInfoQuery 
+  } = userApi;
 

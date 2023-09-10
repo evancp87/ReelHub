@@ -8,43 +8,46 @@ const backend = "http://localhost:6002";
 
 // const userToken = localStorage.getItem("userToken") ?  localStorage.getItem("userToken") : null
 
+const userToken = typeof localStorage !== 'undefined' ? localStorage.getItem("userToken") : null;
+
+
 type InitialState = {
   user: User | null,
   token: string | null,
-  loading: boolean,
-  error: null | string,
-  success: boolean,
+  // loading: boolean,
+  // error: null | string,
+  // success: boolean,
 }
 
 
 
 const initialState = {
-  loading: false,
+  // loading: false,
   user: null, 
-  // token: userToken, 
-  error: null,
-  success: false,
+  token: userToken, 
+  // error: null,
+  // success: false,
 } as InitialState;
 
 
-export const registerUser = createAsyncThunk<User, User>("user/register", async (user: User, { rejectWithValue }) => {
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+// export const registerUser = createAsyncThunk<User, User>("user/register", async (user: User, { rejectWithValue }) => {
+//   try {
+//     const config = {
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     };
 
-    await axios.post(`${backend}/users/new`, {user}, config);
-  } catch (error: any) {
-    console.log("There was an error", error);
-    if (error.response && error.response.data.message) {
-      return rejectWithValue(error.response.data.message);
-    } else {
-      return rejectWithValue(error.message);
-    }
-  }
-});
+//     await axios.post(`${backend}/users/new`, {user}, config);
+//   } catch (error: any) {
+//     console.log("There was an error", error);
+//     if (error.response && error.response.data.message) {
+//       return rejectWithValue(error.response.data.message);
+//     } else {
+//       return rejectWithValue(error.message);
+//     }
+//   }
+// });
 
 
 export const loginUser = createAsyncThunk<User, User>("user/login", async ({email, password}, { rejectWithValue }) => {
@@ -83,43 +86,59 @@ export const userSlice = createSlice({
     //   state.loading = true;
     //   state.success = true;
     // },
-    setCredentials: (state, action: PayloadAction<InitialState>) => {
-      const { user, token } = action.payload;
-      state.user = user;
+//     setCredentials: (state, action: PayloadAction<InitialState>) => {
+//       const { user, token } = action.payload;
+//   //  localStorage.setItem("userToken", userToken)
+//   localStorage.setItem("userToken", token)
+// console.log("checking the data here", user, token)
+//       state.user = user;
+//       state.token = token
 
-    },
-    logout: (state, action) => {
-      return initialState;
+//     },
+setCredentials: (state, action: PayloadAction<{ userToFind: User; token: string }>) => {
+  const { userToFind, token } = action.payload;
+  
+  localStorage.setItem("userToken", token);
+  console.log("checking the data here", userToFind, token);
+  state.user = userToFind;
+  state.token = token;
+},
+
+    logout: () => {
+
+      console.log("helooooooooo")
+      localStorage.removeItem("userToken");
+      return {...initialState};
     },
   },
-  extraReducers(builder) {
-    builder
-      .addCase(registerUser.pending, (state, action) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(registerUser.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string | null;
-      })
-      .addCase(registerUser.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.success = true;
-      })
-      .addCase(loginUser.pending, (state, action) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string | null;
-      })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.success = true;
-        state.token = action.payload.token;
-      });
-  },
+  // extraReducers(builder) {
+  //   builder
+  //     .addCase(registerUser.pending, (state, action) => {
+  //       state.loading = true;
+  //       state.error = null;
+  //     })
+  //     .addCase(registerUser.rejected, (state, action) => {
+  //       state.loading = false;
+  //       state.error = action.payload as string | null;
+  //     })
+  //     .addCase(registerUser.fulfilled, (state, action) => {
+  //       state.user = action.payload;
+  //       state.success = true;
+  //     })
+  //     .addCase(loginUser.pending, (state, action) => {
+  //       state.loading = true;
+  //       state.error = null;
+  //     })
+  //     .addCase(loginUser.rejected, (state, action) => {
+  //       state.loading = false;
+  //       state.error = action.payload as string | null;
+  //     })
+  //     .addCase(loginUser.fulfilled, (state, action) => {
+  //       state.user = action.payload;
+  //       state.success = true;
+  //       state.token = action.payload.token;
+  //     });
+  // },
 });
 
 

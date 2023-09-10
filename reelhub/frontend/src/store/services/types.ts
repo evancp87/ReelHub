@@ -36,8 +36,10 @@ export type AuthToken = {
 
 export type RegisterCredentials = {
     email: string,
-    name: string,
-    password: string
+    firstName: string,
+    lastName: string,
+    password: string,
+    avatar?: File
 }
 
 export type LoginCredentials = {
