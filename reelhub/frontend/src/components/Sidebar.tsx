@@ -20,15 +20,21 @@ import type { TypedUseSelectorHook } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useLogoutUserMutation } from "../store/services/userApi";
-import { useGetUserInfoQuery } from "../store/services/userApi";
+// import { useGetUserInfoQuery } from "../store/services/userApi";
+import { useRouter } from "next/navigation";
 
+import { selectCurrentUser, logout } from "../store/services/usersSlice";
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 type Props = {};
 
 export default function Sidebar({}: Props) {
-  // const dispatch = useAppDispatch();
+  const user = useAppSelector(selectCurrentUser);
+  const router = useRouter();
+  console.log("the user is", user);
+  console.log("checking the id", user?._id);
+  const dispatch = useAppDispatch();
   // const { data, isFetching } = useGetUserDetailsQuery('userDetails', {
   //   // perform a refetch every 15mins
   //     pollingInterval: 900000,
@@ -40,16 +46,18 @@ export default function Sidebar({}: Props) {
   // }
   //   },[dispatch, data])
 
-  // const [logoutUser, { isLoading, isSuccess, error, isError }] =
-  //   useLogoutUserMutation();
+  const [logoutUser] = useLogoutUserMutation();
 
-  // const handleLogout = () => {
-  //   logoutUser();
-  // };
-  const { data, isLoading, isSuccess, error, isError } =
-    useGetUserInfoQuery(null);
+  const handleLogout = () => {
+    // logoutUser();
+    dispatch(logout());
+    router.push("/authentication/login");
+  };
 
-  console.log("user data", data);
+  // const { data, isLoading, isSuccess, error, isError } =
+  //   useGetUserInfoQuery();
+
+  // console.log("user data", data?.firstName);
   return (
     <ReduxProvider>
       <aside className=" flex h-24 flex-row items-center justify-between bg-darkBlue sm:mx-[0.5em] sm:mt-[1.5em] sm:rounded-xl md:mx-[2em] md:h-[70vh] md:w-[200px] md:max-w-[200px] md:flex-col">
@@ -82,8 +90,8 @@ export default function Sidebar({}: Props) {
           width="32"
           height="25"
         />
-        {data && data.firstName}
-        <button> Logout </button>
+        {user?.firstName}
+        <button onClick={handleLogout}> {user ? "Logout" : ""} </button>
       </aside>
     </ReduxProvider>
   );

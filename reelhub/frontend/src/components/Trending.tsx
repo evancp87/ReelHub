@@ -23,7 +23,7 @@ export default function Trending({}: Props) {
             <p>Loading...</p>
           ) : data ? (
             data.map((media: Media, index) => {
-              const { year, title, rating, thumbnail, category } = media;
+              const { year, title, rating, thumbnail, category, _id } = media;
               return (
                 <div className="carousel-item relative">
                   <TrendingCard
@@ -33,6 +33,7 @@ export default function Trending({}: Props) {
                     rating={rating}
                     title={title}
                     thumbnail={thumbnail}
+                    id={_id}
                     // isBookmarked={isBookmarked}
                     // isTrending={isTrending}
                   />

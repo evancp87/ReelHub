@@ -3,7 +3,10 @@ import React from "react";
 import Bookmark from "/public/assets/icon-bookmark-empty.svg";
 import Image from "next/image";
 import Category from "/public/assets/icon-category-movie.svg";
-
+import {
+  useAddBookmarkMutation,
+  useDeleteMediaMutation,
+} from "../store/services/bookmarksApi";
 type Props = {
   title: string;
   thumbnail?: {
@@ -41,6 +44,19 @@ export default function RecommendedCard({
 
   console.log(regularSmall, regularMedium, regularLarge);
 
+  // const [addBookmark, { error, isLoading, isError }] = useAddBookmarkMutation;
+
+  // const [deleteMedia, { error, isLoading, isError }] = useDeleteMediaMutation;
+
+  const handleBookmarkInteraction = () => {
+    if (isBookmarked) {
+      // remove from bookmarks
+      // set as not bookmarked
+    }
+
+    // add to bookmarks
+    // set property as bookmarked
+  };
   return (
     <>
       <div className="relative">
@@ -62,8 +78,16 @@ export default function RecommendedCard({
           />
         </picture>
 
-        <div className="absolute right-0 top-0 mr-[1em] mt-[1em] rounded-full bg-gray-700 p-3 opacity-60">
-          <Image width="20" height="20" alt="bookmark" src={Bookmark} />
+        <div className="absolute right-0 top-0 mr-[1em] mt-[1em] cursor-pointer rounded-full bg-gray-700 p-3 opacity-60 hover:bg-white">
+          <Image
+            width="20"
+            height="20"
+            alt="bookmark"
+            className={`hover:brightness-[.95] hover:contrast-[1.05] hover:hue-rotate-[293deg] hover:invert-[0] hover:saturate-[0] hover:sepia-[.04]
+            ${!isBookmarked ? "" : "bg-white"}`}
+            src={Bookmark}
+            onClick={handleBookmarkInteraction}
+          />
         </div>
         <div className=" flex max-w-[70%] flex-col ">
           <div className=" my-2 flex flex-row justify-between">

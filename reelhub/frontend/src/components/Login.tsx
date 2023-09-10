@@ -8,8 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 import Link from "next/link";
-import { login } from "@/store/services/usersSlice";
-import { useLoginUserMutation } from "../store/services/userApi";
+import { setCredentials } from "@/store/services/usersSlice";
+import { AuthToken, LoginCredentials } from "../store/services/types";
+import {
+  useLoginUserMutation,
+  //   useGetUserInfoQuery,
+} from "../store/services/userApi";
 import {
   loginUser,
   selectCurrentUser,
@@ -32,6 +36,14 @@ function Login({}: Props) {
   //   const { loading, user, error, success } = useAppSelector(selectAuthState);
   const [loginUser, { isLoading, isSuccess, error, isError }] =
     useLoginUserMutation();
+
+  //   const userEmail = userInput?.email;
+
+  //   const { data: getUserInfo } = useGetUserInfoQuery(userEmail);
+  //   console.log("getUserInfo data:", getUserInfo);
+
+  // const { getUserInfo } = useGetUserInfoQuery(null);
+
   console.log(isSuccess);
   //   const { createUser, isLoading: isRegisteringUser } = useCreateUserMutation;
 
@@ -41,10 +53,20 @@ function Login({}: Props) {
     const { name, value } = e.target;
     setUserInput((inputs) => ({ ...inputs, [name]: value }));
   };
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+
+    const { email, password } = userInput;
     try {
-      loginUser(userInput);
+      const { data } = await loginUser({ email, password });
+      //   console.log("checking the data here", data);
+      console.log("checking the id here", data._id);
+
+      // Dispatch setCredentials with the data from loginUser
+      dispatch(setCredentials(data));
+      //   loginUser({ email, password });
+      //     dispatch(setCredentials(userInput));
+      //   useGetUserInfoQuery(email);
     } catch (error) {
       console.log("There was an error", error);
     }

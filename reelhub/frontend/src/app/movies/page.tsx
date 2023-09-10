@@ -34,44 +34,46 @@ export default function page({}: Props) {
     <ReduxProvider>
       <div className="my-4">
         <h3 className="mb-4 text-xl">Movies</h3>
-        {filteredSearch.length === 0 && <p>No movies found</p>}
-        {search ? (
-          filteredSearch.map((media: Media) => (
-            <MediaCard
-              title={media.title}
-              thumbnail={media.thumbnail}
-              year={media.year}
-              category={media.category}
-              rating={media.rating}
-              isBookmarked={media.isBookmarked}
-              isTrending={media.isTrending}
-            />
-          ))
-        ) : (
-          <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
-            {error ? (
-              <p>Oh no, there was an error</p>
-            ) : isLoading || isFetching ? (
-              <p>Loading...</p>
-            ) : data ? (
-              data.map((media, index) => {
-                const { year, title, rating, thumbnail, category } = media;
-                console.log(thumbnail?.regular.large);
+        <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
+          {filteredSearch.length === 0 && <p>No movies found</p>}
+          {search ? (
+            filteredSearch.map((media: Media) => (
+              <MediaCard
+                title={media.title}
+                thumbnail={media.thumbnail}
+                year={media.year}
+                category={media.category}
+                rating={media.rating}
+                isBookmarked={media.isBookmarked}
+                isTrending={media.isTrending}
+              />
+            ))
+          ) : (
+            <>
+              {error ? (
+                <p>Oh no, there was an error</p>
+              ) : isLoading || isFetching ? (
+                <p>Loading...</p>
+              ) : data ? (
+                data.map((media, index) => {
+                  const { year, title, rating, thumbnail, category } = media;
+                  console.log(thumbnail?.regular.large);
 
-                return (
-                  <MediaCard
-                    key={index}
-                    year={year}
-                    category={category}
-                    rating={rating}
-                    title={title}
-                    thumbnail={thumbnail}
-                  />
-                );
-              })
-            ) : null}
-          </div>
-        )}
+                  return (
+                    <MediaCard
+                      key={index}
+                      year={year}
+                      category={category}
+                      rating={rating}
+                      title={title}
+                      thumbnail={thumbnail}
+                    />
+                  );
+                })
+              ) : null}
+            </>
+          )}
+        </div>
       </div>
     </ReduxProvider>
   );
