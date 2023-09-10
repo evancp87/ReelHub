@@ -1,7 +1,12 @@
 
 import { User } from "../models/users.model";
+import dotenv  from "dotenv"
+import jwt from "jsonwebtoken";
+
+dotenv.config()
 import bcrypt from "bcrypt";
 const saltRounds = 10;
+const jwtSecret = process.env.JWT_SECRET_KEY!;
 // const ,} = require( "express");
 import {Request, Response} from "express";
 
@@ -61,29 +66,27 @@ export async function login(req: Request, res: Response): Promise<void> {
       return;
     }
 
+    console.log(userToFind)
+
     // Compare the provided password with the hashed password in the database
     const matchedPassword = await bcrypt.compare(password, userToFind.password);
-    // const token = jwt.sign(
-    //   { email },
-    //   process.env.TOKEN_KEY,
-    //   {
-    //     expiresIn: "2h",
-    //   },
-    //   (err, token) => {
-    //     if (err) {
-    //       console.log(err);
-    //     }
-    //     res.send(token);
-    //   }
-    // );
-  
+    const token = jwt.sign(
+      { _id: userToFind._id, email: userToFind.email },
+      jwtSecret,
+      { expiresIn: "2h" }
+    );
+
+    console.log(token)
+
     if (!matchedPassword) {
       res.status(401).json({ error: "Incorrect password" });
       return;
     }
 
     // Password is correct, login successful
-    res.status(200).json(userToFind);
+    res.status(200).json({token, userToFind});
+
+
   } catch (error) {
     console.error("There was an error:", error);
     res.status(500).json({ error: "Internal Server Error" });
