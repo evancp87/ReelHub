@@ -20,7 +20,7 @@ export const store = configureStore({
   
   devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({}).concat([mediaApi.middleware, userApi.middleware]),
+    getDefaultMiddleware({}).concat([mediaApi.middleware, userApi.middleware, bookmarkApi.middleware]),
 });
 
 
