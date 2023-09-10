@@ -33,7 +33,7 @@ import Controls from "@/components/Controls";
 import { ReduxProvider } from "@/components/ReduxProvider";
 import { useGetTrendingMediaQuery } from "../store/services/mediaApi";
 import TrendingCard from "@/components/TrendingCard";
-
+import AuthProvider from "../components/AuthProvider";
 // const handle;
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -42,9 +42,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <ReduxProvider>
           <div className="flex flex-col bg-[#10141E] md:flex-row ">
             <Sidebar />
-            <main className="flex min-h-screen flex-col items-center   p-[2em]">
+            <main className="flex min-h-screen w-full flex-col items-center  p-[2em]">
               <Controls />
+              {/* <AuthProvider> */}
               {children}
+              {/* </AuthProvider> */}
             </main>
           </div>
         </ReduxProvider>
