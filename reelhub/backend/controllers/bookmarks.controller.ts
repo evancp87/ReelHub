@@ -9,7 +9,7 @@ export async function addBookmark(req: Request, res: Response): Promise<void> {
     try {
       const { mediaId, userId } = req.body;
   
-      console.log("The media is:", mediaId, "and the user is:", userId);
+      console.log("for adding, The media is:", mediaId, "and the user is:", userId);
   
       const mediaToBookmark = await Media.findOne({ _id: mediaId });
   
@@ -19,19 +19,38 @@ export async function addBookmark(req: Request, res: Response): Promise<void> {
         res.status(404).json("no content to bookmark specified");
         return;
       }
-  
-      if (mediaToBookmark.isBookmarked) {
-        res.send("already bookmarked!");
-        return;
+
+      
+  // const alreadyExists = await Bookmark.findOne({id:mediaId, user: userId})
+
+  // console.log("checking if it exists", alreadyExists)
+  // if (alreadyExists) {
+  //       res.send("already bookmarked!");
+  //       return;
+  //     }
+      let bookmark = await Bookmark.findOne({media: mediaId, user: userId});
+
+      if (bookmark) {
+          // If the bookmark exists, remove it
+          console.log("bookmark deleted")
+          await Bookmark.deleteOne({ _id: bookmark._id });
+          // res.status(200).send("bookmark removed successfully");
+      } else {
+          // If the bookmark does not exist, create it
+          console.log("bookmark added")
+
+          bookmark = new Bookmark({ media: mediaId, user: userId }); 
+          await bookmark.save(); 
+          // res.status(200).send("bookmark added successfully");
       }
-  
-      const newBookmark = new Bookmark({ media: mediaId, user: userId }); 
-      await newBookmark.save(); 
+      
+      // const newBookmark = new Bookmark({ media: mediaId, user: userId }); 
+      // await newBookmark.save(); 
       const user = await User.findOne({ _id: userId });
   
-      mediaToBookmark.isBookmarked = true;
+      // mediaToBookmark.isBookmarked = true;
   
-      console.log("The new bookmark is:", newBookmark);
+      console.log("The new bookmark is:", bookmark);
       console.log("the user is:", user);
   
       if (!user) {
@@ -41,7 +60,7 @@ export async function addBookmark(req: Request, res: Response): Promise<void> {
   
     //   user.bookmarks.push(newBookmark._id); 
       await user.save();
-      res.status(200).send("bookmark added successfully");
+      res.status(200).send("bookmark operation completed successfully");
     } catch (err) {
       res.status(500).json("error while adding bookmark");
     }
@@ -54,7 +73,7 @@ export async function removeBookmark(req:Request, res:Response):Promise<void> {
   
       const {mediaId, userId} = req.body;
   
-      console.log("The media is:", mediaId, "and the user is:", userId);
+      console.log("for deleting, The media is:", mediaId, "and the user is:", userId);
       
        const mediaToRemove =  await Media.findOne({ _id: mediaId});
        const user = await User.findOne({_id: userId});
@@ -134,10 +153,10 @@ if  (!user) {
       try {
         console.log("i ran!");
         
-        const category = req.params.category;
+        // const category = req.params.category;
         const userId = req.params.userId;
     
-        console.log(category);
+        // console.log(category);
         
          const results: typeof Bookmark[] = await Bookmark.find({user: userId}).populate({path: 'media'});
     
