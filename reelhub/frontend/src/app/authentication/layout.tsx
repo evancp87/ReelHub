@@ -26,17 +26,23 @@ import "../globals.css";
 import React from "react";
 import Image from "next/image";
 
-import MovieIcon from "/public/assets/icon-category-movie.svg";
+import MovieIcon from "/public/assets/logo.svg";
 
 const AuthLayout = ({ children }) => {
   return (
-    <main className="flex min-h-screen max-w-[1000px] p-24">
-      <div className="flex-col items-center justify-between ">
-        <Image width="50" height="50" alt="bookmark" src={MovieIcon} />
+    // <main className="flex min-h-screen w-full p-24">
+    <div className="flex min-h-screen w-full  flex-col items-center justify-center ">
+      <Image
+        width="30"
+        height="30"
+        alt="bookmark"
+        src={MovieIcon}
+        className="mb-4 self-center"
+      />
 
-        {children}
-      </div>
-    </main>
+      {children}
+    </div>
+    // </main>
   );
 };
 
