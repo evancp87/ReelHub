@@ -25,3 +25,7 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+input, textarea {
+  caret-color: #FC4747;
+  padding-right: 1em;
+}

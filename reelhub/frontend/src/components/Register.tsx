@@ -13,9 +13,15 @@ import type { TypedUseSelectorHook } from "react-redux";
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 import { useRouter } from "next/navigation";
+import { validateRegister } from "@/validation/index";
 import Link from "next/link";
 import { ReduxProvider } from "./ReduxProvider";
-type Props = {};
+type Error = {
+  firstName: null;
+  lastName: null;
+  email: null;
+  password: null;
+};
 
 type User = {
   firstName: string;
@@ -26,7 +32,7 @@ type User = {
   avatar?: File;
 };
 
-function Register({}: Props) {
+function Register() {
   const [userInput, setUserInput] = useState<User>({
     firstName: "",
     lastName: "",
@@ -41,12 +47,19 @@ function Register({}: Props) {
   //   const { createUser, isLoading: isRegisteringUser } = useCreateUserMutation;
   const [createUser, { isLoading, isSuccess, error, isError }] =
     useCreateUserMutation();
-
+  const [errors, setErrors] = useState(null);
   //   const dispatch = useAppDispatch();
   const router = useRouter();
-  const handleInputs = (e) => {
+  const handleInputs = async (e) => {
     const { name, value } = e.target;
     setUserInput((inputs) => ({ ...inputs, [name]: value }));
+    try {
+      const payload = { [name]: value };
+      const res = await validateRegister(payload);
+      setErrors(res);
+    } catch (error) {
+      console.log("There was an error:", error);
+    }
   };
 
   const handleRegister = () => {
@@ -65,44 +78,100 @@ function Register({}: Props) {
   }, [isSuccess]);
   return (
     <ReduxProvider>
-      <div className="rounded-lg border-2 border-solid border-slate-100">
-        <h3>Sign Up</h3>
-        <form className="flex flex-col" action="" onSubmit={handleRegister}>
-          <label htmlFor="firstName">First Name</label>
-          <input
-            className="my-4"
-            type="text"
-            name="firstName"
-            onChange={handleInputs}
-            value={userInput.firstName}
-          />
-          <label htmlFor="lastName">Last Name</label>
+      <div className="w-64 rounded-lg bg-darkBlue md:w-80">
+        <h3 className="ms-4 mt-4 text-3xl">Sign Up</h3>
+        <form className="flex flex-col p-4" action="" onSubmit={handleRegister}>
+          <div className="relative">
+            <input
+              className={`lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
+            ${errors ? "border-b-2 border-[#FC4747] " : {}}`}
+              type="text"
+              name="firstName"
+              onChange={handleInputs}
+              placeholder="First Name"
+              value={userInput.firstName}
+            />
+            {errors &&
+              errors.map((error, index) =>
+                error.key === "firstName" ? (
+                  <p
+                    className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]"
+                    key={index}
+                  >
+                    {error.message}
+                  </p>
+                ) : null
+              )}
+          </div>
 
-          <input
-            className="my-4"
-            type="text"
-            name="lastName"
-            onChange={handleInputs}
-            value={userInput.lastName}
-          />
-          <label htmlFor="email">Email Address</label>
+          <div className="relative">
+            <input
+              className={`lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
+            ${errors ? "border-b-2 border-[#FC4747] " : {}}`}
+              type="text"
+              name="lastName"
+              onChange={handleInputs}
+              value={userInput.lastName}
+              placeholder="Last Name"
+            />
+            {errors &&
+              errors.map((error, index) =>
+                error.key === "lastName" ? (
+                  <p
+                    className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]"
+                    key={index}
+                  >
+                    {error.message}
+                  </p>
+                ) : null
+              )}
+          </div>
 
-          <input
-            className="my-4"
-            type="text"
-            name="email"
-            onChange={handleInputs}
-            value={userInput.email}
-          />
-          <label htmlFor="password">Password</label>
+          <div className="relative">
+            <input
+              className={`lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
+            ${errors ? "border-b-2 border-[#FC4747] " : {}}`}
+              type="text"
+              name="email"
+              onChange={handleInputs}
+              value={userInput.email}
+              placeholder="Email"
+            />
+            {errors &&
+              errors.map((error, index) =>
+                error.key === "email" ? (
+                  <p
+                    className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]"
+                    key={index}
+                  >
+                    {error.message}
+                  </p>
+                ) : null
+              )}
+          </div>
 
-          <input
-            className="my-4"
-            type="password"
-            name="password"
-            value={userInput.password}
-            onChange={handleInputs}
-          />
+          <div className="relative">
+            <input
+              className={`lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
+            ${errors ? "border-b-2 border-[#FC4747] " : {}}`}
+              type="password"
+              name="password"
+              value={userInput.password}
+              onChange={handleInputs}
+              placeholder="Password"
+            />
+            {errors &&
+              errors.map((error, index) =>
+                error.key === "password" ? (
+                  <p
+                    className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]"
+                    key={index}
+                  >
+                    {error.message}
+                  </p>
+                ) : null
+              )}
+          </div>
           {/* <label htmlFor="repeatPassword">Repeat Password</label>
 
           <input
@@ -112,21 +181,35 @@ function Register({}: Props) {
             onChange={handleInputs}
             value={user.repeatPassword}
           /> */}
-          <label htmlFor="upload">Upload Avatar Image</label>
+          <label htmlFor="upload">Choose an avatar (optional)</label>
 
           <input
-            className="my-4"
+            className="lightBlue my-4 cursor-pointer bg-transparent text-xs"
             type="file"
             name="upload"
             onChange={handleInputs}
           />
 
           {/* handle errors here */}
-          <button className="btn-primary" type="submit" disabled={isLoading}>
+          <button
+            className="h-9 cursor-pointer rounded-lg bg-red text-xs text-[white] hover:bg-white hover:text-[black]"
+            type="submit"
+            disabled={isLoading}
+          >
             Create an account
           </button>
         </form>
-        <Link href="login">Already have an account?</Link>
+        <div className="mb-4 ms-2.5 flex justify-center gap-x-1.5 text-xs">
+          <p>Already have an account?</p>{" "}
+          <Link className="text-red" href="login">
+            Login
+          </Link>
+        </div>
+        {error && (
+          <p className="min-h-30 my-4 flex justify-center text-xs text-red ">
+            error.data.message
+          </p>
+        )}
       </div>
     </ReduxProvider>
   );
