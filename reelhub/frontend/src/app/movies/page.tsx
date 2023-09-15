@@ -32,10 +32,14 @@ export default function page({}: Props) {
     : [];
   return (
     <ReduxProvider>
-      <div className="my-4">
-        <h3 className="mb-4 text-xl">Movies</h3>
+      <div className="my-4 w-full">
+        <p className="flex mt-4 self-start">
+          {search && `Found ${filteredSearch.length} results for ${search}`}
+        </p>
+        <h3 className="mb-4 text-2xl md:text-3xl">Movies</h3>
         <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
-          {filteredSearch.length === 0 && <p>No movies found</p>}
+          {/* {filteredSearch.length === 0 && <p>No movies found</p>} */}
+
           {search ? (
             filteredSearch.map((media: Media) => (
               <MediaCard
@@ -46,6 +50,7 @@ export default function page({}: Props) {
                 rating={media.rating}
                 isBookmarked={media.isBookmarked}
                 isTrending={media.isTrending}
+                // id={_id}
               />
             ))
           ) : (
@@ -56,7 +61,8 @@ export default function page({}: Props) {
                 <p>Loading...</p>
               ) : data ? (
                 data.map((media, index) => {
-                  const { year, title, rating, thumbnail, category } = media;
+                  const { year, title, rating, thumbnail, category, _id } =
+                    media;
                   console.log(thumbnail?.regular.large);
 
                   return (
@@ -67,6 +73,7 @@ export default function page({}: Props) {
                       rating={rating}
                       title={title}
                       thumbnail={thumbnail}
+                      id={_id}
                     />
                   );
                 })

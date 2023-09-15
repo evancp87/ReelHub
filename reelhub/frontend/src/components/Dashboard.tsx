@@ -32,22 +32,24 @@ export default function Dashboard({}: Props) {
     // </>
     <ReduxProvider>
       <div className="bg-[#10141E]">
+        <p className="mt-4 flex self-start">
+          {search && `Found ${filteredSearch.length} results for ${search}`}
+        </p>
         {search ? (
-          filteredSearch.map((media: Media) => (
-            <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
-              <div className="mb-4">
-                <MediaCard
-                  title={media.title}
-                  thumbnail={media.thumbnail}
-                  year={media.year}
-                  category={media.category}
-                  rating={media.rating}
-                  isBookmarked={media.isBookmarked}
-                  isTrending={media.isTrending}
-                />
-              </div>
-            </div>
-          ))
+          <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
+            {filteredSearch.map((media: Media) => (
+              <MediaCard
+                title={media.title}
+                thumbnail={media.thumbnail}
+                year={media.year}
+                category={media.category}
+                rating={media.rating}
+                isBookmarked={media.isBookmarked}
+                isTrending={media.isTrending}
+                id={media._id}
+              />
+            ))}
+          </div>
         ) : (
           <>
             <Trending />

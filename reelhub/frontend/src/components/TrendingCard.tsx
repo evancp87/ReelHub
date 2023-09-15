@@ -2,8 +2,13 @@ import React from "react";
 import Image from "next/image";
 import Thing from "/public/assets/thumbnails/autosport-the-series/regular/large.jpg";
 import Bookmark from "/public/assets/icon-bookmark-empty.svg";
-import Category from "/public/assets/icon-category-movie.svg";
+import movieCategory from "/public/assets/icon-category-movie.svg";
+import tvCategory from "/public/assets/icon-category-tv.svg";
 
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
+// Five-line loading skeleton
 type Props = {
   title: string;
   thumbnail?: {
@@ -63,7 +68,12 @@ export default function TrendingCard({
             {year.toString()} <span className="text-xs">●</span>
           </p>
           <div>
-            <Image width="20" height="10" alt="bookmark" src={Category} />
+            <Image
+              width="20"
+              height="10"
+              alt="bookmark"
+              src={category === "TV Series" ? tvCategory : movieCategory}
+            />
           </div>
           <p>
             {category} <span className="text-xs">●</span>
@@ -71,7 +81,7 @@ export default function TrendingCard({
 
           <p>{rating} </p>
         </div>
-        <h3>{title}</h3>
+        <h3 className="text-xs md:text-2xl">{title}</h3>
       </div>
     </div>
   );

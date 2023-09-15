@@ -31,10 +31,13 @@ export default function page({}: Props) {
 
   return (
     <ReduxProvider>
-      {filteredSearch.length === 0 && <p>No TV Series found</p>}
+      {/* {filteredSearch.length === 0 && <p>No TV Series found</p>} */}
 
+      <p className="mt-4 flex self-start">
+        {search && `Found ${filteredSearch.length} results for ${search}`}
+      </p>
       <div className="my-4">
-        <h3 className="mb-4 text-xl">Tv Series</h3>
+        <h3 className="mb-4 text-2xl md:text-3xl">Tv Series</h3>
         <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {search ? (
             filteredSearch.map((media: Media) => (
@@ -56,7 +59,8 @@ export default function page({}: Props) {
                 <p>Loading...</p>
               ) : data ? (
                 data.map((media, index) => {
-                  const { year, title, rating, thumbnail, category } = media;
+                  const { year, title, rating, thumbnail, category, _id } =
+                    media;
                   return (
                     <div className="carousel-item relative">
                       <MediaCard
@@ -66,6 +70,7 @@ export default function page({}: Props) {
                         rating={rating}
                         title={title}
                         thumbnail={thumbnail}
+                        id={_id}
                       />
                     </div>
                   );

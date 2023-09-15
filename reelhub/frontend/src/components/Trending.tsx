@@ -6,6 +6,8 @@ import Category from "/public/assets/icon-category-movie.svg";
 import TrendingCard from "./TrendingCard";
 import { ReduxProvider } from "./ReduxProvider";
 import { Media } from "../store/services/types";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 type Props = {};
 import { useGetTrendingMediaQuery } from "../store/services/mediaApi";
 export default function Trending({}: Props) {
@@ -15,12 +17,12 @@ export default function Trending({}: Props) {
   return (
     <ReduxProvider>
       <div className="mb-4">
-        <h3 className="my-4 text-xl">Trending</h3>
+        <h3 className="my-4 text-2xl md:text-3xl">Trending</h3>
         <div className="carousel-end carousel rounded-box mb-4 gap-4">
           {error ? (
             <p>Oh no, there was an error</p>
           ) : isLoading || isFetching ? (
-            <p>Loading...</p>
+            <Skeleton width={400} height={200} />
           ) : data ? (
             data.map((media: Media, index) => {
               const { year, title, rating, thumbnail, category, _id } = media;

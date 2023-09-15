@@ -30,7 +30,7 @@ export default function Controls() {
         src={SearchIcon}
       />
       <input
-        className="ml-4 w-full bg-transparent"
+        className="ml-4 w-full bg-transparent focus:outline-none"
         type="text"
         placeholder="Search for movies or Tv series"
         value={search}

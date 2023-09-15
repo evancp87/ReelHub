@@ -25,35 +25,37 @@ export default function BookmarkedMovies({}: Props) {
   const userId = user?._id;
 
   const { error, isLoading, isFetching, data } = useGetUserBookmarksQuery(
-    userId,
+    userId
     // token: token,
-    "Movie"
+    // "Movie"
   );
   console.log("the bookmark data is", data);
   return (
     <div className="my-4">
-      <h3 className="mb-4 text-xl">Bookmarked Movies</h3>
+      <h3 className="mb-4 text-2xl md:text-3xl">Bookmarked Movies</h3>
       <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
         {error ? (
           <p>Oh no, there was an error</p>
         ) : isLoading || isFetching ? (
           <p>Loading...</p>
         ) : data ? (
-          data.map((media, index) => {
-            const { year, title, rating, thumbnail, category, _id } =
-              media.media;
-            return (
-              <MediaCard
-                key={index}
-                year={year}
-                category={category}
-                rating={rating}
-                title={title}
-                thumbnail={thumbnail}
-                id={_id}
-              />
-            );
-          })
+          data
+            .filter((media) => media.media.category === "Movie")
+            .map((media, index) => {
+              const { year, title, rating, thumbnail, category, _id } =
+                media.media;
+              return (
+                <MediaCard
+                  key={index}
+                  year={year}
+                  category={category}
+                  rating={rating}
+                  title={title}
+                  thumbnail={thumbnail}
+                  id={_id}
+                />
+              );
+            })
         ) : null}
       </div>
     </div>

@@ -90,7 +90,7 @@ export default function Sidebar({}: Props) {
           width="32"
           height="25"
         />
-        {user?.firstName}
+        {user && <p>Welcome, {user?.firstName}</p>}
         <button onClick={handleLogout}> {user ? "Logout" : ""} </button>
       </aside>
     </ReduxProvider>

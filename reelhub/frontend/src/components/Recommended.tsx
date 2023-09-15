@@ -15,7 +15,7 @@ export default function Recommended({}: Props) {
   return (
     <ReduxProvider>
       <div className="mb-4">
-        <h3 className="mb-4 text-xl">Recommended for you</h3>
+        <h3 className="mb-4 text-2xl md:text-3xl">Recommended for you</h3>
         <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {error ? (
             <p>Oh no, there was an error</p>
@@ -23,7 +23,7 @@ export default function Recommended({}: Props) {
             <p>Loading...</p>
           ) : data ? (
             data.map((media, index) => {
-              const { year, title, rating, thumbnail, category } = media;
+              const { year, title, rating, thumbnail, category, _id } = media;
               console.log(thumbnail?.regular.large);
               return (
                 <MediaCard
@@ -33,6 +33,7 @@ export default function Recommended({}: Props) {
                   rating={rating}
                   title={title}
                   thumbnail={thumbnail}
+                  id={_id}
                 />
               );
             })
