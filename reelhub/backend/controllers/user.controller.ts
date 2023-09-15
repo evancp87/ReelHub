@@ -55,7 +55,7 @@ export async function login(req: Request, res: Response): Promise<void> {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      res.status(400).json({ error: "Email and password are required" });
+      res.status(400).json({ error: "Please check your login credentials and try again" });
       return;
     }
 
