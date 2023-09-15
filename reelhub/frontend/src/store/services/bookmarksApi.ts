@@ -19,15 +19,17 @@ export const bookmarkApi = createApi({
         query: (userId) => `/bookmarks/${userId}`,
     
       }),
-      getUserBookmarksByCategory: builder.query<Bookmark[], {userId: UserId, category: Category}>({
-        query: ({userId, category}) => `/bookmarks/${category}/${userId}`,
+      getUserBookmarksByCategory: builder.query<Bookmark[], {category: Category, userId: UserId, }>({
+        query: ({category, userId}) => `/bookmarks/${category}/${userId}`,
 
     
       }),
     addBookmark: builder.mutation<Bookmark, Partial<Bookmark>>({
       query: (bookmark) => ({
-        url: 'media/add',
-        method: 'POST',
+        url: '/bookmarks/add',
+        // method: 'POST',
+        method: 'PUT',
+
         body: bookmark,
       }),
     }),
