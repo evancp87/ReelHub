@@ -5,13 +5,13 @@ export const loginSchema = {
     email:
     joi.string(),
     password: joi.string().trim()
-    .min(1)
-    .max(40)
+    .min(1).message("Can't be empty")
+    .max(40).message("Too long")
 }
 
 export const registerSchema = {
-    firstName: joi.string().min(1).max(50),
-    lastName: joi.string().min(1).max(50),
+    firstName: joi.string().min(1).message("Can't be empty").max(50).message("Too long"),
+    lastName: joi.string().min(1).message("Too short").max(50).message("Too long"),
     email:
     joi.string().email({ minDomainSegments: 2, tlds: { allow: false } }).messages({
         "string.pattern.base": "can't be empty",
