@@ -1,5 +1,5 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { selectCurrentUser } from "./services/usersSlice";
+import { selectCurrentUser, selectCurrentToken } from "./services/usersSlice";
 import type { RootState, AppDispatch } from "./store";
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
@@ -11,7 +11,8 @@ type BookmarkParams = {
 }
 export const useIsAuthenticated = () => {
     const user = useAppSelector(selectCurrentUser);
-    return user !== null
+    const token = useAppSelector(selectCurrentToken);
+    return { user, token, isAuthenticated: user !== null };
 }
 
 export const useAddBookmark = (mediaId:BookmarkParams, userId:BookmarkParams) => {
