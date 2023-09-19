@@ -59,7 +59,7 @@ export default function Sidebar({}: Props) {
 
   // console.log("user data", data?.firstName);
   return (
-    <ReduxProvider>
+    <>
       <aside className=" flex h-24 flex-row items-center justify-between bg-darkBlue sm:mx-[0.5em] sm:mt-[1.5em] sm:rounded-xl md:mx-[2em] md:h-[70vh] md:w-[200px] md:max-w-[200px] md:flex-col">
         <Image
           className=" ml-4 md:ml-0 md:mt-4"
@@ -69,16 +69,16 @@ export default function Sidebar({}: Props) {
           height="25"
         />
         <div className="flex flex-row gap-4 md:flex-col">
-          <Link href="/movies">
+          <Link href="/dashboard/movies">
             <Image src={NavMovies} alt="logo" width="32" height="25" />
           </Link>
-          <Link href="/">
+          <Link href="/dashboard">
             <Image src={NavHome} alt="logo" width="32" height="25" />
           </Link>
-          <Link href="/bookmarks">
+          <Link href="/dashboard/bookmarks">
             <Image src={NavBookmark} alt="logo" width="32" height="25" />
           </Link>
-          <Link href="/tv">
+          <Link href="/dashboard/tv">
             <Image src={NavTv} alt="logo" width="32" height="25" />
           </Link>
         </div>
@@ -93,6 +93,6 @@ export default function Sidebar({}: Props) {
         {user && <p>Welcome, {user?.firstName}</p>}
         <button onClick={handleLogout}> {user ? "Logout" : ""} </button>
       </aside>
-    </ReduxProvider>
+    </>
   );
 }

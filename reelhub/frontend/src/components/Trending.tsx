@@ -15,36 +15,36 @@ export default function Trending({}: Props) {
   console.log(isLoading, isFetching, data, error);
 
   return (
-    <ReduxProvider>
-      <div className="mb-4">
-        <h3 className="my-4 text-2xl md:text-3xl">Trending</h3>
-        <div className="carousel-end carousel rounded-box mb-4 gap-4">
-          {error ? (
-            <p>Oh no, there was an error</p>
-          ) : isLoading || isFetching ? (
-            <Skeleton width={400} height={200} />
-          ) : data ? (
-            data.map((media: Media, index) => {
-              const { year, title, rating, thumbnail, category, _id } = media;
-              return (
-                <div className="carousel-item relative">
-                  <TrendingCard
-                    key={index}
-                    year={year}
-                    category={category}
-                    rating={rating}
-                    title={title}
-                    thumbnail={thumbnail}
-                    id={_id}
-                    // isBookmarked={isBookmarked}
-                    // isTrending={isTrending}
-                  />
-                </div>
-              );
-            })
-          ) : null}
-        </div>
+    // <ReduxProvider>
+    <div className="mb-4">
+      <h3 className="my-4 text-2xl md:text-3xl">Trending</h3>
+      <div className="carousel-end carousel rounded-box mb-4 gap-4">
+        {error ? (
+          <p>Oh no, there was an error</p>
+        ) : isLoading || isFetching ? (
+          <Skeleton width={400} height={200} />
+        ) : data ? (
+          data.map((media: Media, index) => {
+            const { year, title, rating, thumbnail, category, _id } = media;
+            return (
+              <div className="carousel-item relative">
+                <TrendingCard
+                  key={index}
+                  year={year}
+                  category={category}
+                  rating={rating}
+                  title={title}
+                  thumbnail={thumbnail}
+                  id={_id}
+                  // isBookmarked={isBookmarked}
+                  // isTrending={isTrending}
+                />
+              </div>
+            );
+          })
+        ) : null}
       </div>
-    </ReduxProvider>
+    </div>
+    // </ReduxProvider>
   );
 }

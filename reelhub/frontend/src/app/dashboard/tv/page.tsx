@@ -7,7 +7,7 @@ import React from "react";
 // import MediaCard from "../../components/MediaCard";
 // import { ReduxProvider } from "@/components/ReduxProvider";
 
-import TvPage from "../../components/TvPage";
+import TvPage from "../../../components/TvPage";
 type Props = {};
 
 export default function page({}: Props) {

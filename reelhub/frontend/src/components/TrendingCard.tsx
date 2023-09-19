@@ -45,7 +45,7 @@ export default function TrendingCard({
   const regularLarge = thumbnail?.regular.large;
 
   return (
-    <div className="carousel-item relative">
+    <>
       <picture>
         <source
           media="(max-width: 500px)"
@@ -83,6 +83,6 @@ export default function TrendingCard({
         </div>
         <h3 className="text-xs md:text-2xl">{title}</h3>
       </div>
-    </div>
+    </>
   );
 }

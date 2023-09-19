@@ -1,5 +1,5 @@
 import { store } from "@/store/store";
-import layout from "../layout";
+import layout from "../dashboard/layout";
 import { setInitialMedia, selectMedia } from "../features/mediaSlice";
 import Dashboard from "@/components/Dashboard";
 

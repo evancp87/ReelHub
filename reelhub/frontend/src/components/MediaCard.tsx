@@ -166,8 +166,8 @@ export default function RecommendedCard({
             <p className="text-xs">{year.toString()}</p>
 
             <Image
-              width="20"
-              height="10"
+              width="10"
+              height="5"
               alt="bookmark"
               src={category === "TV Series" ? tvCategory : movieCategory}
             />

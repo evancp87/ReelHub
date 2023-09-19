@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Trending from "./Trending";
 import Recommended from "./Recommended";
@@ -30,33 +32,33 @@ export default function Dashboard({}: Props) {
     //   <Trending />
     //   <Recommended />
     // </>
-    <ReduxProvider>
-      <div className="bg-[#10141E]">
-        <p className="mt-4 flex self-start">
-          {search && `Found ${filteredSearch.length} results for ${search}`}
-        </p>
-        {search ? (
-          <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
-            {filteredSearch.map((media: Media) => (
-              <MediaCard
-                title={media.title}
-                thumbnail={media.thumbnail}
-                year={media.year}
-                category={media.category}
-                rating={media.rating}
-                isBookmarked={media.isBookmarked}
-                isTrending={media.isTrending}
-                id={media._id}
-              />
-            ))}
-          </div>
-        ) : (
-          <>
-            <Trending />
-            <Recommended />
-          </>
-        )}
-      </div>
-    </ReduxProvider>
+    // <ReduxProvider>
+    <div className="bg-[#10141E]">
+      <p className="mt-4 flex self-start">
+        {search && `Found ${filteredSearch.length} results for ${search}`}
+      </p>
+      {search ? (
+        <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
+          {filteredSearch.map((media: Media) => (
+            <MediaCard
+              title={media.title}
+              thumbnail={media.thumbnail}
+              year={media.year}
+              category={media.category}
+              rating={media.rating}
+              isBookmarked={media.isBookmarked}
+              isTrending={media.isTrending}
+              id={media._id}
+            />
+          ))}
+        </div>
+      ) : (
+        <>
+          <Trending />
+          <Recommended />
+        </>
+      )}
+    </div>
+    // </ReduxProvider>
   );
 }

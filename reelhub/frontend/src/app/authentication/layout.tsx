@@ -27,21 +27,24 @@ import React from "react";
 import Image from "next/image";
 
 import MovieIcon from "/public/assets/logo.svg";
+import { ReduxProvider } from "../../components/ReduxProvider";
 
 const AuthLayout = ({ children }) => {
   return (
     // <main className="flex min-h-screen w-full p-24">
-    <div className="flex min-h-screen w-full  flex-col items-center justify-center ">
-      <Image
-        width="30"
-        height="30"
-        alt="bookmark"
-        src={MovieIcon}
-        className="mb-4 self-center"
-      />
+    <ReduxProvider>
+      <div className="flex min-h-screen w-full  flex-col items-center justify-center ">
+        <Image
+          width="30"
+          height="30"
+          alt="bookmark"
+          src={MovieIcon}
+          className="mb-4 self-center"
+        />
 
-      {children}
-    </div>
+        {children}
+      </div>
+    </ReduxProvider>
     // </main>
   );
 };

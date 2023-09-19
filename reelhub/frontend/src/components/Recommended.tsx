@@ -13,33 +13,33 @@ export default function Recommended({}: Props) {
   const { isLoading, isFetching, data, error } = useGetMediaQuery(null);
 
   return (
-    <ReduxProvider>
-      <div className="mb-4">
-        <h3 className="mb-4 text-2xl md:text-3xl">Recommended for you</h3>
-        <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
-          {error ? (
-            <p>Oh no, there was an error</p>
-          ) : isLoading || isFetching ? (
-            <p>Loading...</p>
-          ) : data ? (
-            data.map((media, index) => {
-              const { year, title, rating, thumbnail, category, _id } = media;
-              console.log(thumbnail?.regular.large);
-              return (
-                <MediaCard
-                  key={index}
-                  year={year}
-                  category={category}
-                  rating={rating}
-                  title={title}
-                  thumbnail={thumbnail}
-                  id={_id}
-                />
-              );
-            })
-          ) : null}
-        </div>
+    // <ReduxProvider>
+    <div className="mb-4">
+      <h3 className="mb-4 text-2xl md:text-3xl">Recommended for you</h3>
+      <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
+        {error ? (
+          <p>Oh no, there was an error</p>
+        ) : isLoading || isFetching ? (
+          <p>Loading...</p>
+        ) : data ? (
+          data.map((media, index) => {
+            const { year, title, rating, thumbnail, category, _id } = media;
+            console.log(thumbnail?.regular.large);
+            return (
+              <MediaCard
+                key={index}
+                year={year}
+                category={category}
+                rating={rating}
+                title={title}
+                thumbnail={thumbnail}
+                id={_id}
+              />
+            );
+          })
+        ) : null}
       </div>
-    </ReduxProvider>
+    </div>
+    // </ReduxProvider>
   );
 }

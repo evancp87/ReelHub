@@ -89,7 +89,7 @@ function Login() {
 
   useEffect(() => {
     if (isSuccess) {
-      router.push("/");
+      router.push("/dashboard");
     }
     console.log("is redirecting");
   }, [isSuccess]);

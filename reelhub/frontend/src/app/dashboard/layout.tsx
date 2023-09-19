@@ -1,6 +1,6 @@
 // "use client";
 
-import "./globals.css";
+import "../globals.css";
 // import type { Metadata } from "next";
 // import { Inter } from "next/font/google";
 // import Sidebar from "../components/Sidebar";
@@ -31,24 +31,26 @@ import Sidebar from "@/components/Sidebar";
 import Dashboard from "@/components/Dashboard";
 import Controls from "@/components/Controls";
 import { ReduxProvider } from "@/components/ReduxProvider";
-import { useGetTrendingMediaQuery } from "../store/services/mediaApi";
+import { useGetTrendingMediaQuery } from "../../store/services/mediaApi";
 import TrendingCard from "@/components/TrendingCard";
-import AuthProvider from "../components/AuthProvider";
+import AuthProvider from "../../components/AuthProvider";
 
 // const handle;
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html>
       <body>
-        <body>
-          {/* <Sidebar /> */}
-          {/* <main className="flex min-h-screen w-full flex-col items-center  p-[2em]"> */}
-          {/* <Controls /> */}
-          {/* <AuthProvider> */}
-          <ReduxProvider>{children}</ReduxProvider>
-          {/* </AuthProvider> */}
-          {/* </main> */}
-        </body>
+        <ReduxProvider>
+          <AuthProvider>
+            <div className="flex flex-col bg-[#10141E] md:flex-row ">
+              <Sidebar />
+              <main className="flex min-h-screen w-full flex-col items-center  p-[2em]">
+                <Controls />
+                {children}
+              </main>
+            </div>
+          </AuthProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

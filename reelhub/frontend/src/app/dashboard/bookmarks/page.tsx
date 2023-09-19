@@ -3,16 +3,16 @@ import React from "react";
 import BookmarkedMovies from "@/components/BookmarkedMovies";
 import BookmarkedTV from "@/components/BookmarkedTV";
 // import { ReduxProvider } from "@/components/ReduxProvider";
-import { ReduxProvider } from "../../components/ReduxProvider";
+import { ReduxProvider } from "../../../components/ReduxProvider";
 import { useSelector, useDispatch, TypedUseSelectorHook } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
+import { AppDispatch, RootState } from "../../../store/store";
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 import { selectCurrentUser } from "@/store/services/usersSlice";
 import { useGetUserBookmarksQuery } from "@/store/services/bookmarksApi";
 import { selectSearch } from "@/store/services/mediaSlice";
-import MediaCard from "../../components/MediaCard";
-import { Media } from "../../store/services/types";
+import MediaCard from "../../../components/MediaCard";
+import { Media } from "../../../store/services/types";
 type Props = {};
 
 export default function page({}: Props) {
@@ -34,32 +34,32 @@ export default function page({}: Props) {
 
   return (
     <div>
-      <ReduxProvider>
-        {search ? (
-          <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
-            <p className="mt-4 flex self-start">
-              {search && `Found ${filteredSearch.length} results for ${search}`}
-            </p>
-            {filteredSearch.map((bookmark) => (
-              <MediaCard
-                title={bookmark.media.title}
-                thumbnail={bookmark.media.thumbnail}
-                year={bookmark.media.year}
-                category={bookmark.media.category}
-                rating={bookmark.media.rating}
-                isBookmarked={bookmark.media.isBookmarked}
-                isTrending={bookmark.media.isTrending}
-                id={bookmark.media._id}
-              />
-            ))}
-          </div>
-        ) : (
-          <>
-            <BookmarkedMovies />
-            <BookmarkedTV />
-          </>
-        )}
-      </ReduxProvider>
+      {/* <ReduxProvider> */}
+      {search ? (
+        <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
+          <p className="mt-4 flex self-start">
+            {search && `Found ${filteredSearch.length} results for ${search}`}
+          </p>
+          {filteredSearch.map((bookmark) => (
+            <MediaCard
+              title={bookmark.media.title}
+              thumbnail={bookmark.media.thumbnail}
+              year={bookmark.media.year}
+              category={bookmark.media.category}
+              rating={bookmark.media.rating}
+              isBookmarked={bookmark.media.isBookmarked}
+              isTrending={bookmark.media.isTrending}
+              id={bookmark.media._id}
+            />
+          ))}
+        </div>
+      ) : (
+        <>
+          <BookmarkedMovies />
+          <BookmarkedTV />
+        </>
+      )}
+      {/* </ReduxProvider> */}
     </div>
   );
 }
