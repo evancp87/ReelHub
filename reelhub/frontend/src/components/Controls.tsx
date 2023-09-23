@@ -32,7 +32,7 @@ export default function Controls() {
       <input
         className="ml-4 w-full bg-transparent focus:outline-none"
         type="text"
-        placeholder="Search for movies or Tv series"
+        placeholder="Search for content"
         value={search}
         onChange={handleQuery}
       />
