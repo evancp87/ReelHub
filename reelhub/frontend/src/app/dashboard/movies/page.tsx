@@ -33,15 +33,15 @@ export default function page({}: Props) {
   return (
     // <ReduxProvider>
     <div className="my-4 w-full">
-      <p className="mt-4 flex self-start">
-        {search && `Found ${filteredSearch.length} results for ${search}`}
-      </p>
-      <h3 className="mb-4 text-2xl md:text-3xl">Movies</h3>
-      <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
-        {/* {filteredSearch.length === 0 && <p>No movies found</p>} */}
-
-        {search ? (
-          filteredSearch.map((media: Media) => (
+      {search && (
+        <p className="my-4 flex self-start">
+          Found {filteredSearch.length} results for '{search}'
+        </p>
+      )}
+      {/* {filteredSearch.length === 0 && <p>No movies found</p>} */}
+      {search ? (
+        <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
+          {filteredSearch.map((media: Media) => (
             <MediaCard
               title={media.title}
               thumbnail={media.thumbnail}
@@ -50,37 +50,42 @@ export default function page({}: Props) {
               rating={media.rating}
               isBookmarked={media.isBookmarked}
               isTrending={media.isTrending}
-              // id={_id}
             />
-          ))
-        ) : (
-          <>
-            {error ? (
-              <p>Oh no, there was an error</p>
-            ) : isLoading || isFetching ? (
-              <p>Loading...</p>
-            ) : data ? (
-              data.map((media, index) => {
-                const { year, title, rating, thumbnail, category, _id } = media;
-                console.log(thumbnail?.regular.large);
+          ))}
+        </div>
+      ) : (
+        <>
+          {error ? (
+            <p>Oh no, there was an error</p>
+          ) : isLoading || isFetching ? (
+            <p>Loading...</p>
+          ) : data ? (
+            <>
+              <h3 className="mb-4 text-2xl md:text-3xl">Movies</h3>
+              <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
+                {data.map((media, index) => {
+                  const { year, title, rating, thumbnail, category, _id } =
+                    media;
+                  console.log(thumbnail?.regular.large);
 
-                return (
-                  <MediaCard
-                    key={index}
-                    year={year}
-                    category={category}
-                    rating={rating}
-                    title={title}
-                    thumbnail={thumbnail}
-                    id={_id}
-                  />
-                );
-              })
-            ) : null}
-          </>
-        )}
-      </div>
+                  return (
+                    <MediaCard
+                      key={index}
+                      year={year}
+                      category={category}
+                      rating={rating}
+                      title={title}
+                      thumbnail={thumbnail}
+                      id={_id}
+                    />
+                  );
+                })}
+              </div>
+            </>
+          ) : null}
+        </>
+      )}
+      {/* </div> */}
     </div>
-    // </ReduxProvider>
   );
 }

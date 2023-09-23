@@ -37,7 +37,7 @@ const AuthLayout = ({ children }) => {
         <Image
           width="30"
           height="30"
-          alt="bookmark"
+          alt="movie icon"
           src={MovieIcon}
           className="mb-4 self-center"
         />

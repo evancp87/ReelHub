@@ -33,26 +33,30 @@ export default function page({}: Props) {
     : [];
 
   return (
-    <div>
+    <div className="contents">
       {/* <ReduxProvider> */}
+      {search && (
+        <p className="my-4 flex self-start">
+          Found {filteredSearch.length} results for '{search}'
+        </p>
+      )}
       {search ? (
-        <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
-          <p className="mt-4 flex self-start">
-            {search && `Found ${filteredSearch.length} results for ${search}`}
-          </p>
-          {filteredSearch.map((bookmark) => (
-            <MediaCard
-              title={bookmark.media.title}
-              thumbnail={bookmark.media.thumbnail}
-              year={bookmark.media.year}
-              category={bookmark.media.category}
-              rating={bookmark.media.rating}
-              isBookmarked={bookmark.media.isBookmarked}
-              isTrending={bookmark.media.isTrending}
-              id={bookmark.media._id}
-            />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
+            {filteredSearch.map((bookmark) => (
+              <MediaCard
+                title={bookmark.media.title}
+                thumbnail={bookmark.media.thumbnail}
+                year={bookmark.media.year}
+                category={bookmark.media.category}
+                rating={bookmark.media.rating}
+                isBookmarked={bookmark.media.isBookmarked}
+                isTrending={bookmark.media.isTrending}
+                id={bookmark.media._id}
+              />
+            ))}
+          </div>
+        </>
       ) : (
         <>
           <BookmarkedMovies />

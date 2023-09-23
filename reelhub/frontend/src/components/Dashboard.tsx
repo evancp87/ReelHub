@@ -33,10 +33,12 @@ export default function Dashboard({}: Props) {
     //   <Recommended />
     // </>
     // <ReduxProvider>
-    <div className="bg-[#10141E]">
-      <p className="mt-4 flex self-start">
-        {search && `Found ${filteredSearch.length} results for ${search}`}
-      </p>
+    <div className="bg-[#10141E] p-2">
+      {search && (
+        <p className="my-4 flex self-start">
+          Found {filteredSearch.length} results for '{search}'
+        </p>
+      )}
       {search ? (
         <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {filteredSearch.map((media: Media) => (

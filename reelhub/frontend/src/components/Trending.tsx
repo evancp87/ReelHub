@@ -9,6 +9,9 @@ import { Media } from "../store/services/types";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 type Props = {};
+
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+
 import { useGetTrendingMediaQuery } from "../store/services/mediaApi";
 export default function Trending({}: Props) {
   const { isLoading, isFetching, data, error } = useGetTrendingMediaQuery(null);
@@ -18,11 +21,13 @@ export default function Trending({}: Props) {
     // <ReduxProvider>
     <div className="mb-4">
       <h3 className="my-4 text-2xl md:text-3xl">Trending</h3>
-      <div className="carousel-end carousel rounded-box mb-4 gap-4">
+      <div className="carousel-end carousel rounded-box mb-4 h-[200px] gap-4 overflow-y-clip sm:h-auto">
         {error ? (
-          <p>Oh no, there was an error</p>
+          <p className="flex w-full flex-col items-start">
+            Oh no, there was an error
+          </p>
         ) : isLoading || isFetching ? (
-          <Skeleton width={400} height={200} />
+          <p className="flex w-full flex-col items-start">Loading...</p>
         ) : data ? (
           data.map((media: Media, index) => {
             const { year, title, rating, thumbnail, category, _id } = media;

@@ -27,7 +27,7 @@ export default async function Home() {
       <div className="flex flex-col bg-[#10141E] md:flex-row ">
         {/* <Sidebar /> */}
 
-        <main className="flex min-h-screen w-full flex-col  items-center">
+        <main className="flex min-h-screen w-full flex-col items-center p-4">
           {/* <Controls /> */}
           {/* <AuthProvider>
             <Dashboard /> */}

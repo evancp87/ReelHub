@@ -44,7 +44,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <AuthProvider>
             <div className="flex flex-col bg-[#10141E] md:flex-row ">
               <Sidebar />
-              <main className="flex min-h-screen w-full flex-col items-center  p-[2em]">
+              <main className="flex min-h-screen w-full flex-col items-center p-4">
                 <Controls />
                 {children}
               </main>
