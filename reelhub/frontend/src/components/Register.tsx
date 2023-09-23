@@ -47,6 +47,8 @@ function Register() {
   //   const { createUser, isLoading: isRegisteringUser } = useCreateUserMutation;
   const [createUser, { isLoading, isSuccess, error, isError }] =
     useCreateUserMutation();
+
+  console.log(error);
   const [errors, setErrors] = useState(null);
   //   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -62,7 +64,8 @@ function Register() {
     }
   };
 
-  const handleRegister = () => {
+  const handleRegister = (e: any) => {
+    e.preventDefault();
     try {
       //   dispatch(registerUser(userInput));
       createUser(userInput);
@@ -76,6 +79,12 @@ function Register() {
       router.push("/login");
     }
   }, [isSuccess]);
+
+  const errorByField = (key: string) => {
+    const error = errors && errors.find((error) => error.key === key);
+    return error ? error.message : "";
+  };
+
   return (
     // <ReduxProvider>
     <div className="w-64 rounded-lg bg-darkBlue md:w-80">
@@ -84,93 +93,69 @@ function Register() {
         <div className="relative">
           <input
             className={`lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
-            ${errors ? "border-b-2 border-[#FC4747] " : {}}`}
+            ${errorByField("firstName") ? "border-b-2 border-[#FC4747] " : {}}`}
             type="text"
             name="firstName"
             onChange={handleInputs}
             placeholder="First Name"
             value={userInput.firstName}
           />
-          {errors &&
-            errors.map((error, index) =>
-              error.key === "firstName" ? (
-                <p
-                  className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]"
-                  key={index}
-                >
-                  {error.message}
-                </p>
-              ) : null
-            )}
+          {errorByField("firstName") && (
+            <p className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]">
+              {errorByField("firstName")}
+            </p>
+          )}
         </div>
 
         <div className="relative">
           <input
             className={`lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
-            ${errors ? "border-b-2 border-[#FC4747] " : {}}`}
+            ${errorByField("lastName") ? "border-b-2 border-[#FC4747] " : {}}`}
             type="text"
             name="lastName"
             onChange={handleInputs}
             value={userInput.lastName}
             placeholder="Last Name"
           />
-          {errors &&
-            errors.map((error, index) =>
-              error.key === "lastName" ? (
-                <p
-                  className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]"
-                  key={index}
-                >
-                  {error.message}
-                </p>
-              ) : null
-            )}
+          {errorByField("lastName") && (
+            <p className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]">
+              {errorByField("lastName")}
+            </p>
+          )}
         </div>
 
         <div className="relative">
           <input
             className={`lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
-            ${errors ? "border-b-2 border-[#FC4747] " : {}}`}
+            ${errorByField("email") ? "border-b-2 border-[#FC4747] " : {}}`}
             type="text"
             name="email"
             onChange={handleInputs}
             value={userInput.email}
             placeholder="Email"
           />
-          {errors &&
-            errors.map((error, index) =>
-              error.key === "email" ? (
-                <p
-                  className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]"
-                  key={index}
-                >
-                  {error.message}
-                </p>
-              ) : null
-            )}
+          {errorByField("email") && (
+            <p className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]">
+              {errorByField("email")}
+            </p>
+          )}
         </div>
 
         <div className="relative">
           <input
             className={`lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
-            ${errors ? "border-b-2 border-[#FC4747] " : {}}`}
+            ${errorByField("password") ? "border-b-2 border-[#FC4747] " : {}}`}
             type="password"
             name="password"
             value={userInput.password}
             onChange={handleInputs}
             placeholder="Password"
           />
-          {errors &&
-            errors.map((error, index) =>
-              error.key === "password" ? (
-                <p
-                  className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]"
-                  key={index}
-                >
-                  {error.message}
-                </p>
-              ) : null
-            )}
+          {errorByField("password") && (
+            <p className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]">
+              {errorByField("password")}
+            </p>
+          )}
         </div>
         {/* <label htmlFor="repeatPassword">Repeat Password</label>
 
@@ -207,7 +192,7 @@ function Register() {
       </div>
       {error && (
         <p className="min-h-30 my-4 flex justify-center text-xs text-red ">
-          error.data.message
+          {error.data}
         </p>
       )}
     </div>

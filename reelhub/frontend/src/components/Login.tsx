@@ -53,6 +53,10 @@ function Login() {
 
   console.log(isSuccess);
   //   const { createUser, isLoading: isRegisteringUser } = useCreateUserMutation;
+  const errorByField = (key: string) => {
+    const error = errors && errors.find((error) => error.key === key);
+    return error ? error.message : "";
+  };
 
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -104,9 +108,8 @@ function Login() {
       >
         <div className="relative w-full">
           <input
-            className={`my-4 my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none ${
-              errors !== null ? "border-b-2 border-[#FC4747] " : {}
-            }`}
+            className={`my-4 my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none 
+            ${errorByField("email") ? "border-[#FC4747]" : ""}`}
             type="text"
             onChange={handleInputs}
             value={userInput.email}
@@ -114,25 +117,20 @@ function Login() {
             //   title={errors.email}
             name="email"
           />
-          {/* {errors && (
-            <p className="absolute right-0 top-0 text-red">{errors.email}</p>
-          )} */}
-          {errors &&
-            errors.map((error, index) =>
-              error.key === "email" ? (
-                <p
-                  key={index}
-                  className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]"
-                >
-                  {error.message}
-                </p>
-              ) : null
-            )}
+
+          {/* {errors && errorByField("email")}
+           */}
+
+          {errorByField("email") && (
+            <p className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]">
+              {errorByField("email")}
+            </p>
+          )}
         </div>
         <div className="relative w-full">
           <input
             className={` my-4 my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 opacity-75 focus:opacity-100 focus:outline-none 
-           ${errors !== null ? "border-b-2 border-[#FC4747] " : {}}`}
+            ${errorByField("password") ? "border-[#FC4747]" : ""}`}
             type="password"
             onChange={handleInputs}
             value={userInput.password}
@@ -140,17 +138,14 @@ function Login() {
             //   title={errors.password}
             name="password"
           />
-          {errors &&
-            errors.map((error, index) =>
-              error.key === "password" ? (
-                <p
-                  className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]"
-                  key={index}
-                >
-                  {error.message}
-                </p>
-              ) : null
-            )}
+
+          {/* {errors && errorByField("password")}
+           */}
+          {errorByField("password") && (
+            <p className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]">
+              {errorByField("password")}
+            </p>
+          )}
         </div>
 
         <button
@@ -163,7 +158,7 @@ function Login() {
       </form>
       <div className="mb-4 ms-2.5 flex justify-center gap-x-1.5 text-xs">
         <p>Don't have an account?</p>{" "}
-        <Link href="register" className="text-red">
+        <Link href="register" className="cursor-pointer text-red">
           Sign Up
         </Link>
       </div>
