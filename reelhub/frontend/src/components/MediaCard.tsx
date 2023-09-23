@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // import Thing from "/public/assets/thumbnails/autosport-the-series/regular/large.jpg";
-import Bookmark from "/public/assets/icon-bookmark-empty.svg";
+import EmptyBookmark from "/public/assets/icon-bookmark-empty.svg";
+import FullBookmark from "/public/assets/icon-bookmark-full.svg";
+
+import Play from "/public/assets/icon-play.svg";
 import Image from "next/image";
 import movieCategory from "/public/assets/icon-category-movie.svg";
 import tvCategory from "/public/assets/icon-category-tv.svg";
@@ -10,7 +13,6 @@ import "react-toastify/dist/ReactToastify.css";
 import type { TypedUseSelectorHook } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
-
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -77,7 +79,11 @@ export default function RecommendedCard({
   const mediaId = id;
   const [addBookmark] = useAddBookmarkMutation();
   const [deleteMedia] = useDeleteMediaMutation();
+  const [hovered, setHovered] = useState(false);
 
+  const handleHover = () => {
+    setHovered(!hovered);
+  };
   // const { data: addBookmark } = useAddBookmarkMutation();
   // const { data: deleteMedia } = useDeleteMediaMutation();
 
@@ -131,50 +137,62 @@ export default function RecommendedCard({
 
   return (
     <>
-      <div className="relative">
-        <picture>
-          <source
-            media="(max-width: 500px)"
-            srcSet={regularSmall?.valueOf() || ""}
-          />
-          <source
-            media="(max-width: 800px)"
-            srcSet={regularMedium?.valueOf() || ""}
-          />
-          <Image
-            alt="image"
-            className="rounded-md"
-            width="400"
-            height="200"
-            src={regularLarge?.valueOf() || ""}
-          />
-        </picture>
-
-        <div className="absolute right-0 top-0 mr-[1em] mt-[1em] cursor-pointer rounded-full bg-gray-700 p-3 opacity-60 hover:bg-white">
-          <Image
-            width="20"
-            height="20"
-            alt="bookmark"
-            className={`hover:brightness-[.95] hover:contrast-[1.05] hover:hue-rotate-[293deg] hover:invert-[0] hover:saturate-[0] hover:sepia-[.04]
-            ${!bookmarked ? "" : "bg-white"}`}
-            src={Bookmark}
-            onClick={handleBookmarkInteraction}
-          />
+      <div className=" ">
+        <div className="hover-overlay img-container relative">
+          <picture className=" ">
+            <source
+              media="(max-width: 500px)"
+              srcSet={regularSmall?.valueOf() || ""}
+            />
+            <source
+              media="(max-width: 800px)"
+              srcSet={regularMedium?.valueOf() || ""}
+            />
+            <Image
+              alt={`${title} cover`}
+              className="rounded-md"
+              width="400"
+              height="200"
+              src={regularLarge?.valueOf() || ""}
+            />
+            <div className="play-icon flex hidden gap-1.5 rounded-3xl bg-slate-300 bg-opacity-60 px-8 py-2">
+              <Image
+                width="20"
+                height="20"
+                alt="play button"
+                className="opacity-100 "
+                src={Play}
+              />
+              <p className="opacity-100 ">Play</p>
+            </div>
+            <div className="bookmark-container absolute right-0 top-0 mr-[1em] mt-[1em] cursor-pointer rounded-full bg-gray-700 p-3 opacity-60 hover:bg-white min-[1850px]:right-[50px] min-[2000px]:right-[100px] min-[2000px]:top-[-10px]">
+              <Image
+                width="10"
+                height="10"
+                alt="bookmark"
+                className="filtered-bookmark"
+                // className={`${!bookmarked ? "" : "bg-white"}`}
+                src={bookmarked ? FullBookmark : EmptyBookmark}
+                onClick={handleBookmarkInteraction}
+              />
+            </div>
+          </picture>
         </div>
-        <div className=" flex max-w-[70%] flex-col ">
+        <div className=" flex max-w-[90%] flex-col lg:max-w-[70%] ">
           <div className=" my-2 flex flex-row justify-between">
             <p className="text-xs">{year.toString()}</p>
-
-            <Image
-              width="10"
-              height="5"
-              alt="bookmark"
-              src={category === "TV Series" ? tvCategory : movieCategory}
-            />
-            <p className="text-xs">{category}</p>
+            <div className="ml-2 flex flex-wrap gap-[0.3em]">
+              <Image
+                width="10"
+                height="5"
+                alt={category === "TV Series" ? "TV Icon" : "Movie Icon"}
+                src={category === "TV Series" ? tvCategory : movieCategory}
+              />
+              <p className="text-xs">{category}</p>
+            </div>
             <p className="text-xs">{rating}</p>
           </div>
-          <h3 className="text-lg"> {title}</h3>
+          <h3 className="text-sm lg:text-lg"> {title}</h3>
           <ToastContainer
             position="top-right"
             autoClose={5000}
