@@ -181,7 +181,7 @@ export default function RecommendedCard({
         <div className=" flex max-w-[90%] flex-col lg:max-w-[70%] ">
           <div className=" my-2 flex flex-row justify-between">
             <p className="text-xs">{year.toString()}</p>
-            <div className="ml-2 flex flex-wrap gap-[0.3em]">
+            <div className="ml-2 flex flex-wrap gap-[0.8em]">
               <Image
                 width="10"
                 height="5"
