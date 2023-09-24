@@ -21,18 +21,18 @@ export default function Trending({}: Props) {
     // <ReduxProvider>
     <div className="mb-4">
       <h3 className="my-4 text-2xl md:text-3xl">Trending</h3>
-      <div className="carousel-end carousel rounded-box mb-4 h-[200px] gap-4 overflow-y-clip sm:h-auto">
+      <ul className="carousel-end carousel rounded-box mb-4 h-[200px] gap-4 overflow-y-clip sm:h-auto">
         {error ? (
-          <p className="flex w-full flex-col items-start">
+          <li className="flex w-full flex-col items-start">
             Oh no, there was an error
-          </p>
+          </li>
         ) : isLoading || isFetching ? (
-          <p className="flex w-full flex-col items-start">Loading...</p>
+          <li className="flex w-full flex-col items-start">Loading...</li>
         ) : data ? (
           data.map((media: Media, index) => {
             const { year, title, rating, thumbnail, category, _id } = media;
             return (
-              <div className="carousel-item relative">
+              <li className="carousel-item relative">
                 <TrendingCard
                   key={index}
                   year={year}
@@ -44,11 +44,11 @@ export default function Trending({}: Props) {
                   // isBookmarked={isBookmarked}
                   // isTrending={isTrending}
                 />
-              </div>
+              </li>
             );
           })
         ) : null}
-      </div>
+      </ul>
     </div>
     // </ReduxProvider>
   );

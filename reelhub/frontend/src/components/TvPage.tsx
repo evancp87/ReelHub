@@ -40,7 +40,7 @@ export default function page({}: Props) {
       )}
       <div className="my-4 w-full">
         {search ? (
-          <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
+          <ul className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
             {filteredSearch.map((media: Media) => (
               <MediaCard
                 title={media.title}
@@ -52,7 +52,7 @@ export default function page({}: Props) {
                 isTrending={media.isTrending}
               />
             ))}
-          </div>
+          </ul>
         ) : (
           <>
             {error ? (
@@ -63,7 +63,7 @@ export default function page({}: Props) {
               <>
                 <h3 className="mb-4 text-2xl md:text-3xl">TV Series</h3>
 
-                <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
+                <ul className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
                   {data.map((media, index) => {
                     const { year, title, rating, thumbnail, category, _id } =
                       media;
@@ -81,7 +81,7 @@ export default function page({}: Props) {
                       </div>
                     );
                   })}
-                </div>
+                </ul>
               </>
             ) : null}
           </>

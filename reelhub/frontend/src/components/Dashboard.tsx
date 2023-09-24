@@ -40,7 +40,7 @@ export default function Dashboard({}: Props) {
         </p>
       )}
       {search ? (
-        <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
+        <ul className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {filteredSearch.map((media: Media) => (
             <MediaCard
               title={media.title}
@@ -53,7 +53,7 @@ export default function Dashboard({}: Props) {
               id={media._id}
             />
           ))}
-        </div>
+        </ul>
       ) : (
         <>
           <Trending />

@@ -34,14 +34,18 @@ export default function BookmarkedTV({}: Props) {
   );
 
   return (
-    <div className="my-4">
+    <div className="my-4 w-full">
       <h3 className="mb-4 text-2xl md:text-3xl">Bookmarked TV Series</h3>
-      <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
+      <ul className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
         {error ? (
-          <p>Oh no, there was an error</p>
+          <li>
+            <p>Oh no, there was an error</p>
+          </li>
         ) : isLoading || isFetching ? (
-          <p>Loading...</p>
-        ) : data ? (
+          <li>
+            <p>Loading...</p>
+          </li>
+        ) : data && data.length > 0 ? (
           data
             .filter((media) => media.media.category === "TV Series")
             .map((media, index) => {
@@ -59,8 +63,13 @@ export default function BookmarkedTV({}: Props) {
                 />
               );
             })
-        ) : null}
-      </div>
+        ) : (
+          <li>
+            {" "}
+            <p className="py-4">Bookmarked TV series will appear here</p>
+          </li>
+        )}
+      </ul>
     </div>
   );
 }

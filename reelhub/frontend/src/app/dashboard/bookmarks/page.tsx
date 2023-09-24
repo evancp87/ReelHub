@@ -42,7 +42,7 @@ export default function page({}: Props) {
       )}
       {search ? (
         <>
-          <div className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
+          <ul className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
             {filteredSearch.map((bookmark) => (
               <MediaCard
                 title={bookmark.media.title}
@@ -55,7 +55,7 @@ export default function page({}: Props) {
                 id={bookmark.media._id}
               />
             ))}
-          </div>
+          </ul>
         </>
       ) : (
         <>
