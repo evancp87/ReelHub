@@ -1,6 +1,11 @@
 // "use client";
 
 import "../globals.css";
+import { Outfit } from "next/font/google";
+const outfit = Outfit({
+  subsets: ["latin"],
+  display: "swap",
+});
 // import type { Metadata } from "next";
 // import { Inter } from "next/font/google";
 // import Sidebar from "../components/Sidebar";
@@ -39,7 +44,7 @@ import AuthProvider from "../../components/AuthProvider";
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html>
-      <body>
+      <body className={outfit.className}>
         <ReduxProvider>
           <AuthProvider>
             <div className="flex flex-col bg-[#10141E] md:flex-row ">
