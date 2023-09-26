@@ -8,6 +8,7 @@ const backend = "http://localhost:6002";
 
 
 const userToken = typeof localStorage !== 'undefined' ? localStorage.getItem("userToken") : null;
+const user = typeof localStorage !== 'undefined' ? JSON.parse(localStorage.getItem("user")) : null;
 
 
 type InitialState = {
@@ -20,7 +21,7 @@ type InitialState = {
 
 const initialState = {
   // loading: false,
-  user: null, 
+  user: user, 
   token: userToken, 
   // error: null,
   // success: false,
@@ -58,10 +59,12 @@ export const userSlice = createSlice({
  
 setCredentials: (state, action: PayloadAction<{ userToFind: User; token: string }>) => {
   const { userToFind, token } = action.payload;
-  
+  const {email, firstName, lastName, _id } = userToFind;
+  const user = {email, firstName, lastName, _id}
   localStorage.setItem("userToken", token);
+  localStorage.setItem("user", JSON.stringify(user))
   console.log("checking the data here", userToFind, token);
-  state.user = userToFind;
+  state.user =  userToFind;
   state.token = token;
 },
 
@@ -69,6 +72,8 @@ setCredentials: (state, action: PayloadAction<{ userToFind: User; token: string 
 
       console.log("helooooooooo")
       localStorage.removeItem("userToken");
+      localStorage.removeItem("user")
+
       return {...initialState};
     },
   },
@@ -84,4 +89,5 @@ export const {
 export const selectCurrentUser = (state: RootState) => state.users.user;
 export const selectCurrentToken = (state: RootState) => state.users.token;
 export const selectAuthState = (state: RootState) => state.users;
+
 export default userSlice.reducer;

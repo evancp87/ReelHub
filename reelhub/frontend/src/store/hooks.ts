@@ -12,7 +12,11 @@ type BookmarkParams = {
 export const useIsAuthenticated = () => {
     const user = useAppSelector(selectCurrentUser);
     const token = useAppSelector(selectCurrentToken);
-    return { user, token, isAuthenticated: user !== null };
+    // return   user !== null 
+          
+    return { user, token, isAuthenticated:
+         user !== null && token !== null 
+        };
 }
 
 export const useAddBookmark = (mediaId:BookmarkParams, userId:BookmarkParams) => {

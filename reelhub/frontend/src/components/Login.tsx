@@ -43,7 +43,7 @@ function Login() {
   //   const { loading, user, error, success } = useAppSelector(selectAuthState);
   const [loginUser, { isLoading, isSuccess, error, isError }] =
     useLoginUserMutation();
-
+  console.log("checking the error:", error);
   //   const userEmail = userInput?.email;
 
   //   const { data: getUserInfo } = useGetUserInfoQuery(userEmail);
@@ -149,7 +149,9 @@ function Login() {
         </div>
 
         <button
-          className="mb-4 h-9 cursor-pointer rounded-lg bg-red text-[white] hover:bg-white hover:text-[black]"
+          className={`mb-4 h-9 cursor-pointer rounded-lg bg-red text-[white] hover:bg-white hover:text-[black] ${
+            isLoading && "cursor-not-allowed"
+          }`}
           type="submit"
           disabled={isLoading}
         >

@@ -19,40 +19,34 @@ import { ReduxProvider } from "./ReduxProvider";
 import type { TypedUseSelectorHook } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { useLogoutUserMutation } from "../store/services/userApi";
+import {
+  useLogoutUserMutation,
+  useGetUserInfoQuery,
+} from "../store/services/userApi";
 // import { useGetUserInfoQuery } from "../store/services/userApi";
 import { useRouter, usePathname } from "next/navigation";
 
-import { selectCurrentUser, logout } from "../store/services/usersSlice";
+import {
+  selectCurrentUser,
+  selectCurrentToken,
+  logout,
+} from "../store/services/usersSlice";
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 type Props = {};
 
 export default function Sidebar({}: Props) {
   const user = useAppSelector(selectCurrentUser);
-  const router = useRouter();
-  // const isActive = (href) => router.isReady && router.pathname.startsWith(href);
-  const currentRoute = usePathname();
-  // const isActive = (href) =>
-  //   router.pathname ? router.pathname.startsWith(href) : false;
+  const token = useAppSelector(selectCurrentToken);
 
-  // console.log(isActive);
+  const userEmail: string = user?.email!;
+  const router = useRouter();
+  const currentRoute = usePathname();
 
   console.log("the user is", user);
   console.log("checking the id", user?._id);
+
   const dispatch = useAppDispatch();
-  // const { data, isFetching } = useGetUserDetailsQuery('userDetails', {
-  //   // perform a refetch every 15mins
-  //     pollingInterval: 900000,
-  //   })
-
-  //   useEffect(()=> {
-  // if (data) {
-  //   dispatch(setCredentials(data))
-  // }
-  //   },[dispatch, data])
-
-  const [logoutUser] = useLogoutUserMutation();
 
   const handleLogout = () => {
     // logoutUser();
