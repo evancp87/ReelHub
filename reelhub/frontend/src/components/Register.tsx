@@ -28,7 +28,7 @@ type User = {
   lastName: string;
   email: string;
   password: string;
-  //   repeatPassword: string;
+  // repeatPassword: string;
   avatar?: File;
 };
 
@@ -76,7 +76,7 @@ function Register() {
 
   useEffect(() => {
     if (isSuccess) {
-      router.push("/login");
+      router.push("/authentication/login");
     }
   }, [isSuccess]);
 
@@ -157,15 +157,26 @@ function Register() {
             </p>
           )}
         </div>
-        {/* <label htmlFor="repeatPassword">Repeat Password</label>
-
+        {/* <div className="relative">
           <input
-            className="my-4"
+            className={`lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
+           ${
+             errorByField("repeatPassword")
+               ? "border-b-2 border-[#FC4747] "
+               : {}
+           }`}
             type="password"
+            placeholder="Repeat Password"
             name="repeatPassword"
             onChange={handleInputs}
-            value={user.repeatPassword}
-          /> */}
+            value={userInput.repeatPassword}
+          />
+          {errorByField("repeatPassword") && (
+            <p className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]">
+              {errorByField("repeatPassword")}
+            </p>
+          )}
+        </div> */}
         <label htmlFor="upload">Choose an avatar (optional)</label>
 
         <input
@@ -177,7 +188,9 @@ function Register() {
 
         {/* handle errors here */}
         <button
-          className="h-9 cursor-pointer rounded-lg bg-red text-xs text-[white] hover:bg-white hover:text-[black]"
+          className={`h-9 cursor-pointer rounded-lg bg-red text-xs text-[white] hover:bg-white hover:text-[black] ${
+            isLoading && "cursor-not-allowed"
+          }`}
           type="submit"
           disabled={isLoading}
         >
