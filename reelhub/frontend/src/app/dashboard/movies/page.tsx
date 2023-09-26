@@ -43,6 +43,7 @@ export default function page({}: Props) {
         <ul className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {filteredSearch.map((media: Media) => (
             <MediaCard
+              key={_id}
               title={media.title}
               thumbnail={media.thumbnail}
               year={media.year}
@@ -50,6 +51,7 @@ export default function page({}: Props) {
               rating={media.rating}
               isBookmarked={media.isBookmarked}
               isTrending={media.isTrending}
+              id={_id}
             />
           ))}
         </ul>
@@ -70,7 +72,7 @@ export default function page({}: Props) {
 
                   return (
                     <MediaCard
-                      key={index}
+                      key={_id}
                       year={year}
                       category={category}
                       rating={rating}

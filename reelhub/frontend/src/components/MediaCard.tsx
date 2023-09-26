@@ -60,6 +60,8 @@ export default function RecommendedCard({
   const regularSmall = thumbnail?.regular?.small;
   const regularMedium = thumbnail?.regular?.medium;
   const regularLarge = thumbnail?.regular?.large;
+
+  console.log(regularSmall, regularMedium, regularLarge);
   const notifySuccessAdd = () => toast("Your bookmark was saved");
   const notifySuccessRemoved = () => toast("Your bookmark was removed");
   const notifyError = () => toast("Your bookmark could not be saved");

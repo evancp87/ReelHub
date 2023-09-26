@@ -45,6 +45,7 @@ export default function page({}: Props) {
           <ul className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
             {filteredSearch.map((bookmark) => (
               <MediaCard
+                key={bookmark.media._id}
                 title={bookmark.media.title}
                 thumbnail={bookmark.media.thumbnail}
                 year={bookmark.media.year}

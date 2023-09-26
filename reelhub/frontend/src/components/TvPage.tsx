@@ -43,6 +43,7 @@ export default function page({}: Props) {
           <ul className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
             {filteredSearch.map((media: Media) => (
               <MediaCard
+                key={media._id}
                 title={media.title}
                 thumbnail={media.thumbnail}
                 year={media.year}
@@ -70,7 +71,7 @@ export default function page({}: Props) {
                     return (
                       <div className="carousel-item relative">
                         <MediaCard
-                          key={index}
+                          key={_id}
                           year={year}
                           category={category}
                           rating={rating}

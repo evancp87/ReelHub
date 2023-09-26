@@ -12,7 +12,7 @@ export default async function HomePage() {
     // </Layout>
     <div className="flex flex-col bg-[#10141E] md:flex-row ">
       <Sidebar />
-      <main className="flex min-h-screen flex-col items-center   p-[2em]">
+      <main className="flex min-h-screen flex-col items-center   pt-[2em]">
         <Controls />
         <Dashboard />
       </main>
