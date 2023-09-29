@@ -1,28 +1,100 @@
 
 import { User } from "../models/users.model";
 import dotenv  from "dotenv"
-import jwt from "jsonwebtoken";
-
 dotenv.config()
+import jwt from "jsonwebtoken";
+import multerS3 from "multer-s3"
 import bcrypt from "bcrypt";
 const saltRounds = 10;
-const jwtSecret = process.env.JWT_SECRET_KEY!;
-// const ,} = require( "express");
+const jwtSecret = process.env.JWT_SECRET_KEY as string;
+import cloudinary from "../cloudinary";
+// const jwtSecret = process.env.JWT_SECRET_KEY!;
+
 import {Request, Response} from "express";
+import {upload} from "../aws-config";
 
- export async function createUser(req:Request, res:Response):Promise<void> {
-try {
-  console.log("createUser route ran");
-  const {firstName, lastName, email, password} = req.body;
+import joi from "joi"; 
 
-  const hashedPassword = await bcrypt.hash(password, saltRounds);
-  const newUser =  new User({
+// const schema = joi.object({
+//   firstName: joi.string().min(1).max(50),
+//   lastName: joi.string().min(1).max(50),
+//   email: joi.string().email().required(),
+//   password: joi.string().min(5).max(40).regex(/[0-9a-zA-Z]*\d[0-9a-zA-Z]*/).required(),
+// });
+
+console.log("checking the user schema", User);
+
+
+
+interface CustomFile extends Express.Multer.File {
+  location?: string;
+}
+
+export async function createUser(req: Request, res: Response): Promise<void> {
+  try {
+    console.log("createUser route ran");
+ 
+    const { firstName, lastName, email, password, avatar } = req.body;
+    
+    // const { firstName, lastName, email, password } = req.body;
+    
+    // let avatar: string | undefined; 
+
+    let uploadedImageId;
+    let uploadedImageUrl: string | undefined;
+
+    if (avatar) {
+      const uploadedImage = await cloudinary.uploader.upload(avatar, {
+          upload_preset: 'urhoa0lz',
+          allowed_formats: ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
+      });
+  
+      // Assign the public_id after the image has been uploaded
+      uploadedImageId = uploadedImage.public_id;
+      uploadedImageUrl = uploadedImage.url;
+      
+      try {
+                console.log(uploadedImage)
+            } catch (err) {
+                console.log(err)
+    
+            }
+  }
+
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+let newUser
+      if (uploadedImageUrl) {
+   newUser = new User({
     firstName,
     lastName,
     email,
-    password: hashedPassword
+    password: hashedPassword,
+    avatar: uploadedImageUrl, 
   });
 
+
+} else {
+  newUser = new User({
+    firstName,
+    lastName,
+    email,
+    password: hashedPassword,
+  });
+  console.log("checking if there's this one is runngin without avatar", newUser)
+
+}
+     
+
+      const duplicateUser = await User.findOne({ email });
+
+      if (duplicateUser) {
+        res.status(401).send("There is already a user with this email address");
+        return;
+      }
+
+        // Validate the request body against the schema
+    
  // const token = jwt.sign(
     //   { email },
     //   process.env.TOKEN_KEY,
@@ -38,10 +110,10 @@ try {
     // );
 
   await newUser.save()
-  res.json(newUser);
+  res.status(200).json({newUser, message: "user created successfully"});
 } catch (error) {
   console.log("There was an error:", error);
-  res.sendStatus(500).json({error: "Failed to create a user"});
+  res.status(500).json({error: "Failed to create a user"});
 }
 
 }

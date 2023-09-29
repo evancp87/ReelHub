@@ -25,6 +25,8 @@ import {
 } from "../store/services/userApi";
 // import { useGetUserInfoQuery } from "../store/services/userApi";
 import { useRouter, usePathname } from "next/navigation";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 import {
   selectCurrentUser,
@@ -118,13 +120,23 @@ export default function Sidebar({}: Props) {
 
         <div className=" mr-2 mt-2 flex flex-wrap justify-center sm:mt-0 sm:mt-0  md:flex-col md:items-center">
           <div className="flex flex-wrap justify-end sm:items-center sm:justify-center md:flex-col ">
-            <Image
-              className="mr-4 md:mb-4 md:mr-0"
-              src={Avatar}
-              alt="logo"
-              width="32"
-              height="25"
-            />
+            {user?.avatar ? (
+              <Image
+                className="mr-4 mt-2 h-[30px] w-[30px] rounded-full md:mb-4 md:mr-0"
+                src={user?.avatar}
+                alt="logo"
+                width="32"
+                height="25"
+              />
+            ) : (
+              <FontAwesomeIcon
+                className="mr-4 mt-4 md:mb-4 md:mr-0"
+                width="32"
+                height="25"
+                icon={faUser}
+              />
+            )}
+
             {user && (
               <p className="mb-4 hidden p-2 text-xs sm:block">
                 Welcome, {user?.firstName}

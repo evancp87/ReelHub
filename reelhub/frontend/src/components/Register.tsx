@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useCreateUserMutation } from "../store/services/userApi";
 import { AppDispatch, RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
+import MoonLoader from "react-spinners/MoonLoader";
 import {
   registerUser,
   selectCurrentUser,
@@ -29,7 +30,7 @@ type User = {
   email: string;
   password: string;
   // repeatPassword: string;
-  avatar?: File;
+  avatar?: string | null;
 };
 
 function Register() {
@@ -39,8 +40,16 @@ function Register() {
     email: "",
     password: "",
     // repeatPassword: "",
-    avatar: undefined,
+    avatar: null,
   });
+
+  const [image, setImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    // This effect will run whenever the `image` state changes
+    console.log("checking the image", image);
+    setUserInput((inputs) => ({ ...inputs, avatar: image }));
+  }, [image]);
 
   //   const { loading, user, error, success } = useAppSelector(selectAuthState);
 
@@ -48,31 +57,73 @@ function Register() {
   const [createUser, { isLoading, isSuccess, error, isError }] =
     useCreateUserMutation();
 
-  console.log(error);
   const [errors, setErrors] = useState(null);
   //   const dispatch = useAppDispatch();
   const router = useRouter();
+  // const handleInputs = async (e) => {
+  //   const { name, value, files } = e.target;
+  //   setUserInput((inputs) => ({ ...inputs, [name]: value }));
+  //   try {
+  //     const payload = { [name]: value };
+  //     const res = await validateRegister(payload);
+  //     setErrors(res);
+  //   } catch (error) {
+  //     console.log("There was an error:", error);
+  //   }
+  // };
+
+  function previewFiles(file: File) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      const imageUrl = reader.result;
+      console.log("checking the image url", imageUrl);
+      setImage(imageUrl);
+    };
+  }
+
   const handleInputs = async (e) => {
-    const { name, value } = e.target;
-    setUserInput((inputs) => ({ ...inputs, [name]: value }));
-    try {
-      const payload = { [name]: value };
-      const res = await validateRegister(payload);
-      setErrors(res);
-    } catch (error) {
-      console.log("There was an error:", error);
+    const { name, value, files } = e.target;
+
+    if (files) {
+      // Handle file inputs
+      const file = files[0];
+      previewFiles(file);
+      console.log("checking if there's a file", file);
+      console.log("checking the image", image);
+      setUserInput((inputs) => ({ ...inputs, avatar: image }));
+    } else {
+      // Handle other inputs
+      setUserInput((inputs) => ({ ...inputs, [name]: value }));
+
+      try {
+        const payload = { [name]: value };
+        const res = await validateRegister(payload);
+        setErrors(res);
+      } catch (error) {
+        console.log("There was an error:", error);
+      }
     }
+  };
+
+  const onImageChosen = (e) => {
+    const file = e.target.files[0];
+    previewFiles(file);
   };
 
   const handleRegister = (e: any) => {
     e.preventDefault();
     try {
       //   dispatch(registerUser(userInput));
+      console.log(userInput);
       createUser(userInput);
     } catch (error) {
       console.log("There was an error", error);
     }
   };
+  console.log(isLoading, isSuccess, error, isError);
+  console.log("is it successful", isSuccess);
+  console.log(error);
 
   useEffect(() => {
     if (isSuccess) {
@@ -84,7 +135,7 @@ function Register() {
     const error = errors && errors.find((error) => error.key === key);
     return error ? error.message : "";
   };
-
+  console.log("checking the avatar", userInput.avatar);
   return (
     // <ReduxProvider>
     <div className="w-64 rounded-lg bg-darkBlue md:w-80">
@@ -182,19 +233,26 @@ function Register() {
         <input
           className="lightBlue my-4 cursor-pointer bg-transparent text-xs"
           type="file"
-          name="upload"
+          name="avatar"
           onChange={handleInputs}
+          // onChange={onImageChoosen}
+
+          accept="image/png, image/jpeg, image/jpg, image/jfif"
         />
 
         {/* handle errors here */}
         <button
           className={`h-9 cursor-pointer rounded-lg bg-red text-xs text-[white] hover:bg-white hover:text-[black] ${
-            isLoading && "cursor-not-allowed"
+            isLoading && "flex cursor-not-allowed justify-center"
           }`}
           type="submit"
           disabled={isLoading}
         >
-          Create an account
+          {isLoading ? (
+            <MoonLoader color="#ffffff" className="h-[30px] w-[30px]" />
+          ) : (
+            "Create an account"
+          )}
         </button>
       </form>
       <div className="mb-4 ms-2.5 flex justify-center gap-x-1.5 text-xs">

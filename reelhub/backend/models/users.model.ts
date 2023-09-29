@@ -6,6 +6,7 @@ export interface IUser {
     lastName: string;
     email: string;
     password: string;
+    avatar?: string;
     // bookmarks: Types.ObjectId[];
   }
   
@@ -14,6 +15,7 @@ const userSchema = new Schema<IUser>({
     lastName: {type:String, required: true},
     email: {type:String, required: true},
     password: {type:String, required: true},
+    avatar: {type:String}
     // bookmarks: {type:  Schema.Types.Mixed, ref: "Bookmark"}
 })
 // House.find({}).populate("owner")
