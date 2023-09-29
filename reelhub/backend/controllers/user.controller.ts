@@ -3,7 +3,6 @@ import { User } from "../models/users.model";
 import dotenv  from "dotenv"
 dotenv.config()
 import jwt from "jsonwebtoken";
-import multerS3 from "multer-s3"
 import bcrypt from "bcrypt";
 const saltRounds = 10;
 const jwtSecret = process.env.JWT_SECRET_KEY as string;
@@ -11,34 +10,36 @@ import cloudinary from "../cloudinary";
 // const jwtSecret = process.env.JWT_SECRET_KEY!;
 
 import {Request, Response} from "express";
-import {upload} from "../aws-config";
 
 import joi from "joi"; 
 
-// const schema = joi.object({
-//   firstName: joi.string().min(1).max(50),
-//   lastName: joi.string().min(1).max(50),
-//   email: joi.string().email().required(),
-//   password: joi.string().min(5).max(40).regex(/[0-9a-zA-Z]*\d[0-9a-zA-Z]*/).required(),
-// });
+
+const schema = joi.object({
+  firstName: joi.string().min(1).max(50),
+  lastName: joi.string().min(1).max(50),
+  email: joi.string().email({ minDomainSegments: 2, tlds: { allow: false } }).required(),
+  password: joi.string().min(5).max(40).regex(/[0-9a-zA-Z]*\d[0-9a-zA-Z]*/).messages({
+    'string.pattern.base': 'Password must contain at least one number'}).required(),
+});
 
 console.log("checking the user schema", User);
 
 
 
-interface CustomFile extends Express.Multer.File {
-  location?: string;
-}
+
 
 export async function createUser(req: Request, res: Response): Promise<void> {
   try {
     console.log("createUser route ran");
+const {error, value} = schema.validate(req.body);
  
-    const { firstName, lastName, email, password, avatar } = req.body;
-    
-    // const { firstName, lastName, email, password } = req.body;
-    
-    // let avatar: string | undefined; 
+
+if (error) {
+  res.status(400).send(error.details[0].message);
+  return;
+}
+
+const { firstName, lastName, email, password, avatar } = value;
 
     let uploadedImageId;
     let uploadedImageUrl: string | undefined;
@@ -122,6 +123,7 @@ let newUser
 
 export async function login(req: Request, res: Response): Promise<void> {
   console.log("login route ran");
+  console.log("testing joi", joi);
 
   try {
     const { email, password } = req.body;
