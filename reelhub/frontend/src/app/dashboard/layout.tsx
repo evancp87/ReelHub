@@ -46,15 +46,15 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html>
       <body className={outfit.className}>
         <ReduxProvider>
-          <AuthProvider>
-            <div className="flex flex-col bg-[#10141E] md:flex-row ">
-              <Sidebar />
-              <main className="flex min-h-screen w-full flex-col items-center p-4">
-                <Controls />
-                {children}
-              </main>
-            </div>
-          </AuthProvider>
+          {/* <AuthProvider> */}
+          <div className="flex flex-col bg-[#10141E] md:flex-row ">
+            <Sidebar />
+            <main className="flex min-h-screen w-full flex-col items-center p-4">
+              <Controls />
+              {children}
+            </main>
+          </div>
+          {/* </AuthProvider> */}
         </ReduxProvider>
       </body>
     </html>

@@ -74,9 +74,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         {/* <Sidebar /> */}
         {/* <main className="flex min-h-screen w-full flex-col items-center  p-[2em]"> */}
         {/* <Controls /> */}
-        {/* <AuthProvider> */}
-        <ReduxProvider>{children}</ReduxProvider>
-        {/* </AuthProvider> */}
+        <ReduxProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </ReduxProvider>
         {/* </main> */}
       </body>
     </html>
