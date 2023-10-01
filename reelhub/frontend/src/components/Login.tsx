@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useCreateUserMutation } from "../store/services/userApi";
 import type { TypedUseSelectorHook } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
@@ -10,6 +10,7 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 import Link from "next/link";
 import { setCredentials } from "@/store/services/usersSlice";
 import { validateLogin } from "@/validation/index";
+import ClipLoader from "react-spinners/ClipLoader";
 import { AuthToken, LoginCredentials } from "../store/services/types";
 import {
   useLoginUserMutation,
@@ -38,6 +39,7 @@ function Login() {
     email: "",
     password: "",
   });
+
   const notify = () => toast("Please check your login details and try again");
   const [errors, setErrors] = useState(null);
   //   const { loading, user, error, success } = useAppSelector(selectAuthState);
@@ -108,7 +110,7 @@ function Login() {
       >
         <div className="relative w-full">
           <input
-            className={`my-4 my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none 
+            className={`field my-4 my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none 
             ${errorByField("email") ? "border-[#FC4747]" : ""}`}
             type="text"
             onChange={handleInputs}
@@ -116,6 +118,7 @@ function Login() {
             placeholder="Email Address"
             //   title={errors.email}
             name="email"
+            required
           />
 
           {/* {errors && errorByField("email")}
@@ -129,7 +132,7 @@ function Login() {
         </div>
         <div className="relative w-full">
           <input
-            className={` my-4 my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 opacity-75 focus:opacity-100 focus:outline-none 
+            className={` field my-4 my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 opacity-75 focus:opacity-100 focus:outline-none 
             ${errorByField("password") ? "border-[#FC4747]" : ""}`}
             type="password"
             onChange={handleInputs}
@@ -137,6 +140,7 @@ function Login() {
             placeholder={"Password"}
             //   title={errors.password}
             name="password"
+            required
           />
 
           {/* {errors && errorByField("password")}
@@ -155,7 +159,11 @@ function Login() {
           type="submit"
           disabled={isLoading}
         >
-          Login to your account
+          {isLoading ? (
+            <ClipLoader color="#ffffff" size={10} />
+          ) : (
+            " Login to your account"
+          )}
         </button>
       </form>
       <div className="mb-4 ms-2.5 flex justify-center gap-x-1.5 text-xs">

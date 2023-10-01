@@ -5,6 +5,8 @@ const validateWithSchema = async (payload: string, schema: any) => {
   const schemaObject = joi.object(schema);
 
   try {
+
+   
     const results = await schemaObject.validateAsync(payload, {
       abortEarly: false,
     });
@@ -19,6 +21,7 @@ const validateWithSchema = async (payload: string, schema: any) => {
         key: error.context.key,
         message: error.message,
       }));
+
       return errorsMod;
     }
     return [error.message];

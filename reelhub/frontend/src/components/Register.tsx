@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useCreateUserMutation } from "../store/services/userApi";
 import { AppDispatch, RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
-import MoonLoader from "react-spinners/MoonLoader";
+import ClipLoader from "react-spinners/ClipLoader";
 import {
   registerUser,
   selectCurrentUser,
@@ -29,7 +29,7 @@ type User = {
   lastName: string;
   email: string;
   password: string;
-  // repeatPassword: string;
+  repeatPassword: string;
   avatar?: string | null;
 };
 
@@ -39,7 +39,7 @@ function Register() {
     lastName: "",
     email: "",
     password: "",
-    // repeatPassword: "",
+    repeatPassword: "",
     avatar: null,
   });
 
@@ -97,7 +97,14 @@ function Register() {
       setUserInput((inputs) => ({ ...inputs, [name]: value }));
 
       try {
-        const payload = { [name]: value };
+        let payload;
+        if (name === "repeatPassword") {
+          payload = { password: userInput.password, repeatPassword: value };
+        } else {
+          payload = { [name]: value };
+        }
+
+        // const payload = { [name]: value };
         const res = await validateRegister(payload);
         setErrors(res);
       } catch (error) {
@@ -143,13 +150,14 @@ function Register() {
       <form className="flex flex-col p-4" action="" onSubmit={handleRegister}>
         <div className="relative">
           <input
-            className={`lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
+            className={`field lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
             ${errorByField("firstName") ? "border-b-2 border-[#FC4747] " : {}}`}
             type="text"
             name="firstName"
             onChange={handleInputs}
             placeholder="First Name"
             value={userInput.firstName}
+            required
           />
           {errorByField("firstName") && (
             <p className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]">
@@ -160,13 +168,14 @@ function Register() {
 
         <div className="relative">
           <input
-            className={`lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
+            className={`field lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
             ${errorByField("lastName") ? "border-b-2 border-[#FC4747] " : {}}`}
             type="text"
             name="lastName"
             onChange={handleInputs}
             value={userInput.lastName}
             placeholder="Last Name"
+            required
           />
           {errorByField("lastName") && (
             <p className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]">
@@ -177,13 +186,14 @@ function Register() {
 
         <div className="relative">
           <input
-            className={`lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
+            className={`field lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
             ${errorByField("email") ? "border-b-2 border-[#FC4747] " : {}}`}
             type="text"
             name="email"
             onChange={handleInputs}
             value={userInput.email}
             placeholder="Email"
+            required
           />
           {errorByField("email") && (
             <p className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]">
@@ -194,7 +204,7 @@ function Register() {
 
         <div className="relative">
           <input
-            className={`lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
+            className={`field lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
             ${errorByField("password") ? "border-b-2 border-[#FC4747] " : {}}`}
             type="password"
             name="password"
@@ -208,9 +218,9 @@ function Register() {
             </p>
           )}
         </div>
-        {/* <div className="relative">
+        <div className="relative">
           <input
-            className={`lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
+            className={`field lightBlue my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none
            ${
              errorByField("repeatPassword")
                ? "border-b-2 border-[#FC4747] "
@@ -221,13 +231,14 @@ function Register() {
             name="repeatPassword"
             onChange={handleInputs}
             value={userInput.repeatPassword}
+            required
           />
           {errorByField("repeatPassword") && (
             <p className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]">
               {errorByField("repeatPassword")}
             </p>
           )}
-        </div> */}
+        </div>
         <label htmlFor="upload">Choose an avatar (optional)</label>
 
         <input
@@ -249,7 +260,7 @@ function Register() {
           disabled={isLoading}
         >
           {isLoading ? (
-            <MoonLoader color="#ffffff" className="h-[30px] w-[30px]" />
+            <ClipLoader color="#ffffff" size={10} />
           ) : (
             "Create an account"
           )}

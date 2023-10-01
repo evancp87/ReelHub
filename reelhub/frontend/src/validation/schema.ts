@@ -31,27 +31,13 @@ export const registerSchema = {
   .min(5).message("Must be 5 or more characters")
   .max(40).message("Must be 40 characters or less")
   .regex(/[0-9a-zA-Z]*\d[0-9a-zA-Z]*/).message("Must have at least one number").messages({'string.empty': "Can't be empty"}),
-  repeatPassword: joi.string().trim().valid(joi.ref('password')).messages({
-    'any.only': 'Passwords must match',
-    'string.empty': "Can't be empty",
+  repeatPassword: joi.string().trim()
+  .valid(joi.ref("password"))
+  .label("Confirm password")
+  .messages({
+	// "any.required": "Password confirmation is required",
+	"string.empty": "Password confirmation is required",
+	"any.only": "Password does not match",
   }),
-  // .custom((value, helpers) => {
-  //   if (value === helpers.state.password) {
-  //     return value; // Passwords match
-  //   } else {
-  //     return helpers.message('Passwords must match');
-  //   }
-  // })
-  // .messages({
-  //   'string.empty': "Can't be empty",
-  // }),
-  // .valid(joi.ref('password'))
-  // .options({
-  //   language: {
-  //     any: {
-  //       allowOnly: '!!Passwords do not match',
-  //     }
-  //   } 
-  // })
  
 };
