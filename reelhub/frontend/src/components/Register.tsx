@@ -5,11 +5,8 @@ import { useCreateUserMutation } from "../store/services/userApi";
 import { AppDispatch, RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
-import {
-  registerUser,
-  selectCurrentUser,
-  selectAuthState,
-} from "../store/services/usersSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import type { TypedUseSelectorHook } from "react-redux";
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -44,6 +41,7 @@ function Register() {
   });
 
   const [image, setImage] = useState<string | null>(null);
+  const notifySuccess = () => toast("User successfully created");
 
   useEffect(() => {
     // This effect will run whenever the `image` state changes
@@ -113,17 +111,14 @@ function Register() {
     }
   };
 
-  const onImageChosen = (e) => {
-    const file = e.target.files[0];
-    previewFiles(file);
-  };
-
   const handleRegister = (e: any) => {
     e.preventDefault();
     try {
+      const { repeatPassword, ...user } = userInput;
       //   dispatch(registerUser(userInput));
-      console.log(userInput);
-      createUser(userInput);
+      console.log(user);
+      createUser(user);
+      notifySuccess();
     } catch (error) {
       console.log("There was an error", error);
     }
@@ -147,6 +142,7 @@ function Register() {
     // <ReduxProvider>
     <div className="w-64 rounded-lg bg-darkBlue md:w-80">
       <h3 className="ms-4 mt-4 text-3xl">Sign Up</h3>
+      <ToastContainer />
       <form className="flex flex-col p-4" action="" onSubmit={handleRegister}>
         <div className="relative">
           <input
@@ -246,15 +242,13 @@ function Register() {
           type="file"
           name="avatar"
           onChange={handleInputs}
-          // onChange={onImageChoosen}
-
           accept="image/png, image/jpeg, image/jpg, image/jfif"
         />
 
         {/* handle errors here */}
         <button
           className={`h-9 cursor-pointer rounded-lg bg-red text-xs text-[white] hover:bg-white hover:text-[black] ${
-            isLoading && "flex cursor-not-allowed justify-center"
+            isLoading && "flex cursor-not-allowed items-center justify-center"
           }`}
           type="submit"
           disabled={isLoading}

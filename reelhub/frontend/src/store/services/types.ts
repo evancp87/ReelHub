@@ -40,7 +40,8 @@ export type RegisterCredentials = {
     firstName: string,
     lastName: string,
     password: string,
-    avatar?: File
+    repeatPassword: string,
+    avatar?: string
 }
 
 export type LoginCredentials = {
