@@ -59,8 +59,8 @@ export const userSlice = createSlice({
  
 setCredentials: (state, action: PayloadAction<{ userToFind: User; token: string }>) => {
   const { userToFind, token } = action.payload;
-  const {email, firstName, lastName, _id } = userToFind;
-  const user = {email, firstName, lastName, _id}
+  const {email, firstName, lastName, _id, avatar } = userToFind;
+  const user = {email, firstName, lastName, _id, avatar}
   localStorage.setItem("userToken", token);
   localStorage.setItem("user", JSON.stringify(user))
   console.log("checking the data here", userToFind, token);
