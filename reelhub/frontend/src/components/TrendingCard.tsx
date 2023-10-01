@@ -135,9 +135,8 @@ export default function TrendingCard({
       </div>
       <div className=" absolute bottom-0 left-0 mb-4 ms-4 flex w-[50%] flex-col">
         <div className="mb-2 flex flex-row items-center justify-between">
-          <p className="text-xs sm:text-sm">
-            {year.toString()} <span className="text-xs">●</span>
-          </p>
+          <p className="text-xs sm:text-sm">{year.toString()}</p>
+          <span className="text-xs">·</span>
           <div>
             <Image
               width="20"
@@ -146,9 +145,8 @@ export default function TrendingCard({
               src={category === "TV Series" ? tvCategory : movieCategory}
             />
           </div>
-          <p className="text-xs sm:text-sm">
-            {category} <span className="text-xs">●</span>
-          </p>
+          <p className="text-xs sm:text-sm">{category}</p>
+          <span className="text-xs">·</span>
 
           <p className="text-xs sm:text-sm">{rating} </p>
         </div>

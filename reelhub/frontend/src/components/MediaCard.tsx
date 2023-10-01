@@ -182,6 +182,7 @@ export default function RecommendedCard({
       <div className=" flex max-w-[90%] flex-col lg:max-w-[70%] ">
         <div className=" my-2 flex flex-row justify-between">
           <p className="text-xs">{year.toString()}</p>
+          <span className="hidden text-xs sm:block">·</span>
           <div className="ml-2 flex flex-wrap gap-[0.8em]">
             <Image
               width="10"
@@ -191,6 +192,7 @@ export default function RecommendedCard({
             />
             <p className="text-xs">{category}</p>
           </div>
+          <span className="hidden text-xs sm:block">·</span>
           <p className="text-xs">{rating}</p>
         </div>
         <h3 className="text-sm lg:text-lg"> {title}</h3>
