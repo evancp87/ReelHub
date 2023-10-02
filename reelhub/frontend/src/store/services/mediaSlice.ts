@@ -1,27 +1,6 @@
 
-import { createSlice, createAsyncThunk , PayloadAction} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../store";
-import {Media} from "@/types/media";
-
-// type MediaState = {
-//   content: Array<object>,
-//   recommended:Array<string>,
-//   trending: Array<string>,
-//   searchInput: String
-//   bookmarked: Array<string>,
-//   initialMedia: Media[]
-  
-// };
-
-// // const initialState = {
-
-// //     content: [],
-// //     recommended: [],
-// //     trending: [],
-// //     searchInput: "",
-// //     bookmarked: [],
-// //     initialMedia: []
-// // } as MediaState;
 
 interface IInitialState {
   search: string;
@@ -30,8 +9,6 @@ interface IInitialState {
 const initialState = {
   search: ""
 } as IInitialState;
-
-
 
 
 

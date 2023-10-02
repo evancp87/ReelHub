@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { useCreateUserMutation } from "../store/services/userApi";
 import type { TypedUseSelectorHook } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,23 +10,8 @@ import Link from "next/link";
 import { setCredentials } from "@/store/services/usersSlice";
 import { validateLogin } from "@/validation/index";
 import ClipLoader from "react-spinners/ClipLoader";
-import { AuthToken, LoginCredentials } from "../store/services/types";
-import {
-  useLoginUserMutation,
-  //   useGetUserInfoQuery,
-} from "../store/services/userApi";
-import {
-  loginUser,
-  selectCurrentUser,
-  selectAuthState,
-} from "../store/services/usersSlice";
+import { useLoginUserMutation } from "../store/services/userApi";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
-
-type Error = {
-  email: null;
-  password: null;
-};
 
 function Login() {
   type User = {
@@ -40,21 +24,10 @@ function Login() {
     password: "",
   });
 
-  const notify = () => toast("Please check your login details and try again");
   const [errors, setErrors] = useState(null);
-  //   const { loading, user, error, success } = useAppSelector(selectAuthState);
-  const [loginUser, { isLoading, isSuccess, error, isError }] =
-    useLoginUserMutation();
-  console.log("checking the error:", error);
-  //   const userEmail = userInput?.email;
+  const [loginUser, { isLoading, isSuccess, error }] = useLoginUserMutation();
 
-  //   const { data: getUserInfo } = useGetUserInfoQuery(userEmail);
-  //   console.log("getUserInfo data:", getUserInfo);
-
-  // const { getUserInfo } = useGetUserInfoQuery(null);
-
-  console.log(isSuccess);
-  //   const { createUser, isLoading: isRegisteringUser } = useCreateUserMutation;
+  // function to find errors and return the message
   const errorByField = (key: string) => {
     const error = errors && errors.find((error) => error.key === key);
     return error ? error.message : "";
@@ -62,11 +35,14 @@ function Login() {
 
   const dispatch = useAppDispatch();
   const router = useRouter();
+
   const handleInputs = async (e) => {
     const { name, value } = e.target;
+    // updates state with dynamic object keys
     setUserInput((inputs) => ({ ...inputs, [name]: value }));
 
     try {
+      // joi validation
       const payload = { [name]: value };
       const res = await validateLogin(payload);
       setErrors(res);
@@ -74,40 +50,32 @@ function Login() {
       console.log("There was an error:", error);
     }
   };
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
     const { email, password } = userInput;
     try {
       const { data } = await loginUser({ email, password });
-      console.log("checking the data here", data);
-      //   console.log("checking the id here", data._id);
 
       // Dispatch setCredentials with the data from loginUser
       dispatch(setCredentials(data));
-      //   loginUser({ email, password });
-      //     dispatch(setCredentials(userInput));
-      //   useGetUserInfoQuery(email);
     } catch (error) {
       console.log("There was an error", error);
     }
   };
 
+  // on successful auth redirects user to dashboard
   useEffect(() => {
     if (isSuccess) {
       router.push("/dashboard");
     }
-    console.log("is redirecting");
   }, [isSuccess]);
+
   return (
     <div className="w-64 rounded-lg bg-darkBlue md:w-80">
       <h3 className="ms-4 mt-4 text-3xl">Login</h3>
-      <form
-        className="flex flex-col p-4"
-        onSubmit={handleLogin}
-
-        // disabled={isLoggingIn}
-      >
+      <form className="flex flex-col p-4" onSubmit={handleLogin}>
         <div className="relative w-full">
           <input
             className={`field my-4 my-4 w-full border-b-2 bg-transparent p-4 text-xs opacity-75 focus:opacity-100 focus:outline-none 
@@ -116,14 +84,9 @@ function Login() {
             onChange={handleInputs}
             value={userInput.email}
             placeholder="Email Address"
-            //   title={errors.email}
             name="email"
             required
           />
-
-          {/* {errors && errorByField("email")}
-           */}
-
           {errorByField("email") && (
             <p className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]">
               {errorByField("email")}
@@ -138,13 +101,10 @@ function Login() {
             onChange={handleInputs}
             value={userInput.password}
             placeholder={"Password"}
-            //   title={errors.password}
             name="password"
             required
           />
 
-          {/* {errors && errorByField("password")}
-           */}
           {errorByField("password") && (
             <p className="absolute right-0 top-0 text-xs text-red md:top-[2.7em]">
               {errorByField("password")}

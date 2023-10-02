@@ -9,16 +9,19 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const currentRoute = usePathname();
 
+  // get user from localStorage
   const currUser =
     typeof localStorage !== "undefined"
       ? JSON.parse(localStorage.getItem("user"))
       : null;
 
   useEffect(() => {
+    // if is not auth, redirect to login
     if (!isAuthenticated) {
       router.push("/authentication/login");
     }
 
+    // if currUser and tries to visit any of these pages is redirected
     if (
       currUser &&
       (currentRoute === "/authentication/login" ||

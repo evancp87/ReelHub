@@ -1,26 +1,13 @@
 import React from "react";
-import Image from "next/image";
-import Thing from "/public/assets/thumbnails/autosport-the-series/regular/large.jpg";
-import Category from "/public/assets/icon-category-movie.svg";
-import Bookmark from "/public/assets/icon-bookmark-empty.svg";
 import MediaCard from "./MediaCard";
 import { useSelector, useDispatch, TypedUseSelectorHook } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-import {
-  selectCurrentUser,
-  selectCurrentToken,
-} from "@/store/services/usersSlice";
-import {
-  useGetUserBookmarksQuery,
-  useGetUserBookmarksByCategoryQuery,
-  useAddBookmarkMutation,
-  useDeleteMediaMutation,
-} from "../store/services/bookmarksApi";
-type Props = {};
+import { selectCurrentUser } from "@/store/services/usersSlice";
+import { useGetUserBookmarksQuery } from "../store/services/bookmarksApi";
 
-export default function BookmarkedMovies({}: Props) {
+export default function BookmarkedMovies() {
   const user = useSelector(selectCurrentUser);
   const userId = user?._id;
 
@@ -29,7 +16,6 @@ export default function BookmarkedMovies({}: Props) {
     // token: token,
     // "Movie"
   );
-  console.log("the bookmark data is", data);
   return (
     <div className="my-4 w-full ">
       <h3 className="mb-4 text-2xl md:text-3xl">Bookmarked Movies</h3>

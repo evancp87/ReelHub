@@ -2,8 +2,6 @@
 import React from "react";
 import BookmarkedMovies from "@/components/BookmarkedMovies";
 import BookmarkedTV from "@/components/BookmarkedTV";
-// import { ReduxProvider } from "@/components/ReduxProvider";
-import { ReduxProvider } from "../../../components/ReduxProvider";
 import { useSelector, useDispatch, TypedUseSelectorHook } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 export const useAppDispatch: () => AppDispatch = useDispatch;
@@ -12,20 +10,19 @@ import { selectCurrentUser } from "@/store/services/usersSlice";
 import { useGetUserBookmarksQuery } from "@/store/services/bookmarksApi";
 import { selectSearch } from "@/store/services/mediaSlice";
 import MediaCard from "../../../components/MediaCard";
-import { Media } from "../../../store/services/types";
-type Props = {};
 
-export default function page({}: Props) {
+export default function page() {
   const search = useSelector(selectSearch);
   const user = useSelector(selectCurrentUser);
   const userId = user?._id;
 
-  const { error, isLoading, isFetching, data } = useGetUserBookmarksQuery(
+  const { data } = useGetUserBookmarksQuery(
     userId
     // token: token,
     // "Movie"
   );
-  console.log("the seartch data is", data);
+
+  // filtered search for bookmarks page
   const filteredSearch = data
     ? data.filter((data) =>
         data.media.title.toLowerCase().includes(search.toLowerCase())
@@ -34,7 +31,6 @@ export default function page({}: Props) {
 
   return (
     <div className="contents">
-      {/* <ReduxProvider> */}
       {search && (
         <p className="my-4 flex self-start">
           Found {filteredSearch.length} results for '{search}'
@@ -64,7 +60,6 @@ export default function page({}: Props) {
           <BookmarkedTV />
         </>
       )}
-      {/* </ReduxProvider> */}
     </div>
   );
 }

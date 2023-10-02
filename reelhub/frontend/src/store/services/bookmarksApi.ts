@@ -27,7 +27,6 @@ export const bookmarkApi = createApi({
     addBookmark: builder.mutation<Bookmark, Partial<Bookmark>>({
       query: (bookmark) => ({
         url: '/bookmarks/add',
-        // method: 'POST',
         method: 'PUT',
 
         body: bookmark,

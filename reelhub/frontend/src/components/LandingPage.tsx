@@ -2,12 +2,9 @@
 import React from "react";
 import logo from "../../public/assets/logo.svg";
 import Image from "next/image";
-import tv from "../../public/assets/tv.svg";
 import Link from "next/link";
 
-type Props = {};
-
-export default function LandingPage({}: Props) {
+export default function LandingPage() {
   return (
     <div className="h-screen w-full">
       <header

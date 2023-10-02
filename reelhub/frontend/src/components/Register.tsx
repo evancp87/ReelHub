@@ -13,13 +13,6 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 import { useRouter } from "next/navigation";
 import { validateRegister } from "@/validation/index";
 import Link from "next/link";
-import { ReduxProvider } from "./ReduxProvider";
-type Error = {
-  firstName: null;
-  lastName: null;
-  email: null;
-  password: null;
-};
 
 type User = {
   firstName: string;
@@ -40,42 +33,27 @@ function Register() {
     avatar: null,
   });
 
+  // handles setting an image
   const [image, setImage] = useState<string | null>(null);
   const notifySuccess = () => toast("User successfully created");
 
   useEffect(() => {
-    // This effect will run whenever the `image` state changes
-    console.log("checking the image", image);
+    // This effect will run whenever the image state changes
     setUserInput((inputs) => ({ ...inputs, avatar: image }));
   }, [image]);
 
-  //   const { loading, user, error, success } = useAppSelector(selectAuthState);
-
-  //   const { createUser, isLoading: isRegisteringUser } = useCreateUserMutation;
   const [createUser, { isLoading, isSuccess, error, isError }] =
     useCreateUserMutation();
 
   const [errors, setErrors] = useState(null);
-  //   const dispatch = useAppDispatch();
   const router = useRouter();
-  // const handleInputs = async (e) => {
-  //   const { name, value, files } = e.target;
-  //   setUserInput((inputs) => ({ ...inputs, [name]: value }));
-  //   try {
-  //     const payload = { [name]: value };
-  //     const res = await validateRegister(payload);
-  //     setErrors(res);
-  //   } catch (error) {
-  //     console.log("There was an error:", error);
-  //   }
-  // };
 
+  // handles converting a file to a base 64 encoded format for transportation
   function previewFiles(file: File) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       const imageUrl = reader.result;
-      console.log("checking the image url", imageUrl);
       setImage(imageUrl);
     };
   }
@@ -83,18 +61,17 @@ function Register() {
   const handleInputs = async (e) => {
     const { name, value, files } = e.target;
 
+    // if file, convert file and include in handling of inputs
     if (files) {
-      // Handle file inputs
       const file = files[0];
       previewFiles(file);
-      console.log("checking if there's a file", file);
-      console.log("checking the image", image);
       setUserInput((inputs) => ({ ...inputs, avatar: image }));
     } else {
-      // Handle other inputs
+      // if no avatar uploaded, handle other inputs
       setUserInput((inputs) => ({ ...inputs, [name]: value }));
 
       try {
+        // handles repeatPassword, which joi schema alone can't validate without config
         let payload;
         if (name === "repeatPassword") {
           payload = { password: userInput.password, repeatPassword: value };
@@ -102,7 +79,6 @@ function Register() {
           payload = { [name]: value };
         }
 
-        // const payload = { [name]: value };
         const res = await validateRegister(payload);
         setErrors(res);
       } catch (error) {
@@ -114,32 +90,30 @@ function Register() {
   const handleRegister = (e: any) => {
     e.preventDefault();
     try {
+      // destructures repeatPassword as to not send to server
       const { repeatPassword, ...user } = userInput;
-      //   dispatch(registerUser(userInput));
-      console.log(user);
+      // sends user to server
       createUser(user);
       notifySuccess();
     } catch (error) {
       console.log("There was an error", error);
     }
   };
-  console.log(isLoading, isSuccess, error, isError);
-  console.log("is it successful", isSuccess);
-  console.log(error);
 
+  // redirects successful user to login
   useEffect(() => {
     if (isSuccess) {
       router.push("/authentication/login");
     }
   }, [isSuccess]);
 
+  // displays error
   const errorByField = (key: string) => {
     const error = errors && errors.find((error) => error.key === key);
     return error ? error.message : "";
   };
-  console.log("checking the avatar", userInput.avatar);
+
   return (
-    // <ReduxProvider>
     <div className="w-64 rounded-lg bg-darkBlue md:w-80">
       <h3 className="ms-4 mt-4 text-3xl">Sign Up</h3>
       <ToastContainer />
@@ -272,7 +246,6 @@ function Register() {
         </p>
       )}
     </div>
-    // </ReduxProvider>
   );
 }
 

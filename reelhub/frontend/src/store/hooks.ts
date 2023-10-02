@@ -9,10 +9,10 @@ type BookmarkParams = {
     mediaId: string,
     userId: string
 }
+// hook for checking if user is auth
 export const useIsAuthenticated = () => {
     const user = useAppSelector(selectCurrentUser);
     const token = useAppSelector(selectCurrentToken);
-    // return   user !== null 
           
     return { user, token, isAuthenticated:
          user !== null && token !== null 

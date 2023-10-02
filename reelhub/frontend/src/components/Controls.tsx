@@ -11,20 +11,18 @@ export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export default function Controls() {
-  const [query, setQuery] = useState<string>("");
   const dispatch = useAppDispatch();
   const search = useAppSelector(selectSearch);
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  // dispatches search to store
   const handleQuery = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log(e.target.value);
-
     dispatch(searchQuery(e.target.value));
   };
 
+  // resets query on change of path
   const resetQuery = () => {
     dispatch(searchQuery(""));
-    console.log("i fired");
   };
 
   useEffect(() => {

@@ -4,7 +4,6 @@ import React from "react";
 import Trending from "./Trending";
 import Recommended from "./Recommended";
 import { Media } from "../store/services/types";
-import Controls from "./Controls";
 import type { TypedUseSelectorHook } from "react-redux";
 import { selectSearch } from "../store/services/mediaSlice";
 import { AppDispatch, RootState } from "@/store/store";
@@ -13,11 +12,9 @@ import MediaCard from "../components/MediaCard";
 import { useGetMediaQuery } from "../store/services/mediaApi";
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-import { ReduxProvider } from "./ReduxProvider";
-type Props = {};
 
-export default function Dashboard({}: Props) {
-  const { isLoading, isFetching, data, error } = useGetMediaQuery(null);
+export default function Dashboard() {
+  const { data } = useGetMediaQuery(null);
 
   const search = useAppSelector(selectSearch);
 
@@ -28,11 +25,6 @@ export default function Dashboard({}: Props) {
     : [];
 
   return (
-    // <>
-    //   <Trending />
-    //   <Recommended />
-    // </>
-    // <ReduxProvider>
     <div className="bg-[#10141E] p-2">
       {search && (
         <p className="my-4 flex self-start">
@@ -62,6 +54,5 @@ export default function Dashboard({}: Props) {
         </>
       )}
     </div>
-    // </ReduxProvider>
   );
 }

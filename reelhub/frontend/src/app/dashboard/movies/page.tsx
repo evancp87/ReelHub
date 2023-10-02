@@ -2,18 +2,9 @@
 import React from "react";
 import { RootState, AppDispatch } from "../../../store/store";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
-import Image from "next/image";
-import Thing from "/public/assets/thumbnails/autosport-the-series/regular/large.jpg";
-import Bookmark from "/public/assets/icon-bookmark-empty.svg";
-import Category from "/public/assets/icon-category-movie.svg";
 import { useGetMediaByCategoryQuery } from "../../../store/services/mediaApi";
 import MediaCard from "../../../components/MediaCard";
-// import { Media } from "@/store/services/types";
 import { Media } from "../../../store/services/types";
-
-// import { ReduxProvider } from "@/components/ReduxProvider";
-import { ReduxProvider } from "../../../components/ReduxProvider";
-// import { selectSearch } from "@/store/services/mediaSlice";
 import { selectSearch } from "../../../store/services/mediaSlice";
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
@@ -21,24 +12,24 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 type Props = {};
 
 export default function page({}: Props) {
+  // api call for movies
   const { isLoading, isFetching, data, error } =
     useGetMediaByCategoryQuery("Movie");
   const search = useAppSelector(selectSearch);
 
+  // filtered search for movie data
   const filteredSearch = data
     ? data.filter((data) =>
         data.title.toLowerCase().includes(search.toLowerCase())
       )
     : [];
   return (
-    // <ReduxProvider>
     <div className="my-4 w-full">
       {search && (
         <p className="my-4 flex self-start">
           Found {filteredSearch.length} results for '{search}'
         </p>
       )}
-      {/* {filteredSearch.length === 0 && <p>No movies found</p>} */}
       {search ? (
         <ul className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {filteredSearch.map((media: Media) => (
@@ -87,7 +78,6 @@ export default function page({}: Props) {
           ) : null}
         </>
       )}
-      {/* </div> */}
     </div>
   );
 }

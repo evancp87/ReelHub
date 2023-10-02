@@ -5,18 +5,13 @@ import { RootState, AppDispatch } from "../store/store";
 import MediaCard from "../components/MediaCard";
 import { Media } from "../store/services/types";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
-// import Image from "next/image";
-// import Thing from "/public/assets/thumbnails/autosport-the-series/regular/large.jpg";
-// import Bookmark from "/public/assets/icon-bookmark-empty.svg";
-// import Category from "/public/assets/icon-category-movie.svg";
 import { useGetMediaByCategoryQuery } from "../store/services/mediaApi";
 import { ReduxProvider } from "./ReduxProvider";
 import { selectSearch } from "@/store/services/mediaSlice";
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-type Props = {};
 
-export default function page({}: Props) {
+export default function page() {
   const { isLoading, isFetching, data, error } =
     useGetMediaByCategoryQuery("TV Series");
   console.log(error);
@@ -30,7 +25,7 @@ export default function page({}: Props) {
     : [];
 
   return (
-    <ReduxProvider>
+    <div>
       {/* {filteredSearch.length === 0 && <p>No TV Series found</p>} */}
 
       {search && (
@@ -88,6 +83,6 @@ export default function page({}: Props) {
           </>
         )}
       </div>
-    </ReduxProvider>
+    </div>
   );
 }

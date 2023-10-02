@@ -1,12 +1,12 @@
 import {loginSchema, registerSchema } from "./schema";
 import joi from "joi";
 
+// reusable function for different schemas
 const validateWithSchema = async (payload: string, schema: any) => {
   const schemaObject = joi.object(schema);
 
   try {
 
-   
     const results = await schemaObject.validateAsync(payload, {
       abortEarly: false,
     });

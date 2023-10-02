@@ -1,19 +1,12 @@
 import React from "react";
-import Image from "next/image";
-import Thing from "/public/assets/thumbnails/autosport-the-series/regular/large.jpg";
-import Category from "/public/assets/icon-category-movie.svg";
-import Bookmark from "/public/assets/icon-bookmark-empty.svg";
 import MediaCard from "./MediaCard";
-import { ReduxProvider } from "./ReduxProvider";
 
 import { useGetMediaQuery } from "@/store/services/mediaApi";
-type Props = {};
 
-export default function Recommended({}: Props) {
+export default function Recommended() {
   const { isLoading, isFetching, data, error } = useGetMediaQuery(null);
-
+  // for recommended section
   return (
-    // <ReduxProvider>
     <div className="mb-4 ">
       <h3 className="mb-4 text-2xl md:text-3xl">Recommended for you</h3>
       <ul className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
@@ -40,6 +33,5 @@ export default function Recommended({}: Props) {
         ) : null}
       </ul>
     </div>
-    // </ReduxProvider>
   );
 }

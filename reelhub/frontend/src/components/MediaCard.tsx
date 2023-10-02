@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import Thing from "/public/assets/thumbnails/autosport-the-series/regular/large.jpg";
 import EmptyBookmark from "/public/assets/icon-bookmark-empty.svg";
 import FullBookmark from "/public/assets/icon-bookmark-full.svg";
 
@@ -23,8 +22,6 @@ import {
 } from "../store/services/bookmarksApi";
 
 import { selectCurrentUser } from "@/store/services/usersSlice";
-
-// https://github.com/dvtng/react-loading-skeleton
 
 type Props = {
   title: string;
@@ -57,67 +54,32 @@ export default function RecommendedCard({
   isTrending,
   id,
 }: Props) {
+  // defines different sizes of thumbnails for different viewports
   const regularSmall = thumbnail?.regular?.small;
   const regularMedium = thumbnail?.regular?.medium;
   const regularLarge = thumbnail?.regular?.large;
 
-  console.log(regularSmall, regularMedium, regularLarge);
   const notifySuccessAdd = () => toast("Your bookmark was saved");
   const notifySuccessRemoved = () => toast("Your bookmark was removed");
-  const notifyError = () => toast("Your bookmark could not be saved");
 
   const user = useSelector(selectCurrentUser);
+  // fetches and refetches userBookmarks
   const { data: userBookmarks, refetch } = useGetUserBookmarksQuery(user?._id);
-  console.log("checking usr bookmarkas", userBookmarks);
 
+  // finds the media items that are already bookmarked
   const bookmarked = userBookmarks?.some(
     (bookmark) => bookmark.media._id === id
   );
   useEffect(() => {
     console.log("new bookmarks", userBookmarks);
   }, [userBookmarks]);
-  console.log(bookmarked);
 
   const mediaId = id;
   const [addBookmark] = useAddBookmarkMutation();
-  const [deleteMedia] = useDeleteMediaMutation();
-  const [hovered, setHovered] = useState(false);
-
-  const handleHover = () => {
-    setHovered(!hovered);
-  };
-  // const { data: addBookmark } = useAddBookmarkMutation();
-  // const { data: deleteMedia } = useDeleteMediaMutation();
-
-  // const handleBookmarkInteraction = async () => {
-  //   if (bookmarked) {
-  //     // If already bookmarked, remove it
-  //     // await deleteMediaMutation.mutateAsync(id);
-
-  //     try {
-  //       console.log("checking the media id", mediaId);
-  //       await deleteMedia({ mediaId, userId: user._id });
-  //     } catch (error) {
-  //       console.log("error:", error);
-  //     }
-  //   } else {
-  //     try {
-  //       // If not bookmarked, add it
-  //       // await addBookmarkMutation({ id });
-  //       console.log("checking the media id again", mediaId);
-
-  //       await addBookmark({ mediaId, userId: user._id });
-  //     } catch (error) {
-  //       console.error("error:", error);
-  //     }
-  //   }
-  // };
 
   const handleBookmarkInteraction = async () => {
     try {
-      // If not bookmarked, add it
-      // await addBookmarkMutation({ id });
-      console.log("checking the media id again", mediaId);
+      // If not bookmarked, add it, otherwise remove it from db
       if (bookmarked) {
         await addBookmark({ mediaId, userId: user._id });
         refetch();
@@ -132,15 +94,10 @@ export default function RecommendedCard({
     }
   };
 
-  const categories = {
-    movie: "Movie",
-    tv: "TV Series",
-  };
-
   return (
     <li>
       <div className="hover-overlay img-container relative">
-        <picture className=" ">
+        <picture>
           <source
             media="(max-width: 500px)"
             srcSet={regularSmall?.valueOf() || ""}
@@ -172,7 +129,6 @@ export default function RecommendedCard({
               height="10"
               alt="bookmark"
               className="filtered-bookmark"
-              // className={`${!bookmarked ? "" : "bg-white"}`}
               src={bookmarked ? FullBookmark : EmptyBookmark}
               onClick={handleBookmarkInteraction}
             />
@@ -208,7 +164,6 @@ export default function RecommendedCard({
           pauseOnHover
           theme="light"
         />
-        {/* Same as */}
         <ToastContainer />
       </div>
     </li>
