@@ -2,14 +2,8 @@
 import React from "react";
 import BookmarkedMovies from "@/components/BookmarkedMovies";
 import BookmarkedTV from "@/components/BookmarkedTV";
-import { useSelector, useDispatch, TypedUseSelectorHook } from "react-redux";
-import { AppDispatch, RootState } from "../../../store/store";
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-import {
-  selectCurrentToken,
-  selectCurrentUser,
-} from "@/store/services/usersSlice";
+import { useAppSelector } from "@/utils/helpers";
+import { selectCurrentUser } from "@/store/services/usersSlice";
 import { useGetUserBookmarksQuery } from "@/store/services/bookmarksApi";
 import { selectSearch } from "@/store/services/mediaSlice";
 import MediaCard from "../../../components/MediaCard";

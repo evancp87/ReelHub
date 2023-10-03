@@ -44,7 +44,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <meta property="og:image:alt" content={metadata.openGraph.image.alt} />
         <meta property="og:image:width" content={metadata.openGraph.image.width.toString()} />
         <meta property="og:image:height" content={metadata.openGraph.image.height.toString()} /> */}
-        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href="images/favicon.ico" />
       </Head>
       <body className={outfit.className}>
         <ReduxProvider>

@@ -1,15 +1,11 @@
 "use client";
 
 import React from "react";
-import { RootState, AppDispatch } from "../store/store";
 import MediaCard from "../components/MediaCard";
 import { Media } from "../store/services/types";
-import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import { useGetMediaByCategoryQuery } from "../store/services/mediaApi";
-import { ReduxProvider } from "./ReduxProvider";
 import { selectSearch } from "@/store/services/mediaSlice";
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+import { useAppSelector } from "@/utils/helpers";
 
 export default function page() {
   const { isLoading, isFetching, data, error } =
@@ -26,8 +22,6 @@ export default function page() {
 
   return (
     <div>
-      {/* {filteredSearch.length === 0 && <p>No TV Series found</p>} */}
-
       {search && (
         <p className="mt-4 flex self-start">
           Found {filteredSearch.length} results for '{search}'

@@ -1,17 +1,12 @@
 "use client";
 import React from "react";
-import { RootState, AppDispatch } from "../../../store/store";
-import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import { useGetMediaByCategoryQuery } from "../../../store/services/mediaApi";
 import MediaCard from "../../../components/MediaCard";
 import { Media } from "../../../store/services/types";
 import { selectSearch } from "../../../store/services/mediaSlice";
+import { useAppSelector } from "@/utils/helpers";
 
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-type Props = {};
-
-export default function page({}: Props) {
+export default function page() {
   // api call for movies
   const { isLoading, isFetching, data, error } =
     useGetMediaByCategoryQuery("Movie");

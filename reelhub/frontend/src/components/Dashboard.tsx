@@ -4,14 +4,10 @@ import React from "react";
 import Trending from "./Trending";
 import Recommended from "./Recommended";
 import { Media } from "../store/services/types";
-import type { TypedUseSelectorHook } from "react-redux";
 import { selectSearch } from "../store/services/mediaSlice";
-import { AppDispatch, RootState } from "@/store/store";
-import { useDispatch, useSelector } from "react-redux";
 import MediaCard from "../components/MediaCard";
 import { useGetMediaQuery } from "../store/services/mediaApi";
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+import { useAppSelector } from "@/utils/helpers";
 
 export default function Dashboard() {
   const { data } = useGetMediaQuery(null);

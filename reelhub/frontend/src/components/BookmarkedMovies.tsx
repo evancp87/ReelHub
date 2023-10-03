@@ -1,14 +1,11 @@
 import React from "react";
 import MediaCard from "./MediaCard";
-import { useSelector, useDispatch, TypedUseSelectorHook } from "react-redux";
-import { AppDispatch, RootState } from "../store/store";
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+import { useAppSelector } from "@/utils/helpers";
 import { selectCurrentUser } from "@/store/services/usersSlice";
 import { useGetUserBookmarksQuery } from "../store/services/bookmarksApi";
 
 export default function BookmarkedMovies() {
-  const user = useSelector(selectCurrentUser);
+  const user = useAppSelector(selectCurrentUser);
   const userId = user?._id;
 
   const { error, isLoading, isFetching, data } = useGetUserBookmarksQuery(

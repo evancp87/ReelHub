@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import type { TypedUseSelectorHook } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
-import { useDispatch, useSelector } from "react-redux";
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+import { useAppSelector } from "@/utils/helpers";
 
 import {
   useAddBookmarkMutation,
@@ -54,7 +50,7 @@ export default function RecommendedCard({
   const notifySuccessAdd = () => toast("Your bookmark was saved");
   const notifySuccessRemoved = () => toast("Your bookmark was removed");
 
-  const user = useSelector(selectCurrentUser);
+  const user = useAppSelector(selectCurrentUser);
   // fetches and refetches userBookmarks
   const { data: userBookmarks, refetch } = useGetUserBookmarksQuery(user?._id);
 
