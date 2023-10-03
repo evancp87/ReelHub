@@ -15,33 +15,17 @@ dotenv.config()
 app.use(cors());
 
 
-const options = {
-    origin: 'http://localhost:3000',
-    methods: 'GET, POST',
-  }
-
-// app.use(cors({
-//     origin: 'http://localhost:3000', 
-//     credentials: true,
-//   }));
-
-//   app.use(cors(options,
-//     ));
-
 app.use(cors({
     origin:  'http://localhost:3000',
     credentials: true, 
   }))
 
 
-
+// sets file size limit, to ensure uploads can work - cloudinary
 app.use(express.json({limit: '50mb'}));
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-
-
 const PORT = process.env.PORT || 6002;
-
 const source:string = process.env.MONGO_SOURCE!
 
 mongoose.connect(`${source}`, {
@@ -61,13 +45,11 @@ const connectDB = async () => {
 };
 
 connectDB();
-// mongoose.connect(`${source}`);
-
 
 
 app.use("/users",  userRouter);
 app.use("/media", mediaRouter);
-app.use("/bookmarks", bookmarksRouter)
+app.use("/bookmarks", checkToken, bookmarksRouter)
 
 
 app.listen(PORT, () => {

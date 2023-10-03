@@ -6,21 +6,21 @@ import { useSelector, useDispatch, TypedUseSelectorHook } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-import { selectCurrentUser } from "@/store/services/usersSlice";
+import {
+  selectCurrentToken,
+  selectCurrentUser,
+} from "@/store/services/usersSlice";
 import { useGetUserBookmarksQuery } from "@/store/services/bookmarksApi";
 import { selectSearch } from "@/store/services/mediaSlice";
 import MediaCard from "../../../components/MediaCard";
 
 export default function page() {
-  const search = useSelector(selectSearch);
-  const user = useSelector(selectCurrentUser);
+  const search = useAppSelector(selectSearch);
+  const user = useAppSelector(selectCurrentUser);
+
   const userId = user?._id;
 
-  const { data } = useGetUserBookmarksQuery(
-    userId
-    // token: token,
-    // "Movie"
-  );
+  const { data } = useGetUserBookmarksQuery(userId);
 
   // filtered search for bookmarks page
   const filteredSearch = data
