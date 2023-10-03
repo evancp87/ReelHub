@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import SearchIcon from "/public/assets/icon-search.svg";
 import { selectSearch, searchQuery } from "@/store/services/mediaSlice";
 import type { TypedUseSelectorHook } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
@@ -35,7 +34,7 @@ export default function Controls() {
         alt="search-icon for search bar"
         width="20"
         height="20"
-        src={SearchIcon}
+        src="https://reelhub.s3.eu-west-2.amazonaws.com/icon-search.svg"
       />
       <input
         className="ml-4 w-full bg-transparent focus:outline-none"

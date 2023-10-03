@@ -1,21 +1,12 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
-import Thing from "/public/assets/thumbnails/autosport-the-series/regular/large.jpg";
-import Bookmark from "/public/assets/icon-bookmark-empty.svg";
-import movieCategory from "/public/assets/icon-category-movie.svg";
-import tvCategory from "/public/assets/icon-category-tv.svg";
-import type { TypedUseSelectorHook } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
-import { useDispatch, useSelector } from "react-redux";
-import Skeleton from "react-loading-skeleton";
+import { useSelector } from "react-redux";
 import "react-loading-skeleton/dist/skeleton.css";
-import { selectCurrentUser } from "@/store/services/usersSlice";
-import Play from "/public/assets/icon-play.svg";
-import EmptyBookmark from "/public/assets/icon-bookmark-empty.svg";
-import FullBookmark from "/public/assets/icon-bookmark-full.svg";
-import { ToastContainer, toast } from "react-toastify";
+import { selectCurrentUser, RootState } from "@/store/services/usersSlice";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import type { TypedUseSelectorHook } from "react-redux";
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 import {
   useGetUserBookmarksQuery,
   useAddBookmarkMutation,
@@ -61,7 +52,7 @@ export default function TrendingCard({
   const notifySuccessRemoved = () => toast("Your bookmark was removed");
   const notifyError = () => toast("Your bookmark could not be saved");
 
-  const user = useSelector(selectCurrentUser);
+  const user = useAppSelector(selectCurrentUser);
   const { data: userBookmarks, refetch } = useGetUserBookmarksQuery(user?._id);
   console.log("checking usr bookmarkas", userBookmarks);
 
@@ -117,7 +108,7 @@ export default function TrendingCard({
             height="20"
             alt="play button"
             className="opacity-100 "
-            src={Play}
+            src="https://reelhub.s3.eu-west-2.amazonaws.com/icon-play.svg"
           />
           <p className="opacity-100 ">Play</p>
         </div>
@@ -128,8 +119,11 @@ export default function TrendingCard({
           height="10"
           alt="bookmark"
           className="filtered-bookmark"
-          // className={`${!bookmarked ? "" : "bg-white"}`}
-          src={bookmarked ? FullBookmark : EmptyBookmark}
+          src={
+            bookmarked
+              ? "https://reelhub.s3.eu-west-2.amazonaws.com/icon-bookmark-full.svg"
+              : "https://reelhub.s3.eu-west-2.amazonaws.com/icon-bookmark-empty.svg"
+          }
           onClick={handleBookmarkInteraction}
         />
       </div>
@@ -142,7 +136,11 @@ export default function TrendingCard({
               width="20"
               height="10"
               alt={category === "TV Series" ? "tv category" : "movie category"}
-              src={category === "TV Series" ? tvCategory : movieCategory}
+              src={
+                category === "TV Series"
+                  ? "https://reelhub.s3.eu-west-2.amazonaws.com/icon-category-tv.svg"
+                  : "https://reelhub.s3.eu-west-2.amazonaws.com/icon-category-movie.svg"
+              }
             />
           </div>
           <p className="text-xs sm:text-sm">{category}</p>
