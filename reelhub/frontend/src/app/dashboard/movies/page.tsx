@@ -5,19 +5,17 @@ import MediaCard from "../../../components/MediaCard";
 import { Media } from "../../../store/services/types";
 import { selectSearch } from "../../../store/services/mediaSlice";
 import { useAppSelector } from "@/utils/helpers";
+import { filterData } from "@/utils/helpers";
 
 export default function page() {
   // api call for movies
   const { isLoading, isFetching, data, error } =
     useGetMediaByCategoryQuery("Movie");
-  const search = useAppSelector(selectSearch);
 
   // filtered search for movie data
-  const filteredSearch = data
-    ? data.filter((data) =>
-        data.title.toLowerCase().includes(search.toLowerCase())
-      )
-    : [];
+  const search = useAppSelector(selectSearch);
+  const filteredSearch = filterData(data, search);
+
   return (
     <div className="my-4 w-full">
       {search && (

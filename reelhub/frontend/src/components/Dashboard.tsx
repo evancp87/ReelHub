@@ -8,18 +8,13 @@ import { selectSearch } from "../store/services/mediaSlice";
 import MediaCard from "../components/MediaCard";
 import { useGetMediaQuery } from "../store/services/mediaApi";
 import { useAppSelector } from "@/utils/helpers";
-
+import { filterData } from "@/utils/helpers";
 export default function Dashboard() {
   const { data } = useGetMediaQuery(null);
 
   const search = useAppSelector(selectSearch);
-
-  const filteredSearch = data
-    ? data.filter((data) =>
-        data.title.toLowerCase().includes(search.toLowerCase())
-      )
-    : [];
-
+  const filteredSearch = filterData(data, search);
+  
   return (
     <div className="bg-[#10141E] p-2">
       {search && (

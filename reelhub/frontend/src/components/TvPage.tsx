@@ -6,22 +6,16 @@ import { Media } from "../store/services/types";
 import { useGetMediaByCategoryQuery } from "../store/services/mediaApi";
 import { selectSearch } from "@/store/services/mediaSlice";
 import { useAppSelector } from "@/utils/helpers";
-
+import { filterData } from "@/utils/helpers";
 export default function page() {
   const { isLoading, isFetching, data, error } =
     useGetMediaByCategoryQuery("TV Series");
-  console.log(error);
 
   const search = useAppSelector(selectSearch);
-
-  const filteredSearch = data
-    ? data.filter((data) =>
-        data.title.toLowerCase().includes(search.toLowerCase())
-      )
-    : [];
+  const filteredSearch = filterData(data, search);
 
   return (
-    <div>
+    <div className="self-start">
       {search && (
         <p className="mt-4 flex self-start">
           Found {filteredSearch.length} results for '{search}'
