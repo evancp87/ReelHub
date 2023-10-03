@@ -1,7 +1,7 @@
-import jwt from "jsonwebtoken";
-require("dotenv").config();
+// import jwt from "jsonwebtoken";
+// require("dotenv").config();
 import {Request, Response, NextFunction} from "express";
-const secretKey = process.env.JWT_SECRET_KEY!;
+// const secretKey = process.env.JWT_SECRET_KEY!;
 
 interface AuthenticatedRequest extends Request  {
     token?: string

@@ -35,6 +35,7 @@ mongoose.connect(`${source}`, {
 
 const connectDB = async () => {
     try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const conn = await mongoose.connect(source);
         console.log(`Mongo db connected`);
         

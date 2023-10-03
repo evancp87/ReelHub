@@ -1,24 +1,24 @@
-import { Schema, model, connect } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 export interface IMedia {
   title: string,
   thumbnail: {
 
     trending?: {
-      small: String,
-      large:  String, 
+      small: string,
+      large:  string, 
     },
     regular: {
-      small: String,
-      medium: String,
-      large: String,
+      small: string,
+      medium: string,
+      large: string,
     }
   },
-      year:  Number, 
-      category:  String,
-      rating:  String,
-      isBookmarked:  Boolean,
-      isTrending:  Boolean,
+      year:  number, 
+      category:  string,
+      rating:  string,
+      isBookmarked:  boolean,
+      isTrending:  boolean,
 
   }
 

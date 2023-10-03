@@ -1,5 +1,4 @@
-import { Schema, model, connect, Types } from 'mongoose';
-// import mongoose from "mongoose";
+import { Schema, model } from 'mongoose';
 
 export interface IUser {
     firstName: string;
@@ -7,7 +6,6 @@ export interface IUser {
     email: string;
     password: string;
     avatar?: string;
-    // bookmarks: Types.ObjectId[];
   }
   
 const userSchema = new Schema<IUser>({
@@ -16,12 +14,7 @@ const userSchema = new Schema<IUser>({
     email: {type:String, required: true},
     password: {type:String, required: true},
     avatar: {type:String}
-    // bookmarks: {type:  Schema.Types.Mixed, ref: "Bookmark"}
 })
-// House.find({}).populate("owner")
-// for relational
-// types.objectId
-// https://dev.to/alexmercedcoder/mongodb-relationships-using-mongoose-in-nodejs-54cc
 
 
   const User = model<IUser>('User', userSchema);

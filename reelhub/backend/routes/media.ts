@@ -9,8 +9,4 @@ router.get("/trending", getTrending)
 router.get("/category/:category", getCategory)
 router.get("/bookmarks/:category", checkToken, getBookmarkedMedia)
 
-
-
-// Router.patch("/new", createUser)
-
 export default router;
