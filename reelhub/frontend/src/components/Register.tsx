@@ -2,14 +2,9 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useCreateUserMutation } from "../store/services/userApi";
-import { AppDispatch, RootState } from "@/store/store";
-import { useDispatch, useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import type { TypedUseSelectorHook } from "react-redux";
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 import { useRouter } from "next/navigation";
 import { validateRegister } from "@/validation/index";
 import Link from "next/link";
