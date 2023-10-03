@@ -3,7 +3,7 @@ import { mediaApi } from "../../src/store/services/mediaApi";
 import { screen, waitFor, render } from "@testing-library/react";
 import { ApiProvider } from "@reduxjs/toolkit/query/react";
 import { server } from "./server";
-import Trending from "../../src/components/Trending";
+import Recommended from "../../src/components/Recommended";
 // import "@testing-library/jest-dom/extend-expect";
 import "whatwg-fetch";
 
@@ -23,7 +23,7 @@ describe("Media", () => {
   it("should display media", async () => {
     render(
       <ApiProvider api={mediaApi}>
-        <Trending />
+        <Recommended />
       </ApiProvider>
     );
 

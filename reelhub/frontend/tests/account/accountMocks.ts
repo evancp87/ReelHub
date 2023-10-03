@@ -6,7 +6,8 @@ export const login: RegisterCredentials =  {
 firstName: "Evan",
 lastName: "Parker",
 email: "evancp@hotmail.com",
-password: "evancp123"
+password: "evancp123",
+avatar?: null
 }
 
 
