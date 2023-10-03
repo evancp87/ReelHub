@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import EmptyBookmark from "/public/assets/icon-bookmark-empty.svg";
-import FullBookmark from "/public/assets/icon-bookmark-full.svg";
-
-import Play from "/public/assets/icon-play.svg";
 import Image from "next/image";
-import movieCategory from "/public/assets/icon-category-movie.svg";
-import tvCategory from "/public/assets/icon-category-tv.svg";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import type { TypedUseSelectorHook } from "react-redux";
@@ -17,7 +10,6 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 import {
   useAddBookmarkMutation,
-  useDeleteMediaMutation,
   useGetUserBookmarksQuery,
 } from "../store/services/bookmarksApi";
 
@@ -119,7 +111,7 @@ export default function RecommendedCard({
               height="20"
               alt="play button"
               className="opacity-100 "
-              src={Play}
+              src="https://reelhub.s3.eu-west-2.amazonaws.com/icon-play.svg"
             />
             <p className="opacity-100 ">Play</p>
           </div>
@@ -129,7 +121,11 @@ export default function RecommendedCard({
               height="10"
               alt="bookmark"
               className="filtered-bookmark"
-              src={bookmarked ? FullBookmark : EmptyBookmark}
+              src={
+                bookmarked
+                  ? "https://reelhub.s3.eu-west-2.amazonaws.com/icon-bookmark-full.svg"
+                  : "https://reelhub.s3.eu-west-2.amazonaws.com/icon-bookmark-empty.svg"
+              }
               onClick={handleBookmarkInteraction}
             />
           </div>
@@ -144,7 +140,11 @@ export default function RecommendedCard({
               width="10"
               height="5"
               alt={category === "TV Series" ? "TV Icon" : "Movie Icon"}
-              src={category === "TV Series" ? tvCategory : movieCategory}
+              src={
+                category === "TV Series"
+                  ? "https://reelhub.s3.eu-west-2.amazonaws.com/icon-category-tv.svg"
+                  : "https://reelhub.s3.eu-west-2.amazonaws.com/icon-category-movie.svg"
+              }
             />
             <p className="text-xs">{category}</p>
           </div>
