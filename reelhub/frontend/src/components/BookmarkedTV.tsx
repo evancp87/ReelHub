@@ -1,37 +1,21 @@
 import React from "react";
-import Image from "next/image";
-import Thing from "/public/assets/thumbnails/autosport-the-series/regular/large.jpg";
-import Category from "/public/assets/icon-category-movie.svg";
-import Bookmark from "/public/assets/icon-bookmark-empty.svg";
 import MediaCard from "./MediaCard";
-import { useSelector, useDispatch, TypedUseSelectorHook } from "react-redux";
-import { AppDispatch, RootState } from "../store/store";
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+import { useAppSelector } from "@/utils/helpers";
 import {
   selectCurrentUser,
   selectCurrentToken,
 } from "@/store/services/usersSlice";
-import {
-  useGetUserBookmarksQuery,
-  useGetUserBookmarksByCategoryQuery,
-  useAddBookmarkMutation,
-  useDeleteMediaMutation,
-} from "../store/services/bookmarksApi";
-type Props = {};
+import { useGetUserBookmarksQuery } from "../store/services/bookmarksApi";
 
-export default function BookmarkedTV({}: Props) {
-  const user = useSelector(selectCurrentUser);
+export default function BookmarkedTV() {
+  const user = useAppSelector(selectCurrentUser);
   const userId = user?._id;
-  const token = useSelector(selectCurrentToken);
+  const token = useAppSelector(selectCurrentToken);
   console.log("checking the user", user);
   console.log("checking the user id", user?._id);
 
-  const { error, isLoading, isFetching, data } = useGetUserBookmarksQuery(
-    userId,
-    token
-    // "TV Series"
-  );
+  const { error, isLoading, isFetching, data } =
+    useGetUserBookmarksQuery(userId);
 
   return (
     <div className="my-4 w-full">

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
-import {User, Media, Category, UserId, Bookmark} from "./types";
-import { selectCurrentToken } from "./usersSlice";
+import { Category, UserId, Bookmark} from "./types";
+
  
 // The base URL 
 const BASE_API_URL = "http://localhost:6002";

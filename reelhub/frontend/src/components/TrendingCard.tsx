@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
-import { useSelector } from "react-redux";
 import "react-loading-skeleton/dist/skeleton.css";
-import { selectCurrentUser, RootState } from "@/store/services/usersSlice";
+import { selectCurrentUser } from "@/store/services/usersSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import type { TypedUseSelectorHook } from "react-redux";
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+import { useAppSelector } from "@/utils/helpers";
+
 import {
   useGetUserBookmarksQuery,
   useAddBookmarkMutation,
@@ -44,9 +43,6 @@ export default function TrendingCard({
 }: Props) {
   const trendingSmall = thumbnail?.trending?.small;
   const trendingLarge = thumbnail?.trending?.large;
-  const regularSmall = thumbnail?.regular.small;
-  const regularMedium = thumbnail?.regular.medium;
-  const regularLarge = thumbnail?.regular.large;
 
   const notifySuccessAdd = () => toast("Your bookmark was saved");
   const notifySuccessRemoved = () => toast("Your bookmark was removed");

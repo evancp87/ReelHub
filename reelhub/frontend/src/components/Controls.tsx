@@ -2,12 +2,8 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { selectSearch, searchQuery } from "@/store/services/mediaSlice";
-import type { TypedUseSelectorHook } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
-import { useDispatch, useSelector } from "react-redux";
 import { usePathname, useSearchParams } from "next/navigation";
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+import { useAppDispatch, useAppSelector } from "@/utils/helpers";
 
 export default function Controls() {
   const dispatch = useAppDispatch();

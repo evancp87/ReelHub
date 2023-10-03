@@ -1,11 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import type { TypedUseSelectorHook } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
-import { useDispatch, useSelector } from "react-redux";
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+import { useAppDispatch } from "@/utils/helpers";
 import Link from "next/link";
 import { setCredentials } from "@/store/services/usersSlice";
 import { validateLogin } from "@/validation/index";

@@ -1,7 +1,7 @@
 // "use client";
 
 import Dashboard from "@/components/Dashboard";
-import React, { useEffect, useCallback } from "react";
+import React from "react";
 
 export default async function Home() {
   return (

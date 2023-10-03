@@ -7,30 +7,17 @@ import NavHome from "../../public/assets/icon-nav-home.svg";
 import NavTv from "../../public/assets/icon-nav-tv-series.svg";
 import NavMovies from "../../public/assets/icon-nav-movies.svg";
 import Link from "next/link";
-import type { TypedUseSelectorHook } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
-import { useDispatch, useSelector } from "react-redux";
-
+import { useAppDispatch, useAppSelector } from "@/utils/helpers";
 import { useRouter, usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 
-import {
-  selectCurrentUser,
-  selectCurrentToken,
-  logout,
-} from "../store/services/usersSlice";
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-type Props = {};
+import { selectCurrentUser, logout } from "../store/services/usersSlice";
 
-export default function Sidebar({}: Props) {
+export default function Sidebar() {
   const user = useAppSelector(selectCurrentUser);
-  const token = useAppSelector(selectCurrentToken);
-
   const router = useRouter();
   const currentRoute = usePathname();
-
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
