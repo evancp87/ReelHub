@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import MediaCard from "../components/MediaCard";
-import { Media } from "../store/services/types";
-import { useGetMediaByCategoryQuery } from "../store/services/mediaApi";
+import MediaCard from "@/components/MediaCard";
+import { Media } from "@/store/services/types";
+import { useGetMediaByCategoryQuery } from "@/store/services/mediaApi";
 import { selectSearch } from "@/store/services/mediaSlice";
 import { useAppSelector } from "@/utils/helpers";
 import { filterData } from "@/utils/helpers";

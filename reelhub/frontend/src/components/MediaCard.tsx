@@ -7,7 +7,7 @@ import { useAppSelector } from "@/utils/helpers";
 import {
   useAddBookmarkMutation,
   useGetUserBookmarksQuery,
-} from "../store/services/bookmarksApi";
+} from "@/store/services/bookmarksApi";
 
 import { selectCurrentUser } from "@/store/services/usersSlice";
 

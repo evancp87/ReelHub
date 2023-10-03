@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useIsAuthenticated } from "../store/hooks";
+import { useIsAuthenticated } from "@/store/hooks";
 import React, { useEffect } from "react";
 import { usePathname } from "next/navigation";
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {

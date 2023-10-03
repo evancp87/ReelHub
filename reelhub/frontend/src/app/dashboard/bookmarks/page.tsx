@@ -6,7 +6,7 @@ import { useAppSelector } from "@/utils/helpers";
 import { selectCurrentUser } from "@/store/services/usersSlice";
 import { useGetUserBookmarksQuery } from "@/store/services/bookmarksApi";
 import { selectSearch } from "@/store/services/mediaSlice";
-import MediaCard from "../../../components/MediaCard";
+import MediaCard from "@/components/MediaCard";
 
 export default function page() {
   const search = useAppSelector(selectSearch);

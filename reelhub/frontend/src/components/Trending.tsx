@@ -1,8 +1,8 @@
 import React from "react";
 import TrendingCard from "./TrendingCard";
-import { Media } from "../store/services/types";
+import { Media } from "@/store/services/types";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useGetTrendingMediaQuery } from "../store/services/mediaApi";
+import { useGetTrendingMediaQuery } from "@/store/services/mediaApi";
 
 export default function Trending() {
   const { isLoading, isFetching, data, error } = useGetTrendingMediaQuery(null);

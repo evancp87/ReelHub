@@ -6,7 +6,7 @@ import Link from "next/link";
 import { setCredentials } from "@/store/services/usersSlice";
 import { validateLogin } from "@/validation/index";
 import ClipLoader from "react-spinners/ClipLoader";
-import { useLoginUserMutation } from "../store/services/userApi";
+import { useLoginUserMutation } from "@/store/services/userApi";
 import { useRouter } from "next/navigation";
 
 function Login() {

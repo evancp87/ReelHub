@@ -3,10 +3,10 @@
 import React from "react";
 import Trending from "./Trending";
 import Recommended from "./Recommended";
-import { Media } from "../store/services/types";
-import { selectSearch } from "../store/services/mediaSlice";
-import MediaCard from "../components/MediaCard";
-import { useGetMediaQuery } from "../store/services/mediaApi";
+import { Media } from "@/store/services/types";
+import { selectSearch } from "@/store/services/mediaSlice";
+import MediaCard from "@/components/MediaCard";
+import { useGetMediaQuery } from "@/store/services/mediaApi";
 import { useAppSelector } from "@/utils/helpers";
 import { filterData } from "@/utils/helpers";
 export default function Dashboard() {
@@ -14,7 +14,7 @@ export default function Dashboard() {
 
   const search = useAppSelector(selectSearch);
   const filteredSearch = filterData(data, search);
-  
+
   return (
     <div className="bg-[#10141E] p-2">
       {search && (

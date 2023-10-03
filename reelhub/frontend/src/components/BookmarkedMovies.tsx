@@ -2,7 +2,7 @@ import React from "react";
 import MediaCard from "./MediaCard";
 import { useAppSelector } from "@/utils/helpers";
 import { selectCurrentUser } from "@/store/services/usersSlice";
-import { useGetUserBookmarksQuery } from "../store/services/bookmarksApi";
+import { useGetUserBookmarksQuery } from "@/store/services/bookmarksApi";
 
 export default function BookmarkedMovies() {
   const user = useAppSelector(selectCurrentUser);
