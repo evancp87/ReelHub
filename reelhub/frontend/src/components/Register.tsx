@@ -9,7 +9,13 @@ import { useRouter } from "next/navigation";
 import { validateRegister } from "@/validation/index";
 import Link from "next/link";
 
+interface ErrorObject {
+  key: string;
+  message: string;
+}
+
 type User = {
+  _id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -20,6 +26,7 @@ type User = {
 
 function Register() {
   const [userInput, setUserInput] = useState<User>({
+    _id: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -40,7 +47,7 @@ function Register() {
   const [createUser, { isLoading, isSuccess, error, isError }] =
     useCreateUserMutation();
 
-  const [errors, setErrors] = useState(null);
+  const [errors, setErrors] = useState<ErrorObject[]>([]);
   const router = useRouter();
 
   // handles converting a file to a base 64 encoded format for transportation
@@ -48,12 +55,12 @@ function Register() {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      const imageUrl = reader.result;
+      const imageUrl = reader.result as string;
       setImage(imageUrl);
     };
   }
 
-  const handleInputs = async (e) => {
+  const handleInputs = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
 
     // if file, convert file and include in handling of inputs
@@ -67,7 +74,7 @@ function Register() {
 
       try {
         // handles repeatPassword, which joi schema alone can't validate without config
-        let payload;
+        let payload: any;
         if (name === "repeatPassword") {
           payload = { password: userInput.password, repeatPassword: value };
         } else {
@@ -89,7 +96,9 @@ function Register() {
       const { repeatPassword, ...user } = userInput;
       // sends user to server
       createUser(user);
-      notifySuccess();
+      if (!error) {
+        notifySuccess();
+      }
     } catch (error) {
       console.log("There was an error", error);
     }
@@ -235,9 +244,9 @@ function Register() {
           Login
         </Link>
       </div>
-      {error && (
+      {error && "data" in error && (
         <p className="min-h-30 my-4 flex justify-center text-xs text-red ">
-          {error.data}
+          {error.data as string}
         </p>
       )}
     </div>

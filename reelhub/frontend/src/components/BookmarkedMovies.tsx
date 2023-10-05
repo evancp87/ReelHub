@@ -31,8 +31,16 @@ export default function BookmarkedMovies() {
           data
             .filter((media) => media.media.category === "Movie")
             .map((media, index) => {
-              const { year, title, rating, thumbnail, category, _id } =
-                media.media;
+              const {
+                year,
+                title,
+                rating,
+                thumbnail,
+                category,
+                _id,
+                isBookmarked,
+                isTrending,
+              } = media.media;
               return (
                 <MediaCard
                   key={index}
@@ -42,6 +50,8 @@ export default function BookmarkedMovies() {
                   title={title}
                   thumbnail={thumbnail}
                   id={_id}
+                  isBookmarked={isBookmarked}
+                  isTrending={isTrending}
                 />
               );
             })

@@ -7,24 +7,24 @@ const outfit = Outfit({
   display: "swap",
 });
 import type { Metadata } from "next";
+import Favicon from "/public/images/favicon.ico";
 
-<Head>
-  <link rel="shortcut icon" href="/favicon.ico" />
-</Head>;
 export const metadata: Metadata = {
-  title: "Reelhub",
-  description: "An entertainment app",
-  // openGraph: {
-  //   title: 'Reelhub',
-  //   description: 'An entertainment app',
-  //   type: 'website',
-  //   // url: 'https://yourwebsite.com/your-page-url',
-  //   image: {
-  //     url: 'https://yourwebsite.com/your-image-url',
-  //     alt: 'Alt text for your image',
-  //     width: 1200,
-  //     height: 630,
-  //   },
+  openGraph: {
+    title: "ReelHub",
+    description: "An entertainment app",
+    url: "https://nextjs.org",
+    siteName: "ReelHub",
+    images: [
+      {
+        url: "https://reelhub.s3.eu-west-2.amazonaws.com/Reelhub.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en_GB",
+    type: "website",
+  },
 };
 
 import React from "react";
@@ -35,16 +35,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <Head>
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
-        {/* <meta property="og:title" content={metadata.openGraph.title} />
-        <meta property="og:description" content={metadata.openGraph.description} />
-        <meta property="og:type" content={metadata.openGraph.type} />
-        <meta property="og:image" content={metadata.openGraph.image.url} />
-        <meta property="og:image:alt" content={metadata.openGraph.image.alt} />
-        <meta property="og:image:width" content={metadata.openGraph.image.width.toString()} />
-        <meta property="og:image:height" content={metadata.openGraph.image.height.toString()} /> */}
-        <link rel="shortcut icon" href="images/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon" />
       </Head>
       <body className={outfit.className}>
         <ReduxProvider>

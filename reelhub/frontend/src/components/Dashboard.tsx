@@ -13,7 +13,8 @@ export default function Dashboard() {
   const { data } = useGetMediaQuery(null);
 
   const search = useAppSelector(selectSearch);
-  const filteredSearch = filterData(data, search);
+  const filteredSearch = data ? filterData(data, search) : [];
+
 
   return (
     <div className="bg-[#10141E] p-2">

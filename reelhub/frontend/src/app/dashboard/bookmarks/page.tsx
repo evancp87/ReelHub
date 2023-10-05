@@ -10,7 +10,7 @@ import MediaCard from "@/components/MediaCard";
 
 export default function page() {
   const search = useAppSelector(selectSearch);
-  const user = useAppSelector(selectCurrentUser);
+  const user: any = useAppSelector(selectCurrentUser);
 
   const userId = user?._id;
 

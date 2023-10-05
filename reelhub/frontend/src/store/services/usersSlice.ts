@@ -6,7 +6,7 @@ const backend = "http://localhost:6002";
 
 // gets user and token from localStorage
 const userToken = typeof localStorage !== 'undefined' ? localStorage.getItem("userToken") : null;
-const user = typeof localStorage !== 'undefined' ? JSON.parse(localStorage.getItem("user")) : null;
+const user = typeof localStorage !== 'undefined' ? JSON.parse(localStorage.getItem("user")!) : null;
 
 
 type InitialState = {

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAppSelector } from "@/utils/helpers";
-
+import { skipToken } from "@reduxjs/toolkit/query";
 import {
   useAddBookmarkMutation,
   useGetUserBookmarksQuery,
@@ -49,10 +49,11 @@ export default function RecommendedCard({
 
   const notifySuccessAdd = () => toast("Your bookmark was saved");
   const notifySuccessRemoved = () => toast("Your bookmark was removed");
-
   const user = useAppSelector(selectCurrentUser);
+
+  const userId = user ? user._id : skipToken;
   // fetches and refetches userBookmarks
-  const { data: userBookmarks, refetch } = useGetUserBookmarksQuery(user?._id);
+  const { data: userBookmarks, refetch } = useGetUserBookmarksQuery(userId);
 
   // finds the media items that are already bookmarked
   const bookmarked = userBookmarks?.some(
@@ -69,11 +70,11 @@ export default function RecommendedCard({
     try {
       // If not bookmarked, add it, otherwise remove it from db
       if (bookmarked) {
-        await addBookmark({ mediaId, userId: user._id });
+        await addBookmark({ mediaId, userId });
         refetch();
         notifySuccessRemoved();
       } else {
-        await addBookmark({ mediaId, userId: user._id });
+        await addBookmark({ mediaId, userId });
         refetch();
         notifySuccessAdd();
       }

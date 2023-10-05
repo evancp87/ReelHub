@@ -15,12 +15,17 @@ function Login() {
     password: string;
   };
 
+  interface ErrorObject {
+    key: string;
+    message: string;
+  }
+
   const [userInput, setUserInput] = useState<User>({
     email: "",
     password: "",
   });
 
-  const [errors, setErrors] = useState(null);
+  const [errors, setErrors] = useState<ErrorObject[]>([]);
   const [loginUser, { isLoading, isSuccess, error }] = useLoginUserMutation();
 
   // function to find errors and return the message
@@ -32,14 +37,14 @@ function Login() {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const handleInputs = async (e) => {
+  const handleInputs = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     // updates state with dynamic object keys
     setUserInput((inputs) => ({ ...inputs, [name]: value }));
 
     try {
       // joi validation
-      const payload = { [name]: value };
+      const payload: any = { [name]: value };
       const res = await validateLogin(payload);
       setErrors(res);
     } catch (error) {
@@ -47,12 +52,12 @@ function Login() {
     }
   };
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const { email, password } = userInput;
     try {
-      const { data } = await loginUser({ email, password });
+      const { data }: any = await loginUser({ email, password });
 
       // Dispatch setCredentials with the data from loginUser
       dispatch(setCredentials(data));
@@ -128,9 +133,10 @@ function Login() {
           Sign Up
         </Link>
       </div>
-      {error && (
-        <p className="min-h-30 my-4 flex justify-center text-xs text-red">
-          {error.data.error}
+
+      {error && "data" in error && (
+        <p className="min-h-30 my-4 flex justify-center text-xs text-red ">
+          {(error.data as { error: string }).error}
         </p>
       )}
     </div>

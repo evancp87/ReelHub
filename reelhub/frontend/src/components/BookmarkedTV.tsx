@@ -8,8 +8,8 @@ import {
 import { useGetUserBookmarksQuery } from "../store/services/bookmarksApi";
 
 export default function BookmarkedTV() {
-  const user = useAppSelector(selectCurrentUser);
-  const userId = user?._id;
+  const user: any = useAppSelector(selectCurrentUser);
+  const userId = user?._id!;
   const token = useAppSelector(selectCurrentToken);
   console.log("checking the user", user);
   console.log("checking the user id", user?._id);
@@ -33,8 +33,16 @@ export default function BookmarkedTV() {
           data
             .filter((media) => media.media.category === "TV Series")
             .map((media, index) => {
-              const { year, title, rating, thumbnail, category, _id } =
-                media.media;
+              const {
+                year,
+                title,
+                rating,
+                thumbnail,
+                category,
+                _id,
+                isTrending,
+                isBookmarked,
+              } = media.media;
               return (
                 <MediaCard
                   key={index}
@@ -44,6 +52,8 @@ export default function BookmarkedTV() {
                   title={title}
                   thumbnail={thumbnail}
                   id={_id}
+                  isBookmarked={isBookmarked}
+                  isTrending={isTrending}
                 />
               );
             })

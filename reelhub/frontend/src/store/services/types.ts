@@ -1,5 +1,6 @@
 // for media api
 export type Media = {
+    _id: string,
     title: string,
     year: number,
     thumbnail?:  {
@@ -23,6 +24,7 @@ export type Media = {
 //    For users api
 
 export type User = {
+    _id: string,
     firstName: string;
     lastName: string;
     email: string;
@@ -35,13 +37,24 @@ export type AuthToken = {
     token?: string;
 }
 
+export type LoginAuth = {
+  email: string,
+  password: string,
+  token: string | undefined;
+}
+
+export interface ErrorObject {
+  key: string;
+  message: string;
+}
+
 export type RegisterCredentials = {
+    _id: string,
     email: string,
     firstName: string,
     lastName: string,
     password: string,
-    repeatPassword: string,
-    avatar?: string
+    avatar?: string  | null
 }
 
 export type LoginCredentials = {
@@ -53,8 +66,13 @@ export type LoginCredentials = {
 
 
 export type Bookmark = {
+  media: Media
     user: User
-    media: Media
+}
+
+export type AddBookmark = {
+  mediaId: string,
+  userId: string | symbol
 }
 
 export type UserId = {

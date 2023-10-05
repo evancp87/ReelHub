@@ -16,7 +16,16 @@ export default function Recommended() {
           <li>Loading...</li>
         ) : data ? (
           data.map((media, index) => {
-            const { year, title, rating, thumbnail, category, _id } = media;
+            const {
+              year,
+              title,
+              rating,
+              thumbnail,
+              category,
+              _id,
+              isBookmarked,
+              isTrending,
+            } = media;
             console.log(thumbnail?.regular.large);
             return (
               <MediaCard
@@ -27,6 +36,8 @@ export default function Recommended() {
                 title={title}
                 thumbnail={thumbnail}
                 id={_id}
+                isBookmarked={isBookmarked}
+                isTrending={isTrending}
               />
             );
           })

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
-import { Category, UserId, Bookmark} from "./types";
+import { Category, UserId, Bookmark, AddBookmark} from "./types";
 
  
 // The base URL 
@@ -22,16 +22,16 @@ export const bookmarkApi = createApi({
   }),
   endpoints: (builder) => ({
    
-    getUserBookmarks: builder.query<Bookmark[], {userId: UserId}>({
+    getUserBookmarks: builder.query<Bookmark[], string>({
         query: (userId) => `/bookmarks/${userId}`,
-    
+  
       }),
       getUserBookmarksByCategory: builder.query<Bookmark[], {category: Category, userId: UserId, }>({
         query: ({category, userId}) => `/bookmarks/${category}/${userId}`,
 
     
       }),
-    addBookmark: builder.mutation<Bookmark, Partial<Bookmark>>({
+    addBookmark: builder.mutation<Bookmark, AddBookmark>({
       query: (bookmark) => ({
         url: '/bookmarks/add',
         method: 'PUT',

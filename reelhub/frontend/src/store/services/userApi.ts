@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import {AuthToken, RegisterCredentials, LoginCredentials, User } from "./types";
+import {AuthToken, LoginAuth, RegisterCredentials, LoginCredentials, User } from "./types";
 import {RootState} from "../store";
 
   const BASE_API_URL = "http://localhost:6002";
@@ -27,7 +27,7 @@ import {RootState} from "../store";
           body: data,
         }),
       }),
-      loginUser: builder.mutation<AuthToken, LoginCredentials>
+      loginUser: builder.mutation<LoginAuth, LoginCredentials>
      
       ({
         query(data: { email: string, password: string }) {

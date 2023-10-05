@@ -12,7 +12,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // get user from localStorage
   const currUser =
     typeof localStorage !== "undefined"
-      ? JSON.parse(localStorage.getItem("user"))
+      ? JSON.parse(localStorage.getItem("user")!)
       : null;
 
   useEffect(() => {

@@ -14,7 +14,7 @@ export default function page() {
 
   // filtered search for movie data
   const search = useAppSelector(selectSearch);
-  const filteredSearch = filterData(data, search);
+  const filteredSearch = data ? filterData(data, search) : [];
 
   return (
     <div className="my-4 w-full">
@@ -50,8 +50,16 @@ export default function page() {
               <h3 className="mb-4 text-2xl md:text-3xl">Movies</h3>
               <ul className="grid grid-cols-2 gap-3 gap-4 sm:grid-cols-3 md:grid-cols-4">
                 {data.map((media, index) => {
-                  const { year, title, rating, thumbnail, category, _id } =
-                    media;
+                  const {
+                    year,
+                    title,
+                    rating,
+                    thumbnail,
+                    category,
+                    _id,
+                    isBookmarked,
+                    isTrending,
+                  } = media;
                   console.log(thumbnail?.regular.large);
 
                   return (
@@ -63,6 +71,8 @@ export default function page() {
                       title={title}
                       thumbnail={thumbnail}
                       id={_id}
+                      isBookmarked={isBookmarked}
+                      isTrending={isTrending}
                     />
                   );
                 })}

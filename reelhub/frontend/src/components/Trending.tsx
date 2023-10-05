@@ -19,19 +19,27 @@ export default function Trending() {
           <li className="flex w-full flex-col items-start">Loading...</li>
         ) : data ? (
           data.map((media: Media, index) => {
-            const { year, title, rating, thumbnail, category, _id } = media;
+            const {
+              year,
+              title,
+              rating,
+              thumbnail,
+              category,
+              _id,
+              isBookmarked,
+              isTrending,
+            } = media;
             return (
-              <li className="carousel-item relative">
+              <li className="carousel-item relative" key={_id}>
                 <TrendingCard
-                  key={_id}
                   year={year}
                   category={category}
                   rating={rating}
                   title={title}
                   thumbnail={thumbnail}
                   id={_id}
-                  // isBookmarked={isBookmarked}
-                  // isTrending={isTrending}
+                  isBookmarked={isBookmarked}
+                  isTrending={isTrending}
                 />
               </li>
             );

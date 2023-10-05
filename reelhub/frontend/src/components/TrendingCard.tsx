@@ -5,7 +5,7 @@ import { selectCurrentUser } from "@/store/services/usersSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAppSelector } from "@/utils/helpers";
-
+import { skipToken } from "@reduxjs/toolkit/query";
 import {
   useGetUserBookmarksQuery,
   useAddBookmarkMutation,
@@ -49,7 +49,10 @@ export default function TrendingCard({
   const notifyError = () => toast("Your bookmark could not be saved");
 
   const user = useAppSelector(selectCurrentUser);
-  const { data: userBookmarks, refetch } = useGetUserBookmarksQuery(user?._id);
+  // skip token to delay fetching data until user being available is truthy.
+  const userId = user ? user._id : skipToken;
+
+  const { data: userBookmarks, refetch } = useGetUserBookmarksQuery(userId);
   console.log("checking usr bookmarkas", userBookmarks);
 
   const bookmarked = userBookmarks?.some(
@@ -69,11 +72,11 @@ export default function TrendingCard({
       // await addBookmarkMutation({ id });
       console.log("checking the media id again", mediaId);
       if (bookmarked) {
-        await addBookmark({ mediaId, userId: user._id });
+        await addBookmark({ mediaId, userId });
         refetch();
         notifySuccessRemoved();
       } else {
-        await addBookmark({ mediaId, userId: user._id });
+        await addBookmark({ mediaId, userId });
         refetch();
         notifySuccessAdd();
       }
