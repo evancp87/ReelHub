@@ -49,7 +49,6 @@ export interface ErrorObject {
 }
 
 export type RegisterCredentials = {
-    _id: string,
     email: string,
     firstName: string,
     lastName: string,

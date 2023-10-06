@@ -15,7 +15,6 @@ interface ErrorObject {
 }
 
 type User = {
-  _id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -26,7 +25,6 @@ type User = {
 
 function Register() {
   const [userInput, setUserInput] = useState<User>({
-    _id: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -38,6 +36,7 @@ function Register() {
   // handles setting an image
   const [image, setImage] = useState<string | null>(null);
   const notifySuccess = () => toast("User successfully created");
+  const notifyError = () => toast("User could not be created");
 
   useEffect(() => {
     // This effect will run whenever the image state changes
@@ -96,17 +95,16 @@ function Register() {
       const { repeatPassword, ...user } = userInput;
       // sends user to server
       createUser(user);
-      if (!error) {
-        notifySuccess();
-      }
     } catch (error) {
       console.log("There was an error", error);
+      notifyError();
     }
   };
 
   // redirects successful user to login
   useEffect(() => {
     if (isSuccess) {
+      notifySuccess();
       router.push("/authentication/login");
     }
   }, [isSuccess]);
