@@ -53,7 +53,6 @@ export default function TrendingCard({
   const userId = user ? user._id : skipToken;
 
   const { data: userBookmarks, refetch } = useGetUserBookmarksQuery(userId);
-  console.log("checking usr bookmarkas", userBookmarks);
 
   const bookmarked = userBookmarks?.some(
     (bookmark) => bookmark.media._id === id
@@ -61,7 +60,6 @@ export default function TrendingCard({
   useEffect(() => {
     console.log("new bookmarks", userBookmarks);
   }, [userBookmarks]);
-  console.log(bookmarked);
 
   const mediaId = id;
   const [addBookmark] = useAddBookmarkMutation();
@@ -69,8 +67,6 @@ export default function TrendingCard({
   const handleBookmarkInteraction = async () => {
     try {
       // If not bookmarked, add it
-      // await addBookmarkMutation({ id });
-      console.log("checking the media id again", mediaId);
       if (bookmarked) {
         await addBookmark({ mediaId, userId });
         refetch();

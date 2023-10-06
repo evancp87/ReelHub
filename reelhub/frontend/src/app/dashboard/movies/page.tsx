@@ -60,7 +60,6 @@ export default function page() {
                     isBookmarked,
                     isTrending,
                   } = media;
-                  console.log(thumbnail?.regular.large);
 
                   return (
                     <MediaCard

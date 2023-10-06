@@ -11,8 +11,6 @@ export default function BookmarkedTV() {
   const user: any = useAppSelector(selectCurrentUser);
   const userId = user?._id!;
   const token = useAppSelector(selectCurrentToken);
-  console.log("checking the user", user);
-  console.log("checking the user id", user?._id);
 
   const { error, isLoading, isFetching, data } =
     useGetUserBookmarksQuery(userId);

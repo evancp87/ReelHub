@@ -26,7 +26,6 @@ export default function Recommended() {
               isBookmarked,
               isTrending,
             } = media;
-            console.log(thumbnail?.regular.large);
             return (
               <MediaCard
                 key={_id}
