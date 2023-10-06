@@ -1,32 +1,64 @@
+import "whatwg-fetch";
 import "@testing-library/jest-dom";
+import { Provider } from "react-redux";
+import { store } from "@/store/store";
 import {
   userApi,
   useCreateUserMutation,
   useLoginUserMutation,
 } from "@/store/services/userApi";
-
+import { login } from "./accountMocks";
 import { screen, waitFor, render, fireEvent } from "@testing-library/react";
 import { ApiProvider } from "@reduxjs/toolkit/query/react";
 import { server } from "./server";
 import Login from "@/components/Login";
-import Register from "@/components/Login";
-import "whatwg-fetch";
+import Register from "@/components/Register";
+import { useRouter } from "next/navigation";
+import { configureStore } from "@reduxjs/toolkit";
+import userReducer from "../../store/services/usersSlice";
 
-// Mock the useLoginUserMutation hook
-jest.mock("@/store/services/userApi", () => ({
-  ...jest.requireActual("@/store/services/userApi"),
-  useLoginUserMutation: () => [
-    jest.fn(),
-    { isLoading: false, isSuccess: true, error: null },
-  ],
-  useCreateUserMutation: () => [
-    jest.fn(),
-    { isLoading: false, isSuccess: true, error: null },
-  ],
-}));
+jest.mock("next/navigation");
+
+const mockStore = configureStore({
+  reducer: {
+    user: userReducer,
+  },
+  preloadedState: {
+    user: {
+      token: "mock-token",
+    },
+  },
+});
+
+jest.mock("react-redux", () => {
+  const originalModule = jest.requireActual("react-redux");
+  return {
+    ...originalModule,
+    useSelector: jest.fn(),
+    useDispatch: jest.fn(),
+  };
+});
+
+const { useSelector, useDispatch } = jest.requireMock("react-redux");
+
+const mockDispatch = jest.fn();
+
+useDispatch.mockReturnValue(mockDispatch);
+useSelector.mockImplementation((selector: any) =>
+  selector(mockStore.getState())
+);
+
+const mockPush = jest.fn();
+
+const mockedUseRouter = useRouter as jest.Mock;
+
+mockedUseRouter.mockReturnValue({
+  push: mockPush,
+});
 
 describe("account", () => {
   beforeAll(() => {
+    mockPush.mockClear();
     server.listen();
   });
 
@@ -44,7 +76,6 @@ describe("account", () => {
         <Login />
       </ApiProvider>
     );
-
     fireEvent.change(screen.getByPlaceholderText("Email Address"), {
       target: { value: "testuser@gmail.com" },
     });
@@ -57,6 +88,12 @@ describe("account", () => {
       expect(screen.getByText("Trending")).toBeInTheDocument();
       expect(screen.getByText("Recommended")).toBeInTheDocument();
     });
+    await waitFor(() => {
+      expect(mockPush).toHaveBeenCalledWith("/dashboard");
+    });
+    // await waitFor(() => {
+    //   expect(mockPush).toHaveBeenCalledWith("/dashboard");
+    // });
   });
 
   it("should register a new user", async () => {
@@ -67,22 +104,19 @@ describe("account", () => {
     );
 
     fireEvent.change(screen.getByPlaceholderText("First Name"), {
-      target: { value: "testuser" },
-    });
-    fireEvent.change(screen.getByLabelText("Password"), {
-      target: { value: "testpassword" },
+      target: { value: "test" },
     });
     fireEvent.change(screen.getByPlaceholderText("Last Name"), {
-      target: { value: "testuser" },
+      target: { value: "user" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Email"), {
+      target: { value: "testuser@gmail.com" },
     });
     fireEvent.change(screen.getByPlaceholderText("Password"), {
-      target: { value: "testuser" },
+      target: { value: "testuser123" },
     });
-    fireEvent.change(screen.getByLabelText("Repeat Password"), {
-      target: { value: "testuser" },
-    });
-    fireEvent.change(screen.getByLabelText(""), {
-      target: { value: null },
+    fireEvent.change(screen.getByPlaceholderText("Repeat Password"), {
+      target: { value: "testuser123" },
     });
 
     fireEvent.click(screen.getByText("Create an account"));

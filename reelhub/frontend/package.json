@@ -52,6 +52,7 @@
     "@types/whatwg-fetch": "^0.0.33",
     "jest": "^29.6.4",
     "jest-environment-jsdom": "^29.6.4",
-    "msw": "^1.2.3"
+    "msw": "^1.2.3",
+    "node-fetch": "^3.3.2"
   }
 }
