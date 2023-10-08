@@ -3,16 +3,12 @@ import MediaCard from "./MediaCard";
 import { useAppSelector } from "@/utils/helpers";
 import { selectCurrentUser } from "@/store/services/usersSlice";
 import { useGetUserBookmarksQuery } from "@/store/services/bookmarksApi";
-
 export default function BookmarkedMovies() {
   const user = useAppSelector(selectCurrentUser);
-  const userId = user?._id;
+  const userId = user ? user._id : "";
 
-  const { error, isLoading, isFetching, data } = useGetUserBookmarksQuery(
-    userId
-    // token: token,
-    // "Movie"
-  );
+  const { error, isLoading, isFetching, data } =
+    useGetUserBookmarksQuery(userId);
   return (
     <div className="my-4 w-full ">
       <h3 className="mb-4 text-2xl md:text-3xl">Bookmarked Movies</h3>
