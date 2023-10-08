@@ -4,7 +4,10 @@ import { Category, UserId, Bookmark, AddBookmark} from "./types";
 
  
 // The base URL 
-const BASE_API_URL = "http://localhost:6002";
+const BASE_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
+
+
+
 
 
 

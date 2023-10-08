@@ -2,7 +2,8 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import {User} from "../services/types";
 import {RootState} from "../store";
 import axios from "axios";
-const backend = "http://localhost:6002";
+const backend= process.env.NEXT_PUBLIC_BASE_API_URL;
+
 
 // gets user and token from localStorage
 const userToken = typeof localStorage !== 'undefined' ? localStorage.getItem("userToken") : null;
