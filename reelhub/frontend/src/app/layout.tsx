@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ReelHub",
     description: "An entertainment app",
-    url: "https://nextjs.org",
+    url: "https://reelhub.vercel.app/",
     siteName: "ReelHub",
     images: [
       {
