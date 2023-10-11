@@ -37,7 +37,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <Head>
         <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon" />
       </Head>
-      <body className={outfit.className}>
+      <body className={`bg-black text-white ${outfit.className}`}>
         <ReduxProvider>
           <AuthProvider>{children}</AuthProvider>
         </ReduxProvider>
